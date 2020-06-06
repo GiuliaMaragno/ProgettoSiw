@@ -64,8 +64,7 @@ public class Utente {
 	}
 
 	public Utente( String nome, String cognome) {
-
-		
+		this();
 		this.nome = nome;
 		this.cognome = cognome;
 	}

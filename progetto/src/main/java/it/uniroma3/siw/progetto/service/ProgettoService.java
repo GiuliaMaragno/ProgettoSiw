@@ -37,7 +37,7 @@ public class ProgettoService {
 
 	@Transactional
 	public Progetto condividiConAltroUtente(Progetto progetto, Utente utente) {
-		progetto.addMember(utente);
+		progetto.addMembro(utente);
 		return this.progettoRepository.save(progetto);
 
 	}

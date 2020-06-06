@@ -2,6 +2,7 @@ package it.uniroma3.siw.progetto;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
@@ -29,7 +30,7 @@ import it.uniroma3.siw.progetto.service.UtenteService;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-class ProgettoSiwApplicationTests {
+class ProgettoApplicationTests {
 	@Autowired
 	private CommentoService commentoService;
 	
@@ -93,7 +94,7 @@ class ProgettoSiwApplicationTests {
 		
 		credenziali1= this.credenzialiService.salvaCredenziali(credenziali1); //quando si salvano le credenziali si salvano in DEFAULT 
 		credenziali1.setRuolo(Credenziali.ADMIN_RUOLO);                       //fuori dal save set Ruolo funziona
-		this.utenteService.salvaUtente(utente1);
+		// this.utenteService.salvaUtente(utente1); //non necessario-> cascade all
 		
 		
 		assertEquals(credenziali1.getId().longValue(), 1L);
@@ -105,7 +106,7 @@ class ProgettoSiwApplicationTests {
 		
 		
 		
-		Credenziali credenziali1Aggiornate = new Credenziali("mariaRossi", "password");
+		Credenziali credenziali1Aggiornate = new Credenziali("mariaRossi", "password"); //utente 1 aggiornato
 		Utente utente1Aggiornato=new Utente("Maria","Rossi");
 		utente1Aggiornato.setId(utente1.getId());
 		credenziali1Aggiornate.setUtente(utente1Aggiornato);
@@ -117,15 +118,14 @@ class ProgettoSiwApplicationTests {
 		assertEquals(credenziali1Aggiornate.getUsername(), "mariaRossi");
 		assertEquals(credenziali1Aggiornate.getUtente().getNome(), "Maria");
 		
-		Credenziali credenziali2= new Credenziali("luigiBianchi", "password");
+		Credenziali credenziali2= new Credenziali("luigiBianchi", "password"); //nuovo utente
 		Utente utente2= new Utente("Luigi", "Bianchi");
 		
 		credenziali2.setUtente(utente2);
-		
 		this.credenzialiService.salvaCredenziali(credenziali2);
 		
 		
-		this.utenteService.salvaUtente(utente2);
+		//this.utenteService.salvaUtente(utente2);
 		assertEquals(credenziali2.getId().longValue(), 3L);
 		assertEquals(utente2.getId().longValue(), 4L);
 		assertEquals(credenziali2.getUtente().getNome(), "Luigi");
@@ -134,17 +134,26 @@ class ProgettoSiwApplicationTests {
 		
 		//da qui salviamo il primo progetto nel DB
 		
+		//utente 1 ha un progetto
 		Progetto progetto1= new Progetto("TestProgetto1");
 		progetto1.setProprietario(utente1);
 		
-		this.progettoService.salvaProgetto(progetto1);
+		//lista di progetti di cui utente 1 è proprietario, per ora solo progetto 1
+		List<Progetto> progettiProprietario = new ArrayList<>();
+		progettiProprietario.add(progetto1);
+		utente1.setProgettiProprietario(progettiProprietario);
+		
+		this.progettoService.salvaProgetto(progetto1); //salvo progetto 1
+		
 		assertEquals(progetto1.getProprietario(), utente1);
 		assertEquals(progetto1.getNome(), "TestProgetto1");
 	
 		Progetto progetto2= new Progetto("TestProgetto2");
 		progetto2.setProprietario(utente1);
+		progettiProprietario.add(progetto2); //utente 1 è proprietario anche di progetto 2
 		
-		this.progettoService.salvaProgetto(progetto2);
+		
+		this.progettoService.salvaProgetto(progetto2);  //salvo progetto 2
 		assertEquals(progetto2.getProprietario(), utente1);
 		assertEquals(progetto2.getNome(), "TestProgetto2");
 		
@@ -163,15 +172,19 @@ class ProgettoSiwApplicationTests {
 
 		//progetti visibili all'utente2 
 		/*List <Utente> membriProgetto1 = utenteRepository.findByProgettiVisibili(progetto1);
-			assertEquals(membriProgetto1.size(), 1);
+		assertEquals(membriProgetto1.size(), 1);
 			assertEquals(membriProgetto1.get(0), utente2); //non finziona il metodo che condivide il progetto con l'altro utente
 			
 		List <Progetto> progettiVisibiliUtente2= progettoRepository.findByMembri(utente2);
 			assertEquals(progettiVisibiliUtente2.size(),1 );
-			assertEquals(progettiVisibiliUtente2.get(0), progetto1);*/
+		assertEquals(progettiVisibiliUtente2.get(0), progetto1);*/
 
-			
-			
+		//condivido con utente 2 il progetto 1
+		progettoService.condividiConAltroUtente(progetto1, utente2); 
+		List<Progetto> progettiVisibili = new ArrayList<Progetto>();
+		progettiVisibili.add(progetto1);
+		utente2.setProgettiVisibili(progettiVisibili);
+	    assertEquals(utenteRepository.findByProgettiVisibili(progetto1).get(0), utente2);
 			
 			
 			

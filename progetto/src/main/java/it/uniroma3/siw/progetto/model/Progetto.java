@@ -49,6 +49,7 @@ public class Progetto {
 	}
 
 	public Progetto(String nome) {
+		this();
 		this.nome = nome;
 
 	}
@@ -63,8 +64,8 @@ public class Progetto {
 		this.dataCreazione = LocalDateTime.now();
 	}
 
-	public void addMember(Utente membro) {
-		if(!membri.contains(membro))  //se non è gia presente
+	public void addMembro(Utente membro) {
+		//if(!this.membri.contains(membro))  //se non è gia presente
 		this.membri.add(membro);
 	}
 
