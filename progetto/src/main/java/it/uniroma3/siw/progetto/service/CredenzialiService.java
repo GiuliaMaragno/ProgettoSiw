@@ -22,8 +22,8 @@ public class CredenzialiService {
     @Autowired
     protected CredenzialiRepository credenzialiRepository;
 
-   // @Autowired
-  //  protected PasswordEncoder passwordEncoder;
+    @Autowired
+    protected PasswordEncoder passwordEncoder;
 
    
     @Transactional
@@ -43,7 +43,7 @@ public class CredenzialiService {
     @Transactional
     public Credenziali salvaCredenziali(Credenziali credenziali) {
         credenziali.setRuolo(Credenziali.DEFAULT_RUOLO); //ruolo con pochi privilegi all'inizio
-        //credenziali.setPassword(this.passwordEncoder.encode(credenziali.getPassword()));
+        credenziali.setPassword(this.passwordEncoder.encode(credenziali.getPassword()));
         return this.credenzialiRepository.save(credenziali);
     }
 

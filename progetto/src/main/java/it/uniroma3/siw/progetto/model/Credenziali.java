@@ -164,16 +164,7 @@ public class Credenziali {
 		return result;
 	}
 
-    @Override
-    public String toString() {
-        return "Credentials{" +
-                "id=" + id +
-                ", userName='" + username + '\'' +
-                ", role='" + ruolo + '\'' +
-                ", creationTimestamp=" + dataCreazione +
-                ", lastUpdateTimestamp=" + dataUltimoAggiornamento +
-                '}';
-    }
+
     
     
 }
