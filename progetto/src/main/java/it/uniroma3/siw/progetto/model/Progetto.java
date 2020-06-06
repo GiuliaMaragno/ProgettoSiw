@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 
 @Entity
 public class Progetto {
@@ -50,6 +51,16 @@ public class Progetto {
 	public Progetto(String nome) {
 		this.nome = nome;
 
+	}
+
+	/**
+	 * This method initializes the creationTimestamp and lastUpdateTimestamp of this
+	 * User to the current instant. This method is called automatically just before
+	 * the User is persisted thanks to the @PrePersist annotation.
+	 */
+	@PrePersist
+	protected void onPersist() {
+		this.dataCreazione = LocalDateTime.now();
 	}
 
 	public void addMember(Utente membro) {
