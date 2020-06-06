@@ -37,9 +37,9 @@ public class AuthConfiguration extends WebSecurityConfigurerAdapter {
                 // authorization paragraph: here we define WHO can access WHICH pages
                 .authorizeRequests()
                 // anyone (authenticated or not) can access the welcome page, the login page, and the registration page
-                .antMatchers(HttpMethod.GET, "/", "/index", "/login", "/users/register").permitAll()
+                .antMatchers(HttpMethod.GET, "/", "/index", "/login", "/utenti/registra").permitAll()
                 // anyone (authenticated or not) can send POST requests to the login endpoint and the register endpoint
-                .antMatchers(HttpMethod.POST, "/login", "/users/register").permitAll()
+                .antMatchers(HttpMethod.POST, "/login", "/utenti/registra").permitAll()
                 // only authenticated users with ADMIN authority can access the admin pag
                 .antMatchers(HttpMethod.GET, "/admin").hasAnyAuthority(ADMIN_RUOLO)
                 // all authenticated users can access all the remaining other pages
@@ -76,6 +76,7 @@ public class AuthConfiguration extends WebSecurityConfigurerAdapter {
                 .authoritiesByUsernameQuery("SELECT username, role FROM credenziali WHERE username=?")
                 //retrieve username, password and a boolean flag specifying whether the user is enabled or not (always enabled in our case)
                 .usersByUsernameQuery("SELECT username, password, 1 as enabled FROM credenziali WHERE username=?");
+        
     }
 
     /**
