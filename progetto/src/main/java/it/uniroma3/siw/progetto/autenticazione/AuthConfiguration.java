@@ -73,7 +73,7 @@ public class AuthConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(this.datasource)
                 //retrieve username and role
-                .authoritiesByUsernameQuery("SELECT username, credenziali.ruolo FROM credenziali WHERE username=?")
+                .authoritiesByUsernameQuery("SELECT username, ruolo FROM credenziali WHERE username=?")
                 //retrieve username, password and a boolean flag specifying whether the user is enabled or not (always enabled in our case)
                 .usersByUsernameQuery("SELECT username, password, 1 as enabled FROM credenziali WHERE username=?");
         

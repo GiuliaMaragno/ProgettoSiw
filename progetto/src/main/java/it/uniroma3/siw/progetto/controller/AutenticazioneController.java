@@ -60,8 +60,7 @@ public class AutenticazioneController {
 	public String registraUtente(@Valid @ModelAttribute("utenteForm") Utente utente,
 			BindingResult utenteBindingResult,
 			@Valid @ModelAttribute("credenzialiForm") Credenziali credenziali,
-			BindingResult credenzialiBindingResult,
-			Model model) {
+			BindingResult credenzialiBindingResult,Model model) {
 
 		// validate user and credentials fields
 		this.utenteValidatore.validate(utente, utenteBindingResult);

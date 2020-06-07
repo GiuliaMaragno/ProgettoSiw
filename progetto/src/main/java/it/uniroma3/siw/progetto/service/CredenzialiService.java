@@ -43,6 +43,7 @@ public class CredenzialiService {
     @Transactional
     public Credenziali salvaCredenziali(Credenziali credenziali) {
         credenziali.setRuolo(Credenziali.DEFAULT_RUOLO); //ruolo con pochi privilegi all'inizio
+        //le credenziali in questo modo contengono la password cifrata, prima di salvarla
         credenziali.setPassword(this.passwordEncoder.encode(credenziali.getPassword()));
         return this.credenzialiRepository.save(credenziali);
     }
