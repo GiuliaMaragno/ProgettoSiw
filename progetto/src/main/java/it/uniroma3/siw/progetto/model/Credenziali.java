@@ -43,7 +43,7 @@ public class Credenziali {
     }
 
     public Credenziali(String username, String password) {
-        this();
+        
         this.username = username;
         this.password = password;
     }

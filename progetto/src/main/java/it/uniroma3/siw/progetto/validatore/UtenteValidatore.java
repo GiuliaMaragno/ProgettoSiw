@@ -26,12 +26,12 @@ public class UtenteValidatore implements Validator {
 		String nome = utente.getNome().trim();
 		String cognome = utente.getCognome().trim();
 
-		if (nome.isBlank())
+		if (nome.isEmpty())
 			errors.rejectValue("nome", "required");
 		else if (nome.length() < MIN_NAME_LENGTH || nome.length() > MAX_NAME_LENGTH)
 			errors.rejectValue("nome", "size");
 
-		if (cognome.isBlank())
+		if (cognome.isEmpty())
 			errors.rejectValue("cognome", "required");
 		else if (cognome.length() < MIN_NAME_LENGTH || cognome.length() > MAX_NAME_LENGTH)
 			errors.rejectValue("cognome", "size");

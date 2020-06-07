@@ -29,14 +29,14 @@ public class CredenzialiValidatore implements Validator {
 		String username = credenziali.getUsername().trim();
 		String password = credenziali.getPassword().trim();
 
-		if (username.isBlank())
+		if (username.isEmpty())
 			errors.rejectValue("username", "required");
 		else if (username.length() < MIN_USERNAME_LENGTH || username.length() > MAX_USERNAME_LENGTH)
 			errors.rejectValue("username", "size");
 		else if (this.credenzialiService.getCredenziali(username) != null)
 			errors.rejectValue("username", "duplicate");
 
-		if (password.isBlank())
+		if (password.isEmpty())
 			errors.rejectValue("password", "required");
 		else if (password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH)
 			errors.rejectValue("password", "size");
