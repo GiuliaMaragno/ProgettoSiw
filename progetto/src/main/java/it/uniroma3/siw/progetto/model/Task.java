@@ -50,9 +50,10 @@ public class Task {
 		this.commentiTask= new ArrayList<Commento>();
 	}
 
-	public Task(String nome) {
+	public Task(String nome, String descrizione) {
 		this();
 		this.nome = nome;
+		this.descrizione = descrizione;
 	}
 
 	/**
