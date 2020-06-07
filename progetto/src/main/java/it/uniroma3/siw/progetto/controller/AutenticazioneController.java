@@ -58,17 +58,17 @@ public class AutenticazioneController {
 	 */
 	@RequestMapping(value = { "/utenti/registra" }, method = RequestMethod.POST)
 	public String registraUtente(@Valid @ModelAttribute("utenteForm") Utente utente,
-			BindingResult userBindingResult,
+			BindingResult utenteBindingResult,
 			@Valid @ModelAttribute("credenzialiForm") Credenziali credenziali,
-			BindingResult credentialsBindingResult,
+			BindingResult credenzialiBindingResult,
 			Model model) {
 
 		// validate user and credentials fields
-		this.utenteValidatore.validate(utente, userBindingResult);
-		this.credenzialiValidatore.validate(credenziali, credentialsBindingResult);
+		this.utenteValidatore.validate(utente, utenteBindingResult);
+		this.credenzialiValidatore.validate(credenziali, credenzialiBindingResult);
 
 		// if neither of them had invalid contents, store the User and the Credentials into the DB
-		if(!userBindingResult.hasErrors() && ! credentialsBindingResult.hasErrors()) {
+		if(!utenteBindingResult.hasErrors() && ! credenzialiBindingResult.hasErrors()) {
 			// set the user and store the credentials;
 			// this also stores the User, thanks to Cascade.ALL policy
 			credenziali.setUtente(utente);
