@@ -16,7 +16,7 @@
     <table>
         <tr>
             <td><label for="userNameInput">Username</label>
-            <td><input id=userNameInput type="text" th:field="${credenzialiForm.username}" placeholder="USERNAME" required/></td>
+            <td><input id=userNameInput type="text" th:field="${credenzialiForm.username}" placeholder="USERNAME" /></td>
             <td th:if="${#fields.hasErrors('credenzialiForm.username')}" th:errors="${credenzialiForm.username}" th:style="'color:red'"></td>
         </tr>
         <tr>

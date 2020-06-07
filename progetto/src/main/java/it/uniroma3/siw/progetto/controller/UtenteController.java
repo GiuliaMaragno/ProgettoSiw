@@ -23,10 +23,7 @@ public class UtenteController {
 		return "home";
 	}
 	
-	/**
-	 * 
-	 * questo metodo non funziona
-	 */
+	
 	
 	@RequestMapping(value= { "/admin" }, method = RequestMethod.GET)
 		public String admin(Model model) {
