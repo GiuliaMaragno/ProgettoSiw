@@ -1,6 +1,7 @@
 package it.uniroma3.siw.progetto.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -45,9 +46,12 @@ public class Task {
 
 	public Task() {
 		// TODO Auto-generated constructor stub
+		this.tags= new ArrayList<Tag>();
+		this.commentiTask= new ArrayList<Commento>();
 	}
 
 	public Task(String nome) {
+		this();
 		this.nome = nome;
 	}
 
