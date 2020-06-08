@@ -2,13 +2,18 @@ package it.uniroma3.siw.progetto.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.uniroma3.siw.progetto.model.Credenziali;
 import it.uniroma3.siw.progetto.model.Progetto;
 import it.uniroma3.siw.progetto.model.Utente;
 import it.uniroma3.siw.progetto.repository.ProgettoRepository;
@@ -25,8 +30,8 @@ public class ProgettoController {
 	ProgettoService progettoService;
 	@Autowired
 	UtenteService utenteService;
-	//@Autowired
-	//ProgettoValidatatore progettoValidatore;
+	@Autowired
+	ProgettoValidatatore progettoValidatore;
 
 	@Autowired
 	SessionData sessionData;
@@ -55,18 +60,43 @@ public class ProgettoController {
 		if (progetto == null) 
 			return "redirect:/progetti";  // se non esiste il progetto torna a lista progetti
 
+		
 		List<Utente> membri = utenteRepository.findByProgettiVisibili(progetto);
 		//se non è il proprietario e non è presente tra i membri che lo possono vedere
-		if(!progetto.getProprietario().equals(loggedUtente) && !membri.contains(loggedUtente))
+		if(!progetto.getProprietario().equals(loggedUtente)  && !membri.contains(loggedUtente) ) 
 			return "redirect:/progetti";
 
 
 		model.addAttribute("loggedUtente", loggedUtente);
 		model.addAttribute("progetto", progetto);
 		model.addAttribute("membri", membri);
-		return "progetti";
+		return "progetto";
 
 
 	}
 
+	@RequestMapping(value = {"/progetti/aggiungi"}, method = RequestMethod.GET)
+	public String creaProgettoForm(Model model){
+		Utente loggedUtente = sessionData.getLoggedUtente();
+		model.addAttribute("loggedUtente", loggedUtente);
+		model.addAttribute("progettoForm", new Progetto());
+		return "aggiungiProgetto";
+
+	}
+
+	@RequestMapping(value = {"/progetti/aggiungi"}, method = RequestMethod.POST)
+	public String creaProgetto(@Valid @ModelAttribute("progettoForm") Progetto progetto,
+			BindingResult progettoBindingResult,Model model) {
+
+		Utente loggedUtente = sessionData.getLoggedUtente();
+		progettoValidatore.validate(progetto, progettoBindingResult);
+		if(!progettoBindingResult.hasErrors()) {
+			progetto.setProprietario(loggedUtente);
+			this.progettoService.salvaProgetto(progetto);
+			return "redirect:/progetti/" + progetto.getId();
+		}
+		model.addAttribute("loggedUtente", loggedUtente);
+		return "aggiungiProgetto";
+
+	}
 }

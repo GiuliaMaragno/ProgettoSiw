@@ -120,7 +120,6 @@ class ProgettoApplicationTests3 {
 		utente1.setProgettiProprietario(progettiProprietario);
 
 		this.progettoService.salvaProgetto(progetto1); //salvo progetto 1 
-
 		assertEquals(progetto1.getProprietario(), utente1);
 		assertEquals(utente1.getProgettiProprietario().get(0), progetto1);
 
@@ -146,15 +145,17 @@ class ProgettoApplicationTests3 {
 		assertEquals(progetto1.getMembri().get(0), utente1);
         assertEquals(utenteRepository.findByProgettiVisibili(progetto1).get(0), utente1);
         assertEquals(utenteRepository.findByProgettiVisibili(progetto2).get(0), utente1);
+        assertEquals(progettoService.getProgetto(5L), progetto1);
+
 
 		//aggiungo un task al progetto1 
 		Task task1 = new Task("lezione con andrea rossi", "fare la 4° esercitazione");
 		progetto1.getTaskContenuti().add(task1);
 		this.progettoService.salvaProgetto(progetto1); //aggiorno progetto1 -> anche task
+		//this.taskService.salvaTask(task1);
 		assertEquals(progetto1.getTaskContenuti().get(0), task1);
 
-		
-        this.utenteService.salvaUtente(utente1);
+       
 
 
 

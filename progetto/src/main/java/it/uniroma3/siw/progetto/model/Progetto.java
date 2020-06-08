@@ -29,7 +29,7 @@ public class Progetto {
 	@Column(updatable = false, nullable = false)
 	private LocalDateTime dataCreazione;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Utente proprietario;
 
 	@ManyToMany
