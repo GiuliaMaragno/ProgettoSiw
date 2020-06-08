@@ -7,7 +7,7 @@
 <title>Progetto</title>
 </head>
 <body>
-	<h1>I miei Progetti</h1>
+	<h1  th:text="'I tuoi progetti ' + ${loggedUtente.nome} + '!'">...</h1>
 	<table>
 		<thead>
 			<tr>
