@@ -5,12 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.uniroma3.siw.progetto.model.Progetto;
 import it.uniroma3.siw.progetto.model.Utente;
 import it.uniroma3.siw.progetto.repository.ProgettoRepository;
+import it.uniroma3.siw.progetto.repository.UtenteRepository;
 import it.uniroma3.siw.progetto.service.ProgettoService;
 import it.uniroma3.siw.progetto.service.UtenteService;
 import it.uniroma3.siw.progetto.session.SessionData;
@@ -25,13 +27,15 @@ public class ProgettoController {
 	UtenteService utenteService;
 	//@Autowired
 	//ProgettoValidatatore progettoValidatore;
-	
+
 	@Autowired
 	SessionData sessionData;
 	@Autowired
 	ProgettoRepository progettoRepository;
+	@Autowired
+	UtenteRepository utenteRepository;
 
-	
+
 	@RequestMapping(value = {"/progetti"}, method = RequestMethod.GET)
 	public String mieiProgetti(Model model) {
 		Utente loggedUtente = sessionData.getLoggedUtente();
@@ -40,7 +44,29 @@ public class ProgettoController {
 		model.addAttribute("listaProgetti", listaProgetti);
 		return "mieiProgetti";
 	}
-    
 
+
+	@RequestMapping(value = {"/progetti/{progettoId}"}, method = RequestMethod.GET)
+	public String progetto(Model model, @PathVariable Long progettoId) {
+
+		Utente loggedUtente = sessionData.getLoggedUtente();
+
+		Progetto progetto = progettoService.getProgetto(progettoId);
+		if (progetto == null) 
+			return "redirect:/progetti";  // se non esiste il progetto torna a lista progetti
+
+		List<Utente> membri = utenteRepository.findByProgettiVisibili(progetto);
+		//se non è il proprietario e non è presente tra i membri che lo possono vedere
+		if(!progetto.getProprietario().equals(loggedUtente) && !membri.contains(loggedUtente))
+			return "redirect:/progetti";
+
+
+		model.addAttribute("loggedUtente", loggedUtente);
+		model.addAttribute("progetto", progetto);
+		model.addAttribute("membri", membri);
+		return "progetti";
+
+
+	}
 
 }

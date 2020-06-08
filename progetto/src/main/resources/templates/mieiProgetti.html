@@ -12,13 +12,14 @@
 		<thead>
 			<tr>
 				<th>Nome</th>
-				<th>Descrizione</th>
+
 			</tr>
 		</thead>
 		<tbody>
 			<tr th:each="progetto : ${listaProgetti}">
-				<td th:text="${progetto.nome}">...</td>
-				<td th:text="${progetto.descrizione}">...</td>
+				<td><a th:href="'/progetti/' + ${progetto.id}"
+					th:text="${progetto.nome}">...</a></td>
+
 			</tr>
 		</tbody>
 	</table>

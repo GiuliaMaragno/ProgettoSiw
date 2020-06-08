@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http:://w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Progetto</title>
+</head>
+<body>
+	<h1 th:text="${progetto.nome}"></h1>
+	<h4 th:text="${progetto.descrizione}" style="color:gray"></h4>
+	<div th:if="${membri.size() > 0}">
+		<h3>Condiviso con:</h3>
+		<ul>
+			<li th:each="membro : ${membri}">
+				<div th:text="${membro.nome} + ' ' + ${membro.cognome}"></div>
+		</ul>
+		<h3>Tasks:</h3>
+		<ul>
+			<li th:each="task : ${progetto.taskContenuti}">
+			<div th:text="${task.nome}"></div>
+			<div th:text="${task.descrizione}" style="color:gray"></div>
+		</ul>
+	</div>
+</body>
+</html>
