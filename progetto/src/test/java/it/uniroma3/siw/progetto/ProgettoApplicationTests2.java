@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import it.uniroma3.siw.progetto.model.Credenziali;
 import it.uniroma3.siw.progetto.model.Progetto;
+import it.uniroma3.siw.progetto.model.Tag;
 import it.uniroma3.siw.progetto.model.Task;
 import it.uniroma3.siw.progetto.model.Utente;
 import it.uniroma3.siw.progetto.repository.CommentoRepository;
@@ -134,8 +135,41 @@ class ProgettoApplicationTests2 {
 		progetto1.getTaskContenuti().add(task1);
 		taskService.salvaTask(task1);
 		this.progettoService.salvaProgetto(progetto1);
-
-
+		assertEquals(progetto1.getTaskContenuti().get(0), task1);
+		
+		
+		
+		
+		
+		/**
+		 * AGGIUNGO UN TAG AL PROGETTO
+		 */
+		Tag tag1 = new Tag("in ritardo", "verde", "ultimo esercizio"); 
+		tag1= tagService.salvaTag(tag1);
+		Progetto progetto2= new Progetto("TestProgetto2");
+		Utente utente4 = new Utente("Carlo", "Verdi");
+		utenteService.salvaUtente(utente4);
+		progetto2.setProprietario(utente4);
+		
+		progettoService.aggiungiTagAlProgetto(progetto2, tag1, utente4);
+		assertEquals(progetto2.getTags().size(), 1);
+		assertEquals(progetto2.getTags().get(0), tag1);
+		
+		/**
+		 * ASSEGNARE IL TAG AD UN UTENTE CON VISIBILITA'
+		 */
+		
+		Task task2 = new Task("Revisione es4", "Revisione ultimo esercizio");
+		Progetto progetto3= new Progetto("TestProgetto3");
+		Utente utente3= new Utente("Maria", "Bianchi");
+		utenteService.salvaUtente(utente3);
+		progetto3= progettoService.condividiConAltroUtente(progetto3, utente3);
+		taskService.assegnaTaskAdUtenteConVisibilità(progetto3, utente3, task2);
+		assertEquals(task2.getUtenteAddetto(), utente3);
+		
+		
+		
+		
 
 
 

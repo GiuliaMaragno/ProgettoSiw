@@ -29,7 +29,7 @@ public class CredenzialiValidatore implements Validator {
 		String username = credenziali.getUsername().trim();
 		String password = credenziali.getPassword().trim();
 
-		if (username.isBlank())
+		if (username.isEmpty())
 			errors.rejectValue("username", "required");
 		else if (username.length() < MIN_USERNAME_LENGTH || username.length() > MAX_USERNAME_LENGTH)
 			errors.rejectValue("username", "size");

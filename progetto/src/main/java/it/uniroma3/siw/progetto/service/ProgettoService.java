@@ -41,10 +41,21 @@ public class ProgettoService {
 		return this.progettoRepository.save(progetto);
 
 	}
+	
+	/**
+	 * 
+	 * Colui che aggiunge il tag al progetto deve essere l'utente proprietario
+	 * @param progetto
+	 * @param tag
+	 * @param utente
+	 * @return
+	 */
 
 	@Transactional
-	public Progetto aggiungiTagAlProgetto(Progetto progetto, Tag tag) {
+	public Progetto aggiungiTagAlProgetto(Progetto progetto, Tag tag, Utente utente) {
+		if(progetto.getProprietario().equals(utente)) {
 		progetto.addTags(tag);
+		}
 		return this.progettoRepository.save(progetto);
 	}
 

@@ -112,6 +112,13 @@ public class Progetto {
 	public void addTags(Tag tag) {
 		this.tags.add(tag);
 	}
+	
+	
+	public List<Tag> getTags(){
+		return tags;
+	}
+	
+
 
 	public LocalDateTime getDataCreazione() {
 		return dataCreazione;
