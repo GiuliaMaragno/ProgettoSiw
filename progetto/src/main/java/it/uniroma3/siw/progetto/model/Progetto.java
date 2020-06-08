@@ -35,7 +35,7 @@ public class Progetto {
 	@ManyToMany
 	private List<Utente> membri;
 
-	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Task> taskContenuti;
 
 	@OneToMany
@@ -65,7 +65,7 @@ public class Progetto {
 	}
 
 	public void addMembro(Utente membro) {
-		//if(!this.membri.contains(membro))  //se non è gia presente
+		if(!this.membri.contains(membro))  //se non è gia presente
 		this.membri.add(membro);
 	}
 

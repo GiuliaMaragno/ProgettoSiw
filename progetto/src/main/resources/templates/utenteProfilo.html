@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http:://w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Progetto</title>
+</head>
+<body>
+	<h1>Il tuo profilo</h1>
+
+	<table>
+		<tr>
+			<td>Username</td>
+			<td th:text=${credenziali.username}>...</td>
+		</tr>
+		<tr>
+			<td>Nome</td>
+			<td th:text=${loggedUtente.nome}>...</td>
+		</tr>
+		<tr>
+			<td>Cognome</td>
+			<td th:text=${loggedUtente.cognome}>...</td>
+		</tr>
+		<tr>
+			<td>Ruolo</td>
+			<td th:text=${credenziali.ruolo}>...</td>
+		</tr>
+		<tr>
+			<td>Registrato alle: </td>
+			<td th:text=${credenziali.dataCreazione}>...</td>
+		</tr>
+		<tr>
+			<td>Ultimo aggiornamento: </td>
+			<td th:text=${credenziali.dataUltimoAggiornamento}>...</td>
+		</tr>
+	</table>
+
+</body>
+</html>
