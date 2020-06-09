@@ -19,42 +19,58 @@ import java.util.Optional;
 @Service
 public class CredenzialiService {
 
-    @Autowired
-    protected CredenzialiRepository credenzialiRepository;
+	@Autowired
+	protected CredenzialiRepository credenzialiRepository;
 
-    @Autowired
-    protected PasswordEncoder passwordEncoder;
-
-   
-    @Transactional
-    public Credenziali getCredenziali(long id) {
-        Optional<Credenziali> result = this.credenzialiRepository.findById(id);
-        return result.orElse(null);
-    }
-
-  
-    @Transactional
-    public Credenziali getCredenziali(String username) {
-        Optional<Credenziali> result = this.credenzialiRepository.findByUsername(username);
-        return result.orElse(null);
-    }
+	@Autowired
+	protected PasswordEncoder passwordEncoder;
 
 
-    @Transactional
-    public Credenziali salvaCredenziali(Credenziali credenziali) {
-        credenziali.setRuolo(Credenziali.DEFAULT_RUOLO); //ruolo con pochi privilegi all'inizio
-        //le credenziali in questo modo contengono la password cifrata, prima di salvarla
-        credenziali.setPassword(this.passwordEncoder.encode(credenziali.getPassword()));
-        return this.credenzialiRepository.save(credenziali);
-    }
+	@Transactional
+	public Credenziali getCredenziali(long id) {
+		Optional<Credenziali> result = this.credenzialiRepository.findById(id);
+		return result.orElse(null);
+	}
 
-   
-    @Transactional
-    public List<Credenziali> getAllCredenziali() {
-        List<Credenziali> result = new ArrayList<>();
-        Iterable<Credenziali> iterable = this.credenzialiRepository.findAll();
-        for(Credenziali credenziali : iterable)
-            result.add(credenziali);
-        return result;
-    }
+
+	@Transactional
+	public Credenziali getCredenziali(String username) {
+		Optional<Credenziali> result = this.credenzialiRepository.findByUsername(username);
+		return result.orElse(null);
+	}
+
+
+	@Transactional
+	public Credenziali salvaCredenziali(Credenziali credenziali) {
+		credenziali.setRuolo(Credenziali.DEFAULT_RUOLO); //ruolo con pochi privilegi all'inizio
+		//le credenziali in questo modo contengono la password cifrata, prima di salvarla
+		credenziali.setPassword(this.passwordEncoder.encode(credenziali.getPassword()));
+		return this.credenzialiRepository.save(credenziali);
+	}
+
+
+	@Transactional
+	public List<Credenziali> getAllCredenziali() {
+		List<Credenziali> result = new ArrayList<>();
+		Iterable<Credenziali> iterable = this.credenzialiRepository.findAll();
+		for(Credenziali credenziali : iterable)
+			result.add(credenziali);
+		return result;
+	}
+
+	@Transactional
+	public List<Credenziali> eliminaCredenziali(String username){
+		Iterable<Credenziali> credenziali = credenzialiRepository.findAll();
+		List<Credenziali> result  = new ArrayList<>();
+		//Optional<Credenziali> credenziali1 = this.credenzialiRepository.findByUsername(username);
+		for (Credenziali credenziali2 : credenziali) 
+			if(!credenziali2.getUsername().equals(username)) {
+				result.add(credenziali2);
+			}
+
+
+		return result;
+
+
+	}
 }
