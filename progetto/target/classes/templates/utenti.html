@@ -14,7 +14,7 @@
 				<th>Cognome</th>
 				<th>Elimina</th>
 			</tr>
-			<tr th:each="credenziali : ${credenzialiLista}">
+			<tr th:each="credenziali:${credenzialiLista}">
 				<td th:text="${credenziali.username}"></td>
 				<td th:text="${credenziali.utente.nome}"></td>
 				<td th:text="${credenziali.utente.cognome}"></td>

@@ -59,7 +59,7 @@ public class ProgettoController {
 		if (progetto == null) 
 			return "redirect:/progetti";  // se non esiste il progetto torna a lista progetti
 
-		
+		sessionData.setLoggedProgetto(progetto);
 		List<Utente> membri = utenteRepository.findByProgettiVisibili(progetto);
 		//se non è il proprietario e non è presente tra i membri che lo possono vedere
 		if(!progetto.getProprietario().equals(loggedUtente)  && !membri.contains(loggedUtente) ) 
@@ -91,6 +91,7 @@ public class ProgettoController {
 		progettoValidatore.validate(progetto, progettoBindingResult);
 		if(!progettoBindingResult.hasErrors()) {
 			progetto.setProprietario(loggedUtente);
+			loggedUtente.getProgettiProprietario().add(progetto);
 			this.progettoService.salvaProgetto(progetto);
 			return "redirect:/progetti/" + progetto.getId();
 		}

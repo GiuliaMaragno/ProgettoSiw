@@ -41,6 +41,10 @@ public class Task {
 	@ManyToMany
 	private List<Tag> tags;
 
+
+	@ManyToOne
+	private Progetto progetto;
+
 	@ManyToOne
 	private Utente utenteAddetto;
 
@@ -178,6 +182,22 @@ public class Task {
 	public void addTag(Tag tag) {
 		this.tags.add(tag);
 
+	}
+
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
+	}
+
+	public Progetto getProgetto() {
+		return progetto;
+	}
+
+	public void setProgetto(Progetto progetto) {
+		this.progetto = progetto;
 	}
 
 }

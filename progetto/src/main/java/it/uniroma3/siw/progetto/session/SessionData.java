@@ -2,6 +2,7 @@ package it.uniroma3.siw.progetto.session;
 
 
 import it.uniroma3.siw.progetto.model.Credenziali;
+import it.uniroma3.siw.progetto.model.Progetto;
 import it.uniroma3.siw.progetto.model.Utente;
 import it.uniroma3.siw.progetto.repository.CredenzialiRepository;
 
@@ -29,6 +30,7 @@ public class SessionData {
 	 * Credentials for the currently logged User
 	 */
 	private Credenziali credenziali;
+	private Progetto progetto;
 
 	@Autowired
 	private CredenzialiRepository credenzialiRepository;
@@ -44,6 +46,16 @@ public class SessionData {
 		if (this.credenziali == null)
 			this.update();
 		return this.credenziali;
+	}
+	
+	public Progetto getLoggedProgetto() {
+		if(this.progetto==null)
+			this.update();
+		return this.progetto;
+	}
+	
+	public void setLoggedProgetto(Progetto progetto) {
+		this.progetto = progetto;
 	}
 
 	/**

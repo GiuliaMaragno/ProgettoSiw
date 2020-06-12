@@ -1,5 +1,6 @@
 package it.uniroma3.siw.progetto.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +30,13 @@ public class ProgettoService {
 		return result.orElse(null);
 	}
 
-	@Transactional
-	public Progetto getProgetto(String nome) {
-		Optional<Progetto> result = this.progettoRepository.findByNome(nome);
+
+	@Transactional 
+	public Progetto getProgettoNome(String nome) {
+		Optional<Progetto> result = this.progettoRepository.findByNome(nome); 
 		return result.orElse(null);
 	}
+
 
 	@Transactional
 	public Progetto condividiConAltroUtente(Progetto progetto, Utente utente) {
@@ -41,7 +44,7 @@ public class ProgettoService {
 		return this.progettoRepository.save(progetto);
 
 	}
-	
+
 	/**
 	 * 
 	 * Colui che aggiunge il tag al progetto deve essere l'utente proprietario
@@ -54,7 +57,7 @@ public class ProgettoService {
 	@Transactional
 	public Progetto aggiungiTagAlProgetto(Progetto progetto, Tag tag, Utente utente) {
 		if(progetto.getProprietario().equals(utente)) {
-		progetto.addTags(tag);
+			progetto.addTags(tag);
 		}
 		return this.progettoRepository.save(progetto);
 	}
@@ -63,4 +66,18 @@ public class ProgettoService {
 	public void cancellaProgetto(Progetto progetto) {
 		this.progettoRepository.delete(progetto);
 	}
+
+	@Transactional
+	public boolean giàEsiste(Progetto progetto) {
+		List<Progetto> progettiEsistenti = (List<Progetto>) this.progettoRepository.findAll();
+		for (Progetto progetto2 : progettiEsistenti) 
+			if(progetto2.getNome().equals(progetto.getNome())) {
+				return true;
+			}
+		return false;
+
+	}
+	
+
+
 }

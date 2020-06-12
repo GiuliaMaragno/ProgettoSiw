@@ -14,7 +14,6 @@ public class Tag {
 	private Long id;
 
 	private String colore;
-	@Column(nullable = false)
 	private String descrizione;
 	@Column(nullable = false)
 	private String nome;
@@ -31,6 +30,7 @@ public class Tag {
 		this.nome = nome;
 		this.colore = colore;
 		this.descrizione = descrizione;
+		
 	}
 
 	public Long getId() {
