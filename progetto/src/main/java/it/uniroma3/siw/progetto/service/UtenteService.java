@@ -28,16 +28,8 @@ public class UtenteService {
 
 	}
 
-	/*
-	 * @Transactional public Utente getUtente(String username) { Optional<Utente>
-	 * result = this.utenteRepository.findByUsername(username); return
-	 * result.orElse(null);
-	 * 
-	 * }
-	 */
 
 	@Transactional
-
 	public List<Utente> getAllUser() {
 		List<Utente> result = new ArrayList<>();
 		Iterable<Utente> i = this.utenteRepository.findAll();

@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.uniroma3.siw.progetto.model.Credenziali;
 import it.uniroma3.siw.progetto.model.Progetto;
 import it.uniroma3.siw.progetto.model.Utente;
 import it.uniroma3.siw.progetto.repository.ProgettoRepository;
 import it.uniroma3.siw.progetto.repository.UtenteRepository;
+import it.uniroma3.siw.progetto.service.CredenzialiService;
 import it.uniroma3.siw.progetto.service.ProgettoService;
 import it.uniroma3.siw.progetto.service.UtenteService;
 import it.uniroma3.siw.progetto.session.SessionData;
@@ -31,6 +33,8 @@ public class ProgettoController {
 	UtenteService utenteService;
 	@Autowired
 	ProgettoValidatatore progettoValidatore;
+	@Autowired
+	CredenzialiService credenzialiService;
 
 	@Autowired
 	SessionData sessionData;
@@ -98,5 +102,35 @@ public class ProgettoController {
 		model.addAttribute("loggedUtente", loggedUtente);
 		return "aggiungiProgetto";
 
+	}
+
+	@RequestMapping(value = {"/progetti/membro"}, method = RequestMethod.GET)
+	public String aggiungiMembroForm(Model model) {
+		Utente loggedUtente = sessionData.getLoggedUtente();
+		Progetto loggedProgetto = sessionData.getLoggedProgetto();
+		model.addAttribute("loggedUtente", loggedUtente);
+		model.addAttribute("loggedProgetto", loggedProgetto);
+		model.addAttribute("credenziali", new Credenziali());
+		return "condividiProgetto";
+
+	}
+
+
+	@RequestMapping(value = {"/progetti/membro"}, method = RequestMethod.POST)
+	public String aggiungiMembro(Model model, @ModelAttribute Credenziali credenziali ) {
+		//Utente loggedUtente = sessionData.getLoggedUtente();
+		//model.addAttribute("loggedUtente", loggedUtente);
+
+		Progetto loggedProgetto = sessionData.getLoggedProgetto();
+		Credenziali credenzialiMembro = credenzialiService.getCredenziali(credenziali.getUsername());
+		Utente utenteMembro = credenzialiMembro.getUtente();
+		if(utenteMembro!=null) {
+			//credenzialiService.salvaCredenziali(credenzialiMembro);
+			loggedProgetto=progettoService.condividiConAltroUtente(loggedProgetto, utenteMembro);
+            this.utenteService.salvaUtente(utenteMembro);
+			return "redirect:/progetti/"+loggedProgetto.getId();
+
+		}
+		return "condividiProgetto";
 	}
 }

@@ -32,7 +32,7 @@ public class Progetto {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Utente proprietario;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Utente> membri;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "progetto")

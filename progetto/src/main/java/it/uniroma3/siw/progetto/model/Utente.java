@@ -17,6 +17,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "utenti")
 public class Utente {
@@ -43,7 +44,7 @@ public class Utente {
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "proprietario",fetch = FetchType.EAGER)
 	private List<Progetto> progettiProprietario;
 
-	@ManyToMany(mappedBy = "membri")
+	@ManyToMany(mappedBy = "membri", fetch=FetchType.EAGER)
 	private List<Progetto> progettiVisibili;
 
 	@OneToMany

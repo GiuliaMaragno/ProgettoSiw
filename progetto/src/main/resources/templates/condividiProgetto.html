@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http:://w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Progetto</title>
+</head>
+<body>
+	<form th:action="@{/progetti/membro}" method="POST">
+	<h1>Membro:</h1>
+		<table>
+			<tr>
+				<td><label>Nome</label>
+				<td><input type="text" th:field="${credenziali.username}"
+					placeholder="USERNAME" /></td>
+				<!--	<td th:if="${#fields.hasErrors('username')}" th:errors="${utente.username}"
+					th:style="'color:red'"></td>-->
+			</tr>
+
+			<tr>
+				<td>
+					<button type="submit">Aggiungi</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

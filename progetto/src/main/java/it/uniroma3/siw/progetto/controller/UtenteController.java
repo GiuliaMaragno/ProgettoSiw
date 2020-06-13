@@ -22,6 +22,7 @@ public class UtenteController {
 	SessionData sessionData;
 	@Autowired
 	CredenzialiService credenzialiService;
+	
 
 	@RequestMapping(value= {"/home"}, method =RequestMethod.GET)
 	public String home(Model model) {
@@ -38,7 +39,7 @@ public class UtenteController {
 		model.addAttribute("utente", utenteAutenticato);
 		return "admin";
 	}
-	
+
 	@RequestMapping(value = {"/utenti/me"}, method = RequestMethod.GET)
 	public String me(Model model) {
 		Utente loggedUtente = sessionData.getLoggedUtente();
@@ -47,7 +48,7 @@ public class UtenteController {
 		model.addAttribute("credenziali", credenziali);
 		return "utenteProfilo";
 	}
-	
+
 	@RequestMapping(value = {"/admin/utenti"}, method = RequestMethod.GET)
 	public String listaUtenti(Model model) {
 		Utente loggedUtente = sessionData.getLoggedUtente();
@@ -58,15 +59,16 @@ public class UtenteController {
 		return "utenti";
 
 	}
-	
+
 	@RequestMapping(value = {"/admin/utenti/{username}/delete"}, method = RequestMethod.POST)
 	public String rimuoviUtenti(Model model, @PathVariable String username) {
 		this.credenzialiService.eliminaCredenziali(username);
 		return "redirect:/admin/utenti";
 
 	}
-	
-	
+
+
+
+
+
 }
-
-
