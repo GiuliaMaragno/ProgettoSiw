@@ -9,10 +9,11 @@
 <body>
 	<h1>TAG:</h1>
 
-	<form id="aggiungiTagProgetto" th:action="@{/tags/aggiungi}" method="POST">
+	<form id="aggiungiTagProgetto" th:action="@{/addTagAlTask}"
+		method="POST">
 		<div>
 			<table>
-			
+
 
 				<tr>
 					<td><label for="tagNomeInput">Nome Tag:</label>
@@ -32,13 +33,13 @@
 
 
 				</tr>
-				
-					<tr>
+
+				<tr>
 					<td><label for="tagColoreInput">Colore tag:</label>
-					<td><input id="tagColoreInput" type="text"
-						th:field="${tagForm.colore}" placeholder="COLORE" /></td>
-					<td th:if="${#fields.hasErrors('tagForm.descrizione')}"
-						th:errors="${tagForm.descrizione}" th:style="'color:red'"></td>
+					<td><input id="tagColoreInput" type="color"
+						th:field="${tagForm.colore}" placeholder="#AFAF" /></td>
+					<td th:if="${#fields.hasErrors('tagForm.colore')}"
+						th:errors="${tagForm.colore}" th:style="'color:red'"></td>
 
 
 				</tr>
@@ -54,11 +55,15 @@
 
 		</div>
 	</form>
-	<footer>
-	
-	<h4><a th:href="@{/home}"> Home</a></h4>
-   
-	</footer>
+	<br>
+	<nav>
+
+
+		<a th:href="@{/home}"> Home</a> <a th:href="@{/progetti}"> Miei
+			Progetti</a>
+
+
+	</nav>
 
 </body>
 </html>

@@ -7,33 +7,35 @@
 <title>Progetto</title>
 </head>
 <body>
-	<h1 th:text="${progetto.nome}"></h1>
-	<h3>
-		<a href="/tasks/aggiungi"> Aggiungi Task</a>
-	</h3>
-	<h4>TASK:</h4>
+	<h1 th:text="'Nome: '+ ${progetto.nome}"></h1>
+	<hr>
+
+	<a href="/addTask"> AGGIUNGI</a>
+
+	<span>TASK:</span>
 	<ul>
 		<li th:each="task : ${progetto.taskContenuti}">
-			<div th:text="${task.nome}"></div>
-			<div th:text="${task.descrizione}" style="color: gray"></div>
+			<div>
+				<a href="/task" th:text="${task.nome}"> </a>
+			</div>
 	</ul>
+	<hr>
 
-	<h3>
-		<a href="/tags/aggiungi"> Aggiungi Tag</a>
-	</h3>
-	<h4>TAG:</h4>
+	<a href="/addTag"> AGGIUNGI</a>
+
+	<span>TAG:</span>
 
 	<ul>
 		<li th:each="tag : ${progetto.tags}">
-			<div th:text="${tag.nome}" ></div>
+			<div th:style="'color:'+${tag.colore}" th:text="${tag.nome}"></div>
 			<div th:text="${tag.descrizione}" style="color: gray"></div>
-			<div th:text="${tag.colore}" style="color: gray"></div>
 	</ul>
+	<hr>
 
-	<h3>
-		 <a href="/progetti/membro">Condividi con:</a>
-	</h3>
-	<h4>MEMBRI:</h4>
+
+	<a href="/progetti/membro">CONDIVIDI CON </a>
+
+	<span>UTENTE</span>
 
 	<div th:if="${membri.size() > 0}">
 
@@ -44,6 +46,7 @@
 
 
 	</div>
+	<br>
 	<nav>
 
 

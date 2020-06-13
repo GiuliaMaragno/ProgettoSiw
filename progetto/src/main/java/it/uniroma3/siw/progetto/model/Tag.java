@@ -1,10 +1,14 @@
 package it.uniroma3.siw.progetto.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -19,21 +23,24 @@ public class Tag {
 	@Column(nullable = false)
 	private String nome;
 
-	/*
-	 * @ManyToMany(mappedBy = "tags") private List<Task> tasks;
-	 */
+
+	@ManyToMany(mappedBy = "tags") 
+	private List<Task> tasks;
+
 	@ManyToOne
 	private Progetto progetto;
 
 	public Tag() {
 		// TODO Auto-generated constructor stub
+		tasks = new ArrayList<>();
 	}
 
 	public Tag(String nome, String colore, String descrizione) {
+		this();
 		this.nome = nome;
 		this.colore = colore;
 		this.descrizione = descrizione;
-		
+
 	}
 
 	public Long getId() {
@@ -68,11 +75,15 @@ public class Tag {
 		this.nome = nome;
 	}
 
-	/*
-	 * public List<Task> getTasks() { return tasks; }
-	 * 
-	 * public void setTasks(List<Task> tasks) { this.tasks = tasks; }
-	 */
+
+	public List<Task> getTasks() { 
+		return tasks; 
+	}
+
+	public void setTasks(List<Task> tasks) { 
+		this.tasks = tasks; 
+	}
+
 
 	public Progetto getProgetto() {
 		return progetto;

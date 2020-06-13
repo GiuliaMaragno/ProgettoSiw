@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.uniroma3.siw.progetto.model.Progetto;
 import it.uniroma3.siw.progetto.model.Tag;
-
+import it.uniroma3.siw.progetto.model.Task;
 import it.uniroma3.siw.progetto.model.Utente;
 import it.uniroma3.siw.progetto.repository.UtenteRepository;
 import it.uniroma3.siw.progetto.service.ProgettoService;
 import it.uniroma3.siw.progetto.service.TagService;
-
+import it.uniroma3.siw.progetto.service.TaskService;
 import it.uniroma3.siw.progetto.service.UtenteService;
 import it.uniroma3.siw.progetto.session.SessionData;
 import it.uniroma3.siw.progetto.validatore.ProgettoValidatore;
@@ -44,11 +44,13 @@ public class TagController {
 	UtenteRepository utenteRepository;
 	@Autowired
 	TagValidatore tagValidatore;
-	
-	
+	@Autowired
+	TaskService taskService;
 
 
-	@RequestMapping(value = {"/tags/aggiungi"}, method = RequestMethod.GET)
+
+
+	@RequestMapping(value = {"/addTag"}, method = RequestMethod.GET)
 	public String creaTagForm(Model model){
 		Utente loggedUtente = sessionData.getLoggedUtente();
 		Progetto loggedProgetto = sessionData.getLoggedProgetto();
@@ -56,12 +58,11 @@ public class TagController {
 		model.addAttribute("loggedProgetto", loggedProgetto);
 		model.addAttribute("loggedUtente", loggedUtente);
 		model.addAttribute("tagForm", new Tag());
-		//model.addAttribute("progettoForm", new Progetto());
-		return "aggiungiTag";
+		return "aggiungiTagAlProgetto";
 
 	}
-	
-	@RequestMapping(value = {"/tags/aggiungi"}, method = RequestMethod.POST)
+
+	@RequestMapping(value = {"/addTag"}, method = RequestMethod.POST)
 	public String progettoTag( @Valid @ModelAttribute("tagForm") Tag tag,
 			BindingResult tagBindingResult ,Model model) {
 
@@ -72,19 +73,47 @@ public class TagController {
 		tagValidatore.validate(tag,tagBindingResult);
 		//if(progetto.getNome()!=null&&this.progettoService.getProgetto(progetto.getNome()).getProprietario().equals(loggedUtente)) {
 		if(!tagBindingResult.hasErrors() ) {
-			
+
 			tag.setProgetto(loggedProgetto);
 
 			this.tagService.salvaTag(tag);
-			
+
 			return "redirect:/progetti/" +loggedProgetto.getId();	
 		}
 
 		model.addAttribute("loggedUtente", loggedUtente);
 
-		return "aggiungiTag";
+		return "aggiungiTagAlProgetto";
 
 
+
+	}
+
+	@RequestMapping(value = {"/addTagAlTask"}, method =RequestMethod.GET )
+	public String formTagAlTask(Model model) {
+		model.addAttribute("tagForm", new Tag());
+		return "aggiungiTagAlTask";
+
+	}
+	@RequestMapping(value = {"/addTagAlTask"}, method =RequestMethod.POST )
+	public String aggiungiTagAlTask(Model model, @ModelAttribute("tagForm") Tag tag, BindingResult tagBindingResult) {
+		Utente loggedUtente = sessionData.getLoggedUtente();
+
+		tagValidatore.validate(tag,tagBindingResult);
+		if(!tagBindingResult.hasErrors() ) {
+		Task loggedTask = sessionData.getLoggedTask();
+		tag.getTasks().add(loggedTask);
+		loggedTask.getTags().add(tag);
+		this.tagService.salvaTag(tag);
+		this.taskService.salvaTask(loggedTask);
+		return "redirect:/task";
+		}
+		
+		model.addAttribute("loggedUtente", loggedUtente);
+
+		return "aggiungiTagAltask";
+
+		
 
 	}
 

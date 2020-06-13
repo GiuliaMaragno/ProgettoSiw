@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http:://w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Progetto</title>
+</head>
+<body>
+	<div>
+		<h2 th:text="${loggedTask.nome}"></h2>
+		<h3 th:text="${loggedTask.descrizione}" style="color:grey"></h3>
+	</div>
+	<hr>
+	<a href="/addTagAlTask">AGGIUNGI</a>
+	<span>TAG:</span>
+	<div th:if="${tags.size() > 0}">
+
+
+		<div th:each="tag : ${loggedTask.tags}">
+
+			<div th:style="'color:'+${tag.colore}" th:text="${tag.nome}"></div>
+			<div th:text="'descrizione: '+${tag.descrizione}"></div>
+			<div th:color="${tag.colore}"></div>
+			<br>
+		</div>
+
+
+	</div>
+	<br>
+	<nav>
+
+
+		<a th:href="@{/home}"> Home</a> <a th:href="@{/progetti}"> Miei
+			Progetti</a>
+
+
+	</nav>
+</body>
+</html>

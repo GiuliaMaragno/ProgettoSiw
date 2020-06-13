@@ -2,6 +2,8 @@ package it.uniroma3.siw.progetto.controller;
 
 
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.uniroma3.siw.progetto.model.Progetto;
+import it.uniroma3.siw.progetto.model.Tag;
 import it.uniroma3.siw.progetto.model.Task;
 import it.uniroma3.siw.progetto.model.Utente;
+import it.uniroma3.siw.progetto.repository.TagRepository;
 import it.uniroma3.siw.progetto.repository.UtenteRepository;
 import it.uniroma3.siw.progetto.service.ProgettoService;
 import it.uniroma3.siw.progetto.service.TaskService;
@@ -41,11 +45,13 @@ public class TaskController {
 	UtenteRepository utenteRepository;
 	@Autowired
 	TaskValidatore taskValidatore;
-	
-	
+	@Autowired
+	TagRepository tagRepository;
 
 
-	@RequestMapping(value = {"/tasks/aggiungi"}, method = RequestMethod.GET)
+
+
+	@RequestMapping(value = {"/addTask"}, method = RequestMethod.GET)
 	public String creaTaskForm(Model model){
 		Utente loggedUtente = sessionData.getLoggedUtente();
 		Progetto loggedProgetto = sessionData.getLoggedProgetto();
@@ -57,22 +63,23 @@ public class TaskController {
 		return "aggiungiTask";
 
 	}
-	@RequestMapping(value = {"/tasks/aggiungi"}, method = RequestMethod.POST)
+	@RequestMapping(value = {"/addTask"}, method = RequestMethod.POST)
 	public String progettoTask( @Valid @ModelAttribute("taskForm") Task task,
 			BindingResult taskBindingResult ,Model model) {
 
 
 		Utente loggedUtente = sessionData.getLoggedUtente();
 		Progetto loggedProgetto = sessionData.getLoggedProgetto();
-
+		sessionData.setLoggedTask(task);
+		
 		taskValidatore.validate(task,taskBindingResult);
 		//if(progetto.getNome()!=null&&this.progettoService.getProgetto(progetto.getNome()).getProprietario().equals(loggedUtente)) {
 		if(!taskBindingResult.hasErrors() ) {
-			
+
 			task.setProgetto(loggedProgetto);;
 
 			this.taskService.salvaTask(task);
-			
+
 			return "redirect:/progetti/"+loggedProgetto.getId();	
 		}
 
@@ -80,8 +87,22 @@ public class TaskController {
 
 		return "aggiungiTask";
 
+	}
 
+
+
+	@RequestMapping(value = {"/task"}, method = RequestMethod.GET)
+	public String visualizzaTask(Model model) {
+
+		Task loggedTask = sessionData.getLoggedTask();
+		model.addAttribute("loggedTask", loggedTask);
+		List<Tag> tags = tagRepository.findByTasks(loggedTask); 
+		model.addAttribute("tags", tags);
+		return "tasks";
 
 	}
+	
+
+	
 
 }
