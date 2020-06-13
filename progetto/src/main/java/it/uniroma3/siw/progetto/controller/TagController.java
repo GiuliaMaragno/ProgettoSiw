@@ -49,7 +49,7 @@ public class TagController {
 
 
 	@RequestMapping(value = {"/tags/aggiungi"}, method = RequestMethod.GET)
-	public String creaTaskForm(Model model){
+	public String creaTagForm(Model model){
 		Utente loggedUtente = sessionData.getLoggedUtente();
 		Progetto loggedProgetto = sessionData.getLoggedProgetto();
 
