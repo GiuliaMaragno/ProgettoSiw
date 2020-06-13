@@ -134,4 +134,14 @@ public class ProgettoController {
 		}
 		return "condividiProgetto";
 	}
+	@RequestMapping(value= {"/progetti/elimina"}, method= RequestMethod.GET)
+	public String eliminaProgetto(@PathVariable("id") Long id, Model model) {
+		
+		Progetto progetto =this.progettoService.getProgetto(id);
+		this.progettoService.cancellaProgetto(progetto);
+		model.addAttribute("progetto", progetto);
+		return "redirect:/progetti/";
+		
+		
+	}
 }
