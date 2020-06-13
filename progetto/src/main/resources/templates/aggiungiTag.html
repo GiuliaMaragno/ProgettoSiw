@@ -37,8 +37,8 @@
 					<td><label for="tagColoreInput">Colore tag:</label>
 					<td><input id="tagColoreInput" type="text"
 						th:field="${tagForm.colore}" placeholder="COLORE" /></td>
-					<td th:if="${#fields.hasErrors('tagForm.descrizione')}"
-						th:errors="${tagForm.descrizione}" th:style="'color:red'"></td>
+					<td th:if="${#fields.hasErrors('tagForm.colore')}"
+						th:errors="${tagForm.colore}" th:style="'color:red'"></td>
 
 
 				</tr>
