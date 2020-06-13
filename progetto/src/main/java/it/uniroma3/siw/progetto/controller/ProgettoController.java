@@ -20,7 +20,7 @@ import it.uniroma3.siw.progetto.repository.UtenteRepository;
 import it.uniroma3.siw.progetto.service.ProgettoService;
 import it.uniroma3.siw.progetto.service.UtenteService;
 import it.uniroma3.siw.progetto.session.SessionData;
-import it.uniroma3.siw.progetto.validatore.ProgettoValidatatore;
+import it.uniroma3.siw.progetto.validatore.ProgettoValidatore;
 
 @Controller
 public class ProgettoController {
@@ -30,7 +30,7 @@ public class ProgettoController {
 	@Autowired
 	UtenteService utenteService;
 	@Autowired
-	ProgettoValidatatore progettoValidatore;
+	ProgettoValidatore progettoValidatore;
 
 	@Autowired
 	SessionData sessionData;

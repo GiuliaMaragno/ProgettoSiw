@@ -7,7 +7,7 @@
 <title>Progetto</title>
 </head>
 <body>
-	<h1  th:text="'I tuoi progetti ' + ${loggedUtente.nome} + '!'">...</h1>
+	<h1 th:text="'I tuoi progetti ' + ${loggedUtente.nome} + '!'">...</h1>
 	<table>
 		<thead>
 			<tr>
@@ -23,6 +23,14 @@
 			</tr>
 		</tbody>
 	</table>
+	<footer>
+	
+	 <h4><a th:href="@{/home}"> Home</a></h4>
+
+	
+
+	</footer>
+	
 
 </body>
 </html>
