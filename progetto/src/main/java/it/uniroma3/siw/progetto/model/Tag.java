@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Tag {
@@ -21,6 +22,8 @@ public class Tag {
 	/*
 	 * @ManyToMany(mappedBy = "tags") private List<Task> tasks;
 	 */
+	@ManyToOne
+	private Progetto progetto;
 
 	public Tag() {
 		// TODO Auto-generated constructor stub
@@ -71,6 +74,14 @@ public class Tag {
 	 * public void setTasks(List<Task> tasks) { this.tasks = tasks; }
 	 */
 
+	public Progetto getProgetto() {
+		return progetto;
+	}
+
+	public void setProgetto(Progetto progetto) {
+		this.progetto = progetto;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -95,5 +106,6 @@ public class Tag {
 			return false;
 		return true;
 	}
+
 
 }

@@ -9,7 +9,7 @@ import it.uniroma3.siw.progetto.model.Progetto;
 import it.uniroma3.siw.progetto.service.ProgettoService;
 
 @Component
-public class ProgettoValidatatore implements Validator{
+public class ProgettoValidatore implements Validator{
 	final Integer MAX_NAME_LENGTH = 100;
 	final Integer MIN_NAME_LENGTH = 2;
 
