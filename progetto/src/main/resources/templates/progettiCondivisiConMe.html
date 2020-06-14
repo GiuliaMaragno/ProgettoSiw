@@ -16,11 +16,11 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="progetto : ${condivisiConMe}">
+			<tr th:each="progetto : ${progettiCondivisiConMe}">
 				<td><a th:href="'/progetti/' + ${progetto.id}"
 					th:text="${progetto.nome}">...</a></td>
-				 <td><a th:href="'/utenti/me' +${progetto.proprietario.id}   "
-				th:text="${progetto.proprietario.nome} + ${progetto.proprietario.cognome}">...</a><td>
+				 <td>(Proprietario <a th:href="'/utenti/'+ ${progetto.proprietario.id}"
+				th:text="${progetto.proprietario.nome} + ' ' + ${progetto.proprietario.cognome}">...</a>)<td>
 			</tr>
 		</tbody>
 	</table>

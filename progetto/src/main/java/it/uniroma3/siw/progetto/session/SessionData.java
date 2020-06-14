@@ -49,18 +49,18 @@ public class SessionData {
 			this.update();
 		return this.credenziali;
 	}
-	
+
 	public Progetto getLoggedProgetto() {
 		if(this.progetto==null)
 			this.update();
 		return this.progetto;
 	}
-	
+
 	public void setLoggedProgetto(Progetto progetto) {
 		this.progetto = progetto;
 	}
 
-	
+
 	public Task getLoggedTask() {
 		if(this.task==null)
 			this.update();
@@ -92,4 +92,6 @@ public class SessionData {
 		this.credenziali.setPassword("[PROTECTED]");
 		this.utente = this.credenziali.getUtente();
 	}
+
+
 }
