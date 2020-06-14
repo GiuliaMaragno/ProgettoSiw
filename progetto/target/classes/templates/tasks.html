@@ -12,7 +12,7 @@
 		<h3 th:text="${loggedTask.descrizione}" style="color:grey"></h3>
 	</div>
 	<hr>
-	<a href="/addTagAlTask">AGGIUNGI</a>
+	<a  href="/addTagAlTask">AGGIUNGI</a>  <!-- th:if=${loggedUtente.id}==${loggedProgetto.proprietario.id} -->
 	<span>TAG:</span>
 	<div th:if="${tags.size() > 0}">
 

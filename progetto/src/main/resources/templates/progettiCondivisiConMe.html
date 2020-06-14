@@ -7,7 +7,7 @@
 <title>Progetto</title>
 </head>
 <body>
-	<h1 th:text="'I tuoi progetti ' + ${loggedUtente.nome} + '!'">...</h1>
+	<h1 th:text="'Progetti che hanno condiviso con te, ' + ${loggedUtente.nome} + '!'">...</h1>
 	<table>
 		<thead>
 			<tr>
@@ -16,13 +16,9 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="progetto : ${listaProgetti}">
+			<tr th:each="progetto : ${progettiCondivisiConMe}">
 				<td><a th:href="'/progetti/' + ${progetto.id}"
 					th:text="${progetto.nome}">...</a></td>
-					<td><form method="POST"
-						th:action="@{/progetti/{id}/elimina(id=${progetto.id})}">
-						<button type="submit" name="submit" value="value">DELETE</button>
-					</form></td>
 
 			</tr>
 		</tbody>

@@ -94,6 +94,8 @@ public class TaskController {
 	@RequestMapping(value = {"/task"}, method = RequestMethod.GET)
 	public String visualizzaTask(Model model) {
 
+	
+
 		Task loggedTask = sessionData.getLoggedTask();
 		model.addAttribute("loggedTask", loggedTask);
 		List<Tag> tags = tagRepository.findByTasks(loggedTask); 

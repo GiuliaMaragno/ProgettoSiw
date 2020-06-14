@@ -19,6 +19,10 @@
 			<tr th:each="progetto : ${listaProgetti}">
 				<td><a th:href="'/progetti/' + ${progetto.id}"
 					th:text="${progetto.nome}">...</a></td>
+					<td><form method="POST"
+						th:action="@{/progetti/{id}/elimina(id=${progetto.id})}">
+						<button type="submit" name="submit" value="value">DELETE</button>
+					</form></td>
 
 			</tr>
 		</tbody>

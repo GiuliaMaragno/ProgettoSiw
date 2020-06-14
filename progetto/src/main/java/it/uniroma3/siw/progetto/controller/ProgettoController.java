@@ -31,7 +31,7 @@ public class ProgettoController {
 	ProgettoService progettoService;
 	@Autowired
 	UtenteService utenteService;
-	
+
 	@Autowired
 	ProgettoValidatore progettoValidatore;
 	@Autowired
@@ -128,20 +128,31 @@ public class ProgettoController {
 		if(utenteMembro!=null) {
 			//credenzialiService.salvaCredenziali(credenzialiMembro);
 			loggedProgetto=progettoService.condividiConAltroUtente(loggedProgetto, utenteMembro);
-            this.utenteService.salvaUtente(utenteMembro);
+			this.utenteService.salvaUtente(utenteMembro);
 			return "redirect:/progetti/"+loggedProgetto.getId();
 
 		}
 		return "condividiProgetto";
 	}
-	@RequestMapping(value= {"/progetti/elimina"}, method= RequestMethod.GET)
-	public String eliminaProgetto(@PathVariable("id") Long id, Model model) {
-		
+	@RequestMapping(value= {"/progetti/{id}/elimina"}, method= RequestMethod.POST)
+	public String eliminaProgetto(@PathVariable Long id, Model model) {
+
 		Progetto progetto =this.progettoService.getProgetto(id);
 		this.progettoService.cancellaProgetto(progetto);
 		model.addAttribute("progetto", progetto);
-		return "redirect:/progetti/";
-		
-		
+		return "redirect:/progetti";
+
+
 	}
+
+	@RequestMapping(value= {"/progettiCondivisi"}, method= RequestMethod.GET)
+	public String progettiCondivisiConMe(Model model) {
+		Utente loggedUtente = sessionData.getLoggedUtente();
+		List<Progetto> progettiCondivisiConMe =  this.progettoRepository.findByMembri(loggedUtente);
+		model.addAttribute("loggedUtente", loggedUtente);
+		model.addAttribute("progettiCondivisiConMe", progettiCondivisiConMe);
+		return "progettiCondivisiConMe";
+
+	}
+
 }
