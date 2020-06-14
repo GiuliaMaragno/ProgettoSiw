@@ -14,9 +14,10 @@
 			<table>
 
 				<tr>
-					<td><input type="text" th:field="${commento.descrizione}"
+					<td><input type="text" th:field="${commentoForm.descrizione}"
 						placeholder="DESCRIZIONE" /></td>
-
+					<td th:if="${#fields.hasErrors('commentoForm.descrizione')}" th:errors="${commentoForm.descrizione}"
+						th:style="'color:red'"></td>
 				</tr>
 
 

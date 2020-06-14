@@ -35,7 +35,7 @@ public class Task {
 	@Column(nullable = false)
 	private LocalDateTime dataUltimoAggiornamento;
 
-	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "task", fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "task")
 	private List<Commento> commentiTask;
 
 	@ManyToMany
