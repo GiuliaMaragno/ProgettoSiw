@@ -12,8 +12,16 @@
 		<h3 th:text="${loggedTask.descrizione}" style="color: grey"></h3>
 	</div>
 	<hr>
-	<a href="/addTagAlTask">AGGIUNGI</a>
-	<!-- th:if=${loggedUtente.id}==${loggedProgetto.proprietario.id} -->
+	<a href="/addCommento">AGGIUNGI</a>
+	<span>COMMENTO:</span>
+	<div th:if="${commenti.size() > 0}">
+		<div th:each="commento : ${loggedTask.commentiTask}">
+			<br> <a th:text="${commento.descrizione}"> </a>
+		</div>
+	</div>
+	<hr>
+	<a th:if=${loggedUtente.id}==${loggedTask.progetto.proprietario.id}
+		href="/addTag">AGGIUNGI</a>
 	<span>TAG:</span>
 	<br>
 	<br>

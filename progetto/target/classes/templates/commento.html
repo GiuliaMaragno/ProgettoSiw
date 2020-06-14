@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http:://w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Progetto</title>
+</head>
+<body>
+	<h1>Commenti:</h1>
+
+	<form th:action="@{/addCommento}" method="POST">
+		<div>
+			<table>
+
+				<tr>
+					<td><input type="text" th:field="${commento.descrizione}"
+						placeholder="DESCRIZIONE" /></td>
+
+				</tr>
+
+
+				<tr>
+					<td>
+						<button type="submit">Aggiungi</button>
+					</td>
+				</tr>
+			</table>
+
+
+		</div>
+	</form>
+	<footer>
+
+		<h4>
+			<a th:href="@{/home}"> Home</a>
+		</h4>
+
+	</footer>
+
+
+</body>
+</html>

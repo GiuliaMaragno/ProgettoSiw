@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.uniroma3.siw.progetto.model.Commento;
 import it.uniroma3.siw.progetto.model.Progetto;
 import it.uniroma3.siw.progetto.model.Tag;
 import it.uniroma3.siw.progetto.model.Task;
 import it.uniroma3.siw.progetto.model.Utente;
+import it.uniroma3.siw.progetto.repository.CommentoRepository;
 import it.uniroma3.siw.progetto.repository.TagRepository;
 import it.uniroma3.siw.progetto.repository.UtenteRepository;
 import it.uniroma3.siw.progetto.service.ProgettoService;
@@ -48,6 +50,8 @@ public class TaskController {
 	TaskValidatore taskValidatore;
 	@Autowired
 	TagRepository tagRepository;
+	@Autowired
+	CommentoRepository commentoRepository;
 
 
 
@@ -94,9 +98,16 @@ public class TaskController {
 
 	@RequestMapping(value = {"/task/{taskId}"}, method = RequestMethod.GET)
 	public String visualizzaTask(Model model, @PathVariable Long taskId) {
-
+		
+		Utente loggedUtente = sessionData.getLoggedUtente();
 		Task task = this.taskService.getTask(taskId);
+		//sessionData.setLoggedTask(task);
 		model.addAttribute("loggedTask", task);
+		model.addAttribute("loggedUtente", loggedUtente);
+
+		List<Commento> commenti = commentoRepository.findByTask(task);
+		model.addAttribute("commenti", commenti);
+		
 		List<Tag> tags = tagRepository.findByTasks(task); 
 		model.addAttribute("tags", tags);
 		return "tasks";

@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Commento {
@@ -13,9 +14,9 @@ public class Commento {
 	private Long id;
 	private String descrizione;
 
-	/*
-	 * @ManyToOne private Task task;
-	 */
+	@ManyToOne 
+	private Task task;
+
 
 	public Commento() {
 
@@ -41,11 +42,13 @@ public class Commento {
 		this.descrizione = descrizione;
 	}
 
-	/*
-	 * public Task getTask() { return task; }
-	 * 
-	 * 
-	 * public void setTask(Task task) { this.task = task; }
-	 */
+	public Task getTask() { 
+		return task; 
+	}
+
+	public void setTask(Task task) {
+		this.task = task; 
+	}
+
 
 }
