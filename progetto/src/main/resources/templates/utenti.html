@@ -19,7 +19,7 @@
 				<td th:text="${credenziali.utente.nome}"></td>
 				<td th:text="${credenziali.utente.cognome}"></td>
 				<td><form method="POST"
-						th:action="@{/admin/utenti/{username}/delete(username=${credenziali.username})">
+						th:action="@{/admin/utenti/{username}/delete(username=${credenziali.username})}">
 						<button type="submit" name="submit" value="value">DELETE</button>
 					</form></td>
 			</tr>

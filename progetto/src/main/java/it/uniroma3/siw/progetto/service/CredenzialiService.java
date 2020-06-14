@@ -58,19 +58,11 @@ public class CredenzialiService {
 		return result;
 	}
 
+	
+
 	@Transactional
-	public List<Credenziali> eliminaCredenziali(String username){
-		Iterable<Credenziali> credenziali = credenzialiRepository.findAll();
-		List<Credenziali> result  = new ArrayList<>();
-		//Optional<Credenziali> credenziali1 = this.credenzialiRepository.findByUsername(username);
-		for (Credenziali credenziali2 : credenziali) 
-			if(!credenziali2.getUsername().equals(username)) {
-				result.add(credenziali2);
-			}
-
-
-		return result;
-
+	public void eliminaCredenziali(String username) {
+		this.credenzialiRepository.deleteByUsername(username);
 
 	}
 }
