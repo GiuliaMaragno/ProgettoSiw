@@ -134,14 +134,24 @@ public class ProgettoController {
 		}
 		return "condividiProgetto";
 	}
-	@RequestMapping(value= {"/progetti/elimina"}, method= RequestMethod.GET)
-	public String eliminaProgetto(@PathVariable("id") Long id, Model model) {
+	
+	@RequestMapping(value = {"/progettiCondivisi"}, method = RequestMethod.GET)
+	public String CondivisiConMe(Model model) {
+		Utente loggedUtente=sessionData.getLoggedUtente();
+		List <Progetto> condivisiConMe =this.progettoRepository.findByMembri(loggedUtente);
+		model.addAttribute("loggedUtente", loggedUtente);
+		model.addAttribute("condivisiConMe", condivisiConMe);
+		return "condivisiConMe";
 		
-		Progetto progetto =this.progettoService.getProgetto(id);
-		this.progettoService.cancellaProgetto(progetto);
-		model.addAttribute("progetto", progetto);
-		return "redirect:/progetti/";
 		
 		
 	}
+	
+	
+	
+	
+	
+	
 }
+	
+
