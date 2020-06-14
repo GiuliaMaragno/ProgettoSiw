@@ -19,8 +19,8 @@
 			<tr th:each="progetto : ${condivisiConMe}">
 				<td><a th:href="'/progetti/' + ${progetto.id}"
 					th:text="${progetto.nome}">...</a></td>
-				 <td><h4 th:text="${progetto.proprietario.nome}"></h4>
-					<td><h4 th:text="${progetto.proprietario.cognome}"></h4>
+				 <td><a th:href="'/utenti/me' +${progetto.proprietario.id}   "
+				th:text="${progetto.proprietario.nome} + ${progetto.proprietario.cognome}">...</a><td>
 			</tr>
 		</tbody>
 	</table>
