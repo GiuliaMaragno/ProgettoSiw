@@ -16,7 +16,7 @@
 	<ul>
 		<li th:each="task : ${progetto.taskContenuti}">
 			<div>
-				<a href="/task" th:text="${task.nome}"> </a>
+				<a th:href="'/task/' + ${task.id}" th:text="${task.nome}"> </a>   <!-- problema -->
 			</div>
 	</ul>
 	<hr>

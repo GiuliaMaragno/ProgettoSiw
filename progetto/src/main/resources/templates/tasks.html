@@ -9,24 +9,29 @@
 <body>
 	<div>
 		<h2 th:text="${loggedTask.nome}"></h2>
-		<h3 th:text="${loggedTask.descrizione}" style="color:grey"></h3>
+		<h3 th:text="${loggedTask.descrizione}" style="color: grey"></h3>
 	</div>
 	<hr>
-	<a  href="/addTagAlTask">AGGIUNGI</a>  <!-- th:if=${loggedUtente.id}==${loggedProgetto.proprietario.id} -->
+	<a href="/addTagAlTask">AGGIUNGI</a>
+	<!-- th:if=${loggedUtente.id}==${loggedProgetto.proprietario.id} -->
 	<span>TAG:</span>
+	<br>
+	<br>
+
+
 	<div th:if="${tags.size() > 0}">
+		<ul>
+
+			<li th:each="tag : ${loggedTask.tags}">
 
 
-		<div th:each="tag : ${loggedTask.tags}">
-
-			<div th:style="'color:'+${tag.colore}" th:text="${tag.nome}"></div>
-			<div th:text="'descrizione: '+${tag.descrizione}"></div>
-			<div th:color="${tag.colore}"></div>
-			<br>
-		</div>
-
+				<div th:style="'color:'+${tag.colore}" th:text="${tag.nome}"></div>
+				<div th:text="'descrizione: '+${tag.descrizione}"></div>
+				<div th:color="${tag.colore}"></div> <br>
+		</ul>
 
 	</div>
+
 	<br>
 	<nav>
 

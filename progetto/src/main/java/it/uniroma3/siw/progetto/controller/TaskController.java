@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -71,7 +72,7 @@ public class TaskController {
 		Utente loggedUtente = sessionData.getLoggedUtente();
 		Progetto loggedProgetto = sessionData.getLoggedProgetto();
 		sessionData.setLoggedTask(task);
-		
+
 		taskValidatore.validate(task,taskBindingResult);
 		//if(progetto.getNome()!=null&&this.progettoService.getProgetto(progetto.getNome()).getProprietario().equals(loggedUtente)) {
 		if(!taskBindingResult.hasErrors() ) {
@@ -91,20 +92,18 @@ public class TaskController {
 
 
 
-	@RequestMapping(value = {"/task"}, method = RequestMethod.GET)
-	public String visualizzaTask(Model model) {
+	@RequestMapping(value = {"/task/{taskId}"}, method = RequestMethod.GET)
+	public String visualizzaTask(Model model, @PathVariable Long taskId) {
 
-	
-
-		Task loggedTask = sessionData.getLoggedTask();
-		model.addAttribute("loggedTask", loggedTask);
-		List<Tag> tags = tagRepository.findByTasks(loggedTask); 
+		Task task = this.taskService.getTask(taskId);
+		model.addAttribute("loggedTask", task);
+		List<Tag> tags = tagRepository.findByTasks(task); 
 		model.addAttribute("tags", tags);
 		return "tasks";
 
 	}
-	
 
-	
+
+
 
 }
