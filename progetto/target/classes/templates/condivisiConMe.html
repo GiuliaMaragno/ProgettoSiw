@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http:://w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Progetto</title>
+</head>
+<body>
+	<h1 th:text="'Progetti su cui hai visibilità ' + ${loggedUtente.nome} + '!'">...</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Nome</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="progetto : ${condivisiConMe}">
+				<td><a th:href="'/progetti/' + ${progetto.id}"
+					th:text="${progetto.nome}">...</a></td>
+				 <td><h4 th:text="${progetto.proprietario.nome}"></h4>
+					<td><h4 th:text="${progetto.proprietario.cognome}"></h4>
+			</tr>
+		</tbody>
+	</table>
+	<footer>
+	
+	 <h4><a th:href="@{/home}"> Home</a></h4>
+
+	
+
+	</footer>
+	
+
+</body>
+</html>
