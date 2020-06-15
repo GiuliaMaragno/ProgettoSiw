@@ -2,9 +2,13 @@ package it.uniroma3.siw.progetto.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +20,8 @@ import it.uniroma3.siw.progetto.service.CredenzialiService;
 import it.uniroma3.siw.progetto.service.ProgettoService;
 import it.uniroma3.siw.progetto.service.UtenteService;
 import it.uniroma3.siw.progetto.session.SessionData;
+import it.uniroma3.siw.progetto.validatore.CredenzialiValidatore;
+import it.uniroma3.siw.progetto.validatore.UtenteValidatore;
 
 @Controller
 public class UtenteController {
@@ -31,6 +37,10 @@ public class UtenteController {
 	UtenteService utenteService;
 	@Autowired
 	CredenzialiRepository credenzialiRepository;
+	@Autowired
+	CredenzialiValidatore credenzialiValidatore;
+	@Autowired
+	UtenteValidatore utenteValidatore;
 
 
 	@RequestMapping(value= {"/home"}, method =RequestMethod.GET)
@@ -61,7 +71,7 @@ public class UtenteController {
 	@RequestMapping(value = {"/utenti/{progId}"}, method = RequestMethod.GET)
 	public String proprietario(Model model, @PathVariable Long progId) {
 
-		Utente utente = utenteService.getUtente(progId);
+		Utente utente = utenteService.getUtenteDaId(progId);
 		Credenziali credenziali = credenzialiRepository.findByUtente(utente);
 		model.addAttribute("loggedUtente", utente);
 		model.addAttribute("credenziali", credenziali);
@@ -88,6 +98,49 @@ public class UtenteController {
 
 
 
+	@RequestMapping(value = {"/utenti/me/modifica"}, method = RequestMethod.GET)
+	public String modificaProfilo(Model model) {
 
+		Utente loggedUtente = sessionData.getLoggedUtente();
+		Credenziali credenzialiCorr = sessionData.getLoggedCredenziali();
+
+		model.addAttribute("credenzialiForm", credenzialiCorr);
+		model.addAttribute("utenteForm", loggedUtente);
+		return "modificaProfilo";
+
+	}
+
+	@RequestMapping(value = {"/utenti/me/modifica"}, method = RequestMethod.POST)
+	public String aggiornoProfilo(Model model, @Valid @ModelAttribute("credenzialiForm") Credenziali credenziali,
+			BindingResult credenzialiBindingResult,
+			@Valid @ModelAttribute("utenteForm") Utente utente,BindingResult utenteBindingResult ) {
+
+
+		Utente utenteCorr = sessionData.getLoggedUtente();
+		Credenziali credenzialiCorr = sessionData.getLoggedCredenziali();
+
+
+		// validate user and credentials fields
+		this.utenteValidatore.validate(utente, utenteBindingResult);
+		this.credenzialiValidatore.validate(credenziali, credenzialiBindingResult);
+
+		// if neither of them had invalid contents, store the User and the Credentials into the DB
+		if(!utenteBindingResult.hasErrors() && !credenzialiBindingResult.hasErrors()) {
+			// set the user and store the credentials;
+			// this also stores the User, thanks to Cascade.ALL policy
+			//utente.setId(utenteCorr.getId());
+			utenteCorr.setNome(utente.getNome());
+			utenteCorr.setCognome(utente.getCognome());
+			credenzialiCorr.setUsername(credenziali.getUsername());
+			credenzialiCorr.setPassword(credenziali.getPassword());
+			credenzialiCorr.setUtente(utenteCorr);
+			utenteService.salvaUtente(utenteCorr);
+			credenzialiService.salvaCredenziali(credenzialiCorr);
+			return "redirect:/utenti/" + utenteCorr.getId();
+
+		}
+		return "modificaProfilo";
+
+	}
 
 }

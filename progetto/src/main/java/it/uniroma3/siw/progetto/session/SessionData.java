@@ -82,6 +82,8 @@ public class SessionData {
 			this.update();
 		return this.utente;
 	}
+	
+	
 
 	/**
 	 * Store the Credentials and User objects for the currently logged user in Session

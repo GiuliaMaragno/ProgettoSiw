@@ -22,7 +22,7 @@ public class UtenteService {
 	}
 
 	@Transactional
-	public Utente getUtente(Long id) {
+	public Utente getUtenteDaId(Long id) {
 		Optional<Utente> result = this.utenteRepository.findById(id);
 		return result.orElse(null);
 
@@ -39,6 +39,11 @@ public class UtenteService {
 
 	}
 
+	@Transactional
+	public Utente getUtenteDaNome(String nome) {
+		Optional<Utente> result = this.utenteRepository.findByNome(nome);
+		return result.orElse(null);
 
+	}
 
 }
