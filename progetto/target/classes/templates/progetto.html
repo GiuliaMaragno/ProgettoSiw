@@ -9,7 +9,7 @@
 <body>
 	<h1 th:text="'Nome: '+ ${progetto.nome}"></h1>
 	<h4>
-		<a href="/progetti/modifica"> Aggiorna progetto</a>
+		<a th:if=${loggedUtente.id}==${progetto.proprietario.id} href="/progetti/modifica"> Aggiorna progetto</a>
 	</h4>
 	<hr>
 
