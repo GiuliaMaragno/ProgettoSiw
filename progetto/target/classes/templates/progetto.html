@@ -9,50 +9,61 @@
 <body>
 	<h1 th:text="'Nome: '+ ${progetto.nome}"></h1>
 	<h4>
-		<a th:if=${loggedUtente.id}==${progetto.proprietario.id} href="/progetti/modifica"> Aggiorna progetto</a>
+		<a th:if=${loggedUtente.id}==${progetto.proprietario.id}
+			href="/progetti/modifica"> Aggiorna progetto</a>
 	</h4>
 	<hr>
+	<table>
+		<thead>
+			<tr>
+				<th><a th:if=${loggedUtente.id}==${progetto.proprietario.id}
+					href="/addTask"> AGGIUNGI </a>TASK:</th>
 
-	<a th:if=${loggedUtente.id}==${progetto.proprietario.id}
-		href="/addTask"> AGGIUNGI</a>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="task : ${progetto.taskContenuti}">
+				<td><br>-<a th:href="'/task/' + ${task.id}" th:text="${task.nome}">
+				</a></td>
+			</tr>
+		</tbody>
+	</table>
 
-	<span>TASK:</span>
-	<ul>
-		<li th:each="task : ${progetto.taskContenuti}">
-			<div>
-				<a th:href="'/task/' + ${task.id}" th:text="${task.nome}"> </a>
-			</div>
-	</ul>
 	<hr>
 
-	<a th:if=${loggedUtente.id}==${progetto.proprietario.id} href="/addTag">
-		AGGIUNGI</a>
+	<table>
+		<thead>
+			<tr>
+				<th><a th:if=${loggedUtente.id}==${progetto.proprietario.id}
+					href="/addTag"> AGGIUNGI </a>TAG:</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="tag : ${progetto.tags}">
+				<td><br>
+				<div th:style="'color:'+${tag.colore}" th:text="${tag.nome}"></div>
+					<div th:text="${tag.descrizione}" style="color: gray"></div></td>
+		</tbody>
+	</table>
 
-	<span>TAG:</span>
-
-	<ul>
-		<li th:each="tag : ${progetto.tags}">
-			<div th:style="'color:'+${tag.colore}" th:text="${tag.nome}"></div>
-			<div th:text="${tag.descrizione}" style="color: gray"></div>
-	</ul>
 	<hr>
+	<table>
+		<thead>
+			<tr>
+				<th><a th:if=${loggedUtente.id}==${progetto.proprietario.id}
+					href="/progetti/membro">CONDIVIDI CON </a>UTENTE</th>
+			</tr>
+		</thead>
+		<tbody th:if="${membri.size() > 0}">
+			<tr th:each="membro : ${membri}">
+				<td>-
+					<div th:text="${membro.nome} + ' ' + ${membro.cognome}"></div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 
 
-	<a th:if=${loggedUtente.id}==${progetto.proprietario.id}
-		href="/progetti/membro">CONDIVIDI CON </a>
-
-
-	<span>UTENTE</span>
-
-	<div th:if="${membri.size() > 0}">
-
-		<ul>
-			<li th:each="membro : ${membri}">
-				<div th:text="${membro.nome} + ' ' + ${membro.cognome}"></div>
-		</ul>
-
-
-	</div>
 	<br>
 	<nav>
 
