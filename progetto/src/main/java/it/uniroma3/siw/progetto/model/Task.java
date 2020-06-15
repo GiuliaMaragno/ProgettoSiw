@@ -29,7 +29,7 @@ public class Task {
 	@Column(nullable = false)
 	private String descrizione;
 
-	@Column(nullable = false)
+	@Column(updatable = false, nullable = false)
 	private LocalDateTime dataCreazione;
 
 	@Column(nullable = false)

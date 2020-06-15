@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
 @Entity
 public class Progetto {
@@ -28,6 +29,11 @@ public class Progetto {
 
 	@Column(updatable = false, nullable = false)
 	private LocalDateTime dataCreazione;
+	
+
+	@Column(nullable = false)
+	private LocalDateTime dataUltimoAggiornamento;
+
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Utente proprietario;
@@ -62,6 +68,13 @@ public class Progetto {
 	@PrePersist
 	protected void onPersist() {
 		this.dataCreazione = LocalDateTime.now();
+		this.dataUltimoAggiornamento = LocalDateTime.now();
+
+	}
+	
+	@PreUpdate
+	protected void onUpdate() {
+		this.dataUltimoAggiornamento = LocalDateTime.now();
 	}
 
 	public void addMembro(Utente membro) {
