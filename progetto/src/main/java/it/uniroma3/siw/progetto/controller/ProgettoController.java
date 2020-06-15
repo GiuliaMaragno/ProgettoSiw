@@ -119,8 +119,7 @@ public class ProgettoController {
 
 	@RequestMapping(value = {"/progetti/membro"}, method = RequestMethod.POST)
 	public String aggiungiMembro(Model model, @ModelAttribute Credenziali credenziali ) {
-		//Utente loggedUtente = sessionData.getLoggedUtente();
-		//model.addAttribute("loggedUtente", loggedUtente);
+
 
 		Progetto loggedProgetto = sessionData.getLoggedProgetto();
 		Credenziali credenzialiMembro = credenzialiService.getCredenziali(credenziali.getUsername());
@@ -134,6 +133,8 @@ public class ProgettoController {
 		}
 		return "condividiProgetto";
 	}
+
+
 	@RequestMapping(value= {"/progetti/{id}/elimina"}, method= RequestMethod.POST)
 	public String eliminaProgetto(@PathVariable Long id, Model model) {
 
@@ -155,6 +156,31 @@ public class ProgettoController {
 
 	}
 
+	@RequestMapping(value= {"/progetti/modifica"}, method= RequestMethod.GET)
+	public String ProgettoNome(  Model model) {
+
+
+		model.addAttribute("progettoForm", new Progetto());
+		return "progettoModifica";
+
+	}
+
+	@RequestMapping(value= {"/progetti/modifica"}, method= RequestMethod.POST)
+	public String modificaProgettoNome(@Valid @ModelAttribute("progettoForm") Progetto progetto1, Model model, BindingResult progettoBindingResult) {
+
+		Progetto progettoCorr = sessionData.getLoggedProgetto();
+
+		progettoValidatore.validate(progetto1, progettoBindingResult);
+		if(!progettoBindingResult.hasErrors()) {
+			progettoCorr.setNome(progetto1.getNome());
+			this.progettoService.salvaProgetto(progettoCorr);
+			return "redirect:/progetti/"+progettoCorr.getId();
+		}
+		return "progettoModifica";
+
+
+	}
+
 }
-	
+
 

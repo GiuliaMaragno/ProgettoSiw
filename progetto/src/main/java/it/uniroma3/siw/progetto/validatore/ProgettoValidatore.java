@@ -24,7 +24,7 @@ public class ProgettoValidatore implements Validator{
 		
 		if (nome.isEmpty())
 			errors.rejectValue("nome", "required");
-	    if (nome.length() < MIN_NAME_LENGTH || nome.length() > MAX_NAME_LENGTH)
+		else if (nome.length() < MIN_NAME_LENGTH || nome.length() > MAX_NAME_LENGTH)
 			errors.rejectValue("nome", "size");
 		else if(this.progettoService.giàEsiste(progetto)) {
 			errors.rejectValue("nome","duplicato");

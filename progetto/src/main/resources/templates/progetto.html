@@ -8,20 +8,25 @@
 </head>
 <body>
 	<h1 th:text="'Nome: '+ ${progetto.nome}"></h1>
+	<h4>
+		<a href="/progetti/modifica"> Aggiorna progetto</a>
+	</h4>
 	<hr>
 
-	<a th:if=${loggedUtente.id}==${progetto.proprietario.id} href="/addTask"> AGGIUNGI</a>
+	<a th:if=${loggedUtente.id}==${progetto.proprietario.id}
+		href="/addTask"> AGGIUNGI</a>
 
 	<span>TASK:</span>
 	<ul>
 		<li th:each="task : ${progetto.taskContenuti}">
 			<div>
-				<a th:href="'/task/' + ${task.id}" th:text="${task.nome}"> </a>   <!-- problema -->
+				<a th:href="'/task/' + ${task.id}" th:text="${task.nome}"> </a>
 			</div>
 	</ul>
 	<hr>
 
-	<a th:if=${loggedUtente.id}==${progetto.proprietario.id} href="/addTag"> AGGIUNGI</a>
+	<a th:if=${loggedUtente.id}==${progetto.proprietario.id} href="/addTag">
+		AGGIUNGI</a>
 
 	<span>TAG:</span>
 
@@ -33,7 +38,8 @@
 	<hr>
 
 
-	<a th:if=${loggedUtente.id}==${progetto.proprietario.id} href="/progetti/membro">CONDIVIDI CON </a>
+	<a th:if=${loggedUtente.id}==${progetto.proprietario.id}
+		href="/progetti/membro">CONDIVIDI CON </a>
 
 
 	<span>UTENTE</span>

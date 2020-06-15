@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http:://w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Progetto</title>
+</head>
+<body>
+	<h1>Modifica il Progetto</h1>
+	<form th:action="@{/progetti/modifica}" method="POST">
+		<table>
+			<tr>
+				<td><label for="progettoNomeInput"> Nuovo nome </label>
+				<td><input id=progettoNomeInput type="text"
+					th:field="${progettoForm.nome}" placeholder="NOME" /></td>
+				<td th:if="${#fields.hasErrors('progettoForm.nome')}"
+					th:errors="${progettoForm.nome}" th:style="'color:red'"></td>
+			</tr>
+
+			<tr>
+				<td>
+					<button type="submit">Aggiorna</button>
+				</td>
+			</tr>
+
+		</table>
+
+	</form>
+
+	<footer>
+		<h4>
+			<a th:href="@{/home}"> Home</a>
+		</h4>
+	</footer>
+</body>
+</html>
