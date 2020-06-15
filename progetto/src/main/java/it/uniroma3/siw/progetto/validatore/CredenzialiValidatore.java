@@ -3,6 +3,7 @@ package it.uniroma3.siw.progetto.validatore;
 import it.uniroma3.siw.progetto.model.Credenziali;
 import it.uniroma3.siw.progetto.model.Utente;
 import it.uniroma3.siw.progetto.service.CredenzialiService;
+import it.uniroma3.siw.progetto.session.SessionData;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,18 +23,23 @@ public class CredenzialiValidatore implements Validator {
 
 	@Autowired
 	CredenzialiService credenzialiService;
+	@Autowired
+	SessionData sessionData;
 
 	@Override
 	public void validate(Object o, Errors errors) {
 		Credenziali credenziali = (Credenziali) o;
 		String username = credenziali.getUsername().trim();
 		String password = credenziali.getPassword().trim();
+		
+		Credenziali credenziali2 = this.credenzialiService.getCredenziali(username);
+		
 
 		if (username.isEmpty())
 			errors.rejectValue("username", "required");
 		else if (username.length() < MIN_USERNAME_LENGTH || username.length() > MAX_USERNAME_LENGTH)
 			errors.rejectValue("username", "size");
-		else if (this.credenzialiService.getCredenziali(username) != null)
+		else if (credenziali2!=null && !credenziali2.getUtente().equals(sessionData.getLoggedUtente()))
 			errors.rejectValue("username", "duplicate");
 
 		if (password.isEmpty())
