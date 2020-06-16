@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+<head>
+<title>Progetto</title>
+</head>
+
+<body>
+	<h1>Assegna il task ad un membro del tuo progetto</h1>
+	<form id="registraUtenteForm" th:action="@{/task/assegna}"
+		method="POST">
+
+
+		<table>
+			<tr>
+				<td><label for="userNameInput">Username</label>
+				<td><input id=userNameInput type="text"
+					th:field="${credenzialiForm.username}" placeholder="USERNAME" /></td>
+				<td th:if="${#fields.hasErrors('credenzialiForm.username')}"
+					th:errors="${credenzialiForm.username}" th:style="'color:red'"></td>
+			</tr>
+			<tr>
+				<td>
+					<button type="submit">Salva</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

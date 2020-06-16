@@ -8,10 +8,14 @@
 </head>
 <body>
 	<h1 th:text="'Nome: '+ ${progetto.nome}"></h1>
-	<h4>
+	<form method="GET" th:action="@{/progetti/modifica}">
+		<button type="submit" name="submit" value="value">AGGIORNA</button>
+	</form>
+	<!-- 	<h4>
+	
 		<a th:if=${loggedUtente.id}==${progetto.proprietario.id}
 			href="/progetti/modifica"> Aggiorna progetto</a>
-	</h4>
+	</h4> -->
 	<hr>
 	<table>
 		<thead>
@@ -23,11 +27,17 @@
 		</thead>
 		<tbody>
 			<tr th:each="task : ${progetto.taskContenuti}">
-				<td><br>-<a th:href="'/task/' + ${task.id}" th:text="${task.nome}">
-				</a></td>
-					<td th:if=${loggedUtente.id}==${progetto.proprietario.id}><br><form method="POST" 
+				<td><br>-<a th:href="'/task/' + ${task.id}"
+					th:text="${task.nome}"> </a></td> 
+				<td th:if=${loggedUtente.id}==${progetto.proprietario.id}><br>
+					<form method="POST"
 						th:action="@{/task/{id}/elimina(id=${task.id})}">
 						<button type="submit" name="submit" value="value">DELETE</button>
+					</form></td>
+				<td th:if=${loggedUtente.id}==${progetto.proprietario.id}><br>
+					<form method="GET"
+						th:action="@{/task/{id}/modifica(id=${task.id})}">
+						<button type="submit" name="submit" value="value">AGGIORNA</button>
 					</form></td>
 			</tr>
 		</tbody>
@@ -45,7 +55,7 @@
 		<tbody>
 			<tr th:each="tag : ${progetto.tags}">
 				<td><br>
-				<div th:style="'color:'+${tag.colore}" th:text="${tag.nome}"></div>
+					<div th:style="'color:'+${tag.colore}" th:text="${tag.nome}"></div>
 					<div th:text="${tag.descrizione}" style="color: gray"></div></td>
 		</tbody>
 	</table>
@@ -55,7 +65,7 @@
 		<thead>
 			<tr>
 				<th><a th:if=${loggedUtente.id}==${progetto.proprietario.id}
-					href="/progetti/membro">CONDIVIDI CON </a>UTENTE</th>
+					href="/progetti/membro">CONDIVIDI CON </a>UTENTE:</th>
 			</tr>
 		</thead>
 		<tbody th:if="${membri.size() > 0}">

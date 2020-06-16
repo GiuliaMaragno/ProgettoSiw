@@ -24,7 +24,7 @@ public class Credenziali {
 
    
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)        // when the account is created...
-                                                    //when the account is removed
+                                                   //when the account is removed
     private Utente utente;
 
     

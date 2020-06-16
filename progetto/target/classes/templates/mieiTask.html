@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http:://w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Progetto</title>
+</head>
+<body>
+	<div>
+		<h1>I tuoi Task:</h1>
+		<ul th:if="${taskContenuti.size()>0}"
+			th:each="task : ${taskContenuti}">
+			<li><a th:href="'/task/' + ${task.id}" th:text="${task.nome}">
+			</a>
+		</ul>
+	</div>
+</body>
+</html>

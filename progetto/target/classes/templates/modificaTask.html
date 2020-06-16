@@ -9,7 +9,8 @@
 <body>
 	<h1>Task:</h1>
 
-	<form id="registraTaskProgetto" th:action="@{/addTask}" method="POST">
+	<form id="registraTaskProgetto" th:action="@{/task/{id}/modifica(id=${taskForm.id})}"
+		method="POST">
 		<div>
 			<table>
 
@@ -31,12 +32,8 @@
 
 
 				</tr>
-				<tr>
-					<td><label>Utente Addetto:</label>
-					<td><input type="text" th:field="${credenziali.username}"
-						placeholder="USERNAME" /></td>
-						<td th:if="${#fields.hasErrors('credenziali.username')}"
-						th:errors="${credenziali.username}" th:style="'color:red'"></td>
+
+
 				<tr>
 					<td>
 						<button type="submit">Aggiungi</button>
@@ -48,13 +45,11 @@
 		</div>
 	</form>
 	<footer>
-
-		<h4>
-			<a th:href="@{/home}"> Home</a>
-		</h4>
-
+	
+	<h4><a th:href="@{/home}"> Home</a></h4>
+	
 	</footer>
-
+	
 
 </body>
 </html>

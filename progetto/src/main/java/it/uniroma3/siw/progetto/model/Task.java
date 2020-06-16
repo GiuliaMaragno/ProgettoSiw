@@ -37,7 +37,7 @@ public class Task {
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "task")
 	private List<Commento> commentiTask;
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.REMOVE)
 	private List<Tag> tags;
 
 

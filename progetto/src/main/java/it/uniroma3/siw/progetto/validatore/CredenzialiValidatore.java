@@ -1,9 +1,12 @@
 package it.uniroma3.siw.progetto.validatore;
 
 import it.uniroma3.siw.progetto.model.Credenziali;
+import it.uniroma3.siw.progetto.model.Progetto;
 import it.uniroma3.siw.progetto.model.Utente;
 import it.uniroma3.siw.progetto.service.CredenzialiService;
 import it.uniroma3.siw.progetto.session.SessionData;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,11 +44,29 @@ public class CredenzialiValidatore implements Validator {
 			errors.rejectValue("username", "size");
 		else if (credenziali2!=null && !credenziali2.getUtente().equals(sessionData.getLoggedUtente()))
 			errors.rejectValue("username", "duplicate");
+		
 
 		if (password.isEmpty())
 			errors.rejectValue("password", "required");
 		else if (password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH)
 			errors.rejectValue("password", "size");
+	}
+	
+	public void validateTask(Object o, Errors errors) {
+		Credenziali credenziali = (Credenziali) o;
+		//String username = credenziali.getUsername().trim();
+
+		Progetto loggedProgetto = sessionData.getLoggedProgetto();
+		List<Utente> utentiMembri = loggedProgetto.getMembri(); //
+
+
+		if(credenziali==null) {
+			errors.rejectValue("username", "null");
+		}
+		else if(!utentiMembri.contains(credenziali.getUtente())) {
+			errors.rejectValue("username", "noMembro");
+		}
+		
 	}
 
 	@Override

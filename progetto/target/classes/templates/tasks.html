@@ -8,12 +8,17 @@
 </head>
 <body>
 	<div>
-		<h2 th:text="${loggedTask.nome}"></h2>
-		<h3 th:text="${loggedTask.descrizione}" style="color: grey"></h3>
+		<h1
+			th:text="'Task: '+${loggedTask.nome} + ', ' + 'Descrizione: '+${loggedTask.descrizione} "></h1>
+
+		<h2 th:if="${loggedTask.utenteAddetto}!=null"
+			th:text=" 'Si occupa del task ' + ${loggedTask.utenteAddetto.nome} + ' '+ ${loggedTask.utenteAddetto.cognome}"
+			style="color: grey"></h2>
 	</div>
 	<hr>
-	<a href="/addCommento">AGGIUNGI</a>
-	<span>COMMENTO:</span>
+	<a th:if=${loggedUtente.id}!=${loggedTask.progetto.proprietario.id}
+		href="/addCommento">AGGIUNGI</a>
+	<span>COMMENTI:</span>
 	<div th:if="${commenti.size() > 0}">
 		<div th:each="commento : ${loggedTask.commentiTask}">
 			<br> <a th:text="${commento.descrizione}"> </a>

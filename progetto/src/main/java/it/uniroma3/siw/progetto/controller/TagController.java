@@ -68,17 +68,19 @@ public class TagController {
 
 
 		Utente loggedUtente = sessionData.getLoggedUtente();
-		Progetto loggedProgetto = sessionData.getLoggedProgetto();
+		//Progetto loggedProgetto = sessionData.getLoggedProgetto();
+		Task loggedTask = sessionData.getLoggedTask();
 
 		tagValidatore.validate(tag,tagBindingResult);
 		//if(progetto.getNome()!=null&&this.progettoService.getProgetto(progetto.getNome()).getProprietario().equals(loggedUtente)) {
 		if(!tagBindingResult.hasErrors() ) {
 
-			tag.setProgetto(loggedProgetto);
-
+			tag.getTasks().add(loggedTask);
+			loggedTask.getTags().add(tag);
 			this.tagService.salvaTag(tag);
+			this.taskService.salvaTask(loggedTask);
 
-			return "redirect:/progetti/" +loggedProgetto.getId();	
+			return "redirect:/task/" +loggedTask.getId();	
 		}
 
 		model.addAttribute("loggedUtente", loggedUtente);
