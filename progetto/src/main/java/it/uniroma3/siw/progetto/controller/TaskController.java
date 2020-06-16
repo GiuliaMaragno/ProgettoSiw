@@ -122,7 +122,7 @@ public class TaskController {
 
 		Utente loggedUtente = sessionData.getLoggedUtente();
 		Task task = this.taskService.getTask(taskId);
-		//sessionData.setLoggedTask(task);
+		sessionData.setLoggedTask(task);
 		model.addAttribute("loggedTask", task);
 		model.addAttribute("loggedUtente", loggedUtente);
 
@@ -178,7 +178,7 @@ public class TaskController {
 		}
 		return "modificaTask";
 	}
-	
+
 	@RequestMapping(value = {"/taskAssegnati"}, method =RequestMethod.GET)
 	public String mieiTask(Model model) {
 		Utente loggedUtente = sessionData.getLoggedUtente();

@@ -2,6 +2,8 @@ package it.uniroma3.siw.progetto.controller;
 
 
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import it.uniroma3.siw.progetto.model.Progetto;
 import it.uniroma3.siw.progetto.model.Tag;
 import it.uniroma3.siw.progetto.model.Task;
 import it.uniroma3.siw.progetto.model.Utente;
+import it.uniroma3.siw.progetto.repository.TagRepository;
 import it.uniroma3.siw.progetto.repository.UtenteRepository;
 import it.uniroma3.siw.progetto.service.ProgettoService;
 import it.uniroma3.siw.progetto.service.TagService;
@@ -46,6 +49,8 @@ public class TagController {
 	TagValidatore tagValidatore;
 	@Autowired
 	TaskService taskService;
+	@Autowired
+	TagRepository tagRepository;
 
 
 
@@ -68,19 +73,19 @@ public class TagController {
 
 
 		Utente loggedUtente = sessionData.getLoggedUtente();
-		//Progetto loggedProgetto = sessionData.getLoggedProgetto();
-		Task loggedTask = sessionData.getLoggedTask();
+		Progetto loggedProgetto = sessionData.getLoggedProgetto();
+		//Task loggedTask = sessionData.getLoggedTask();
 
 		tagValidatore.validate(tag,tagBindingResult);
 		//if(progetto.getNome()!=null&&this.progettoService.getProgetto(progetto.getNome()).getProprietario().equals(loggedUtente)) {
 		if(!tagBindingResult.hasErrors() ) {
 
-			tag.getTasks().add(loggedTask);
-			loggedTask.getTags().add(tag);
+			tag.setProgetto(loggedProgetto);
+			loggedProgetto.getTags().add(tag);
 			this.tagService.salvaTag(tag);
-			this.taskService.salvaTask(loggedTask);
+			this.progettoService.salvaProgetto(loggedProgetto);
 
-			return "redirect:/task/" +loggedTask.getId();	
+			return "redirect:/progetti/" +loggedProgetto.getId();	
 		}
 
 		model.addAttribute("loggedUtente", loggedUtente);
@@ -100,15 +105,16 @@ public class TagController {
 	@RequestMapping(value = {"/addTagAlTask"}, method =RequestMethod.POST )
 	public String aggiungiTagAlTask(Model model, @ModelAttribute("tagForm") Tag tag, BindingResult tagBindingResult) {
 		Utente loggedUtente = sessionData.getLoggedUtente();
+		Task loggedTask = sessionData.getLoggedTask();
 
 		tagValidatore.validate(tag,tagBindingResult);
 		if(!tagBindingResult.hasErrors() ) {
-		Task loggedTask = sessionData.getLoggedTask();
-		tag.getTasks().add(loggedTask);
-		loggedTask.getTags().add(tag);
+		List<Tag> tags = tagRepository.findByTasks(loggedTask);
+		tags.add(tag);
+		loggedTask.setTags(tags);
 		this.tagService.salvaTag(tag);
 		this.taskService.salvaTask(loggedTask);
-		return "redirect:/task";
+		return "redirect:/task/"+loggedTask.getId();
 		}
 		
 		model.addAttribute("loggedUtente", loggedUtente);

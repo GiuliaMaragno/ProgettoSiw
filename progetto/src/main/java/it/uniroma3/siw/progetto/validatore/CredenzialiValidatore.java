@@ -63,7 +63,7 @@ public class CredenzialiValidatore implements Validator {
 		if(credenziali==null) {
 			errors.rejectValue("username", "null");
 		}
-		else if(!utentiMembri.contains(credenziali.getUtente())) {
+		else if(!utentiMembri.contains(credenziali.getUtente()) && loggedProgetto.getProprietario().getId()!=(credenziali.getUtente().getId())) {
 			errors.rejectValue("username", "noMembro");
 		}
 		
@@ -76,8 +76,10 @@ public class CredenzialiValidatore implements Validator {
 		Utente loggedUtente = sessionData.getLoggedUtente();
 		if(credenziali==null ) 
 			errors.rejectValue("username", "null");
-		else if(credenziali.getUtente().equals(loggedUtente))
-			errors.rejectValue("username", "tu");
+		
+		  else if(credenziali.getUtente().equals(loggedUtente))
+		  errors.rejectValue("username", "tu");
+		 
 
 	}
 

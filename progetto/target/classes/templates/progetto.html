@@ -9,13 +9,10 @@
 <body>
 	<h1 th:text="'Nome: '+ ${progetto.nome}"></h1>
 	<form method="GET" th:action="@{/progetti/modifica}">
-		<button type="submit" name="submit" value="value">AGGIORNA</button>
+		<button th:if=${loggedUtente.id}==${progetto.proprietario.id}
+			type="submit" name="submit" value="value">AGGIORNA</button>
 	</form>
-	<!-- 	<h4>
-	
-		<a th:if=${loggedUtente.id}==${progetto.proprietario.id}
-			href="/progetti/modifica"> Aggiorna progetto</a>
-	</h4> -->
+
 	<hr>
 	<table>
 		<thead>
@@ -28,7 +25,7 @@
 		<tbody>
 			<tr th:each="task : ${progetto.taskContenuti}">
 				<td><br>-<a th:href="'/task/' + ${task.id}"
-					th:text="${task.nome}"> </a></td> 
+					th:text="${task.nome}"> </a></td>
 				<td th:if=${loggedUtente.id}==${progetto.proprietario.id}><br>
 					<form method="POST"
 						th:action="@{/task/{id}/elimina(id=${task.id})}">

@@ -34,10 +34,10 @@ public class Task {
 	@Column(nullable = false)
 	private LocalDateTime dataUltimoAggiornamento;
 
-	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "task")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
 	private List<Commento> commentiTask;
 
-	@ManyToMany(cascade = CascadeType.REMOVE)
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Tag> tags;
 
 
