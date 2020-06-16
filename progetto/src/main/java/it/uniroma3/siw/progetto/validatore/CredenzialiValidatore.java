@@ -68,6 +68,18 @@ public class CredenzialiValidatore implements Validator {
 		}
 		
 	}
+	
+	
+	public void validateMembro(Object o, Errors errors) {
+		Credenziali credenziali = (Credenziali) o;
+       
+		Utente loggedUtente = sessionData.getLoggedUtente();
+		if(credenziali==null ) 
+			errors.rejectValue("username", "null");
+		else if(credenziali.getUtente().equals(loggedUtente))
+			errors.rejectValue("username", "tu");
+
+	}
 
 	@Override
 	public boolean supports(Class<?> clazz) {

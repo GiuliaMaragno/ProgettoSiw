@@ -22,6 +22,7 @@ import it.uniroma3.siw.progetto.service.CredenzialiService;
 import it.uniroma3.siw.progetto.service.ProgettoService;
 import it.uniroma3.siw.progetto.service.UtenteService;
 import it.uniroma3.siw.progetto.session.SessionData;
+import it.uniroma3.siw.progetto.validatore.CredenzialiValidatore;
 import it.uniroma3.siw.progetto.validatore.ProgettoValidatore;
 
 @Controller
@@ -34,6 +35,8 @@ public class ProgettoController {
 
 	@Autowired
 	ProgettoValidatore progettoValidatore;
+	@Autowired
+	CredenzialiValidatore credenzialiValidatore;
 	@Autowired
 	CredenzialiService credenzialiService;
 
@@ -118,14 +121,16 @@ public class ProgettoController {
 
 
 	@RequestMapping(value = {"/progetti/membro"}, method = RequestMethod.POST)
-	public String aggiungiMembro(Model model, @ModelAttribute Credenziali credenziali ) {
+	public String aggiungiMembro(Model model, @ModelAttribute Credenziali credenziali , BindingResult credenzialiBindingResult) {
 
 
 		Progetto loggedProgetto = sessionData.getLoggedProgetto();
 		Credenziali credenzialiMembro = credenzialiService.getCredenziali(credenziali.getUsername());
-		Utente utenteMembro = credenzialiMembro.getUtente();
-		if(utenteMembro!=null) {
+		credenzialiValidatore.validateMembro(credenzialiMembro, credenzialiBindingResult);
+	//	Utente utenteMembro = credenzialiMembro.getUtente();
+		if(!credenzialiBindingResult.hasErrors()) {
 			//credenzialiService.salvaCredenziali(credenzialiMembro);
+			Utente utenteMembro = credenzialiMembro.getUtente();
 			loggedProgetto=progettoService.condividiConAltroUtente(loggedProgetto, utenteMembro);
 			this.utenteService.salvaUtente(utenteMembro);
 			return "redirect:/progetti/"+loggedProgetto.getId();
