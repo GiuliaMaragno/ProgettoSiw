@@ -98,7 +98,7 @@ public class TaskController {
 
 	@RequestMapping(value = {"/task/{taskId}"}, method = RequestMethod.GET)
 	public String visualizzaTask(Model model, @PathVariable Long taskId) {
-		
+
 		Utente loggedUtente = sessionData.getLoggedUtente();
 		Task task = this.taskService.getTask(taskId);
 		//sessionData.setLoggedTask(task);
@@ -107,7 +107,7 @@ public class TaskController {
 
 		List<Commento> commenti = commentoRepository.findByTask(task);
 		model.addAttribute("commenti", commenti);
-		
+
 		List<Tag> tags = tagRepository.findByTasks(task); 
 		model.addAttribute("tags", tags);
 		return "tasks";
@@ -115,6 +115,23 @@ public class TaskController {
 	}
 
 
+	@RequestMapping(value = {"/task/{id}/elimina"}, method = RequestMethod.POST)
+	public String eliminaTask(@PathVariable Long id , Model model) {
+		
+		Task taskDaElim = this.taskService.getTask(id);
+		Progetto progettoCorr = sessionData.getLoggedProgetto();
+
+		progettoCorr.getTaskContenuti().remove(taskDaElim);
+
+		this.progettoService.salvaProgetto(progettoCorr);
+		this.taskService.cancellaTask(taskDaElim);
+
+	
+		//this.progettoService.salvaProgetto(progettoCorr);
+		model.addAttribute("progetto", progettoCorr);
+		//model.addAttribute("task", task);
+		return "redirect:/progetti/" + progettoCorr.getId() ;
+	}
 
 
 }
