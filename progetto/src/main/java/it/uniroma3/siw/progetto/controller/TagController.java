@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -18,6 +19,7 @@ import it.uniroma3.siw.progetto.model.Progetto;
 import it.uniroma3.siw.progetto.model.Tag;
 import it.uniroma3.siw.progetto.model.Task;
 import it.uniroma3.siw.progetto.model.Utente;
+import it.uniroma3.siw.progetto.repository.ProgettoRepository;
 import it.uniroma3.siw.progetto.repository.TagRepository;
 import it.uniroma3.siw.progetto.repository.TaskRepository;
 import it.uniroma3.siw.progetto.repository.UtenteRepository;
@@ -54,6 +56,8 @@ public class TagController {
 	TaskRepository taskRepository;
 	@Autowired
 	TagRepository tagRepository;
+	@Autowired
+	ProgettoRepository progettoRepository;
 
 
 
@@ -101,33 +105,39 @@ public class TagController {
 
 	@RequestMapping(value = {"/addTagAlTask"}, method =RequestMethod.GET )
 	public String formTagAlTask(Model model) {
-		model.addAttribute("tagForm", new Tag());
-		return "aggiungiTagAlTask";
 
-	}
-	@RequestMapping(value = {"/addTagAlTask"}, method =RequestMethod.POST )
-	public String aggiungiTagAlTask(Model model, @ModelAttribute("tagForm") Tag tag, BindingResult tagBindingResult) {
-		Utente loggedUtente = sessionData.getLoggedUtente();
+
 		Task loggedTask = sessionData.getLoggedTask();
 
-		tagValidatore.validate(tag,tagBindingResult);
-		if(!tagBindingResult.hasErrors() ) {
+		Progetto progettoCorr = progettoRepository.findByTaskContenuti(loggedTask);
+		
+		List<Tag> tags = tagRepository.findByProgetto(progettoCorr);   
+		List<Tag> tags_gia_presenti = tagRepository.findByTasks(loggedTask);
+		for (Tag tag : tags_gia_presenti) {
+			if(tags.contains(tag)) {
+				tags.remove(tag);
+			}
+		}
+
+		model.addAttribute("tags", tags);
+		model.addAttribute("progetto", progettoCorr);
+		return "aggiungiTagAlTask";
+
+
+	}
+	@RequestMapping(value = {"/addTagAlTask/{id}"}, method =RequestMethod.GET )
+	public String aggiungiTagAlTask(Model model, @PathVariable Long id) {
+
+		Task loggedTask = sessionData.getLoggedTask();
+
+		Tag tagScelto = tagService.getTag(id);
 		List<Tag> tags = tagRepository.findByTasks(loggedTask);
-		//List<Task> tasks = taskRepository.findByTags(tag);
-		tags.add(tag);
-		//tasks.add(loggedTask);
+        tags.add(tagScelto);
 		loggedTask.setTags(tags);
-		//tag.setTasks(tasks);
-		//this.tagService.salvaTag(tag);
 		this.taskService.salvaTask(loggedTask);
 		return "redirect:/task/"+loggedTask.getId();
-		}
-		
-		model.addAttribute("loggedUtente", loggedUtente);
 
-		return "aggiungiTagAltask";
 
-		
 
 	}
 

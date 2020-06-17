@@ -7,63 +7,16 @@
 <title>Progetto</title>
 </head>
 <body>
-	<h1>TAG:</h1>
+	<h1>Scegli tra i seguenti tag:</h1>
+	<table>
+		<tbody th:if="${tags.size() > 0}">
+			<tr th:each="tag: ${progetto.tags}">
+				<td><a th:href="'/addTagAlTask/' + ${tag.id}"
+					th:text="${tag.nome} + ' ' + ${tag.descrizione}"></a></td>
+			</tr>
+		</tbody>
+	</table>
 
-	<form id="aggiungiTagProgetto" th:action="@{/addTagAlTask}"
-		method="POST">
-		<div>
-			<table>
-
-
-				<tr>
-					<td><label for="tagNomeInput">Nome Tag:</label>
-					<td><input id="tagNomeInput" type="text"
-						th:field="${tagForm.nome}" placeholder="NOME" /></td>
-					<td th:if="${#fields.hasErrors('tagForm.nome')}"
-						th:errors="${tagForm.nome}" th:style="'color:red'"></td>
-
-
-				</tr>
-				<tr>
-					<td><label for="tagDescrizioneInput">Descrizione tag:</label>
-					<td><input id="tagDescrizioneInput" type="text"
-						th:field="${tagForm.descrizione}" placeholder="DESCRIZIONE" /></td>
-					<td th:if="${#fields.hasErrors('tagForm.descrizione')}"
-						th:errors="${tagForm.descrizione}" th:style="'color:red'"></td>
-
-
-				</tr>
-
-				<tr>
-					<td><label for="tagColoreInput">Colore tag:</label>
-					<td><input id="tagColoreInput" type="color"
-						th:field="${tagForm.colore}" placeholder="#AFAF" /></td>
-					<td th:if="${#fields.hasErrors('tagForm.colore')}"
-						th:errors="${tagForm.colore}" th:style="'color:red'"></td>
-
-
-				</tr>
-
-
-				<tr>
-					<td>
-						<button type="submit">Aggiungi</button>
-					</td>
-				</tr>
-			</table>
-
-
-		</div>
-	</form>
-	<br>
-	<nav>
-
-
-		<a th:href="@{/home}"> Home</a> <a th:href="@{/progetti}"> Miei
-			Progetti</a>
-
-
-	</nav>
 
 </body>
 </html>
