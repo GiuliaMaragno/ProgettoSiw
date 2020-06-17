@@ -92,18 +92,13 @@ public class TaskController {
 		}
 		Utente membro = credenzialiCorr.getUtente(); //prendo utente dalle credenziali
 
-		//task.setUtenteAddetto(membro);
 
 		taskValidatore.validate(task,taskBindingResult);
 		if(!taskBindingResult.hasErrors() ) {
 
-			membro.getTasks().add(task); //se ci sta gli affido il task
+			task.setProgetto(loggedProgetto);
 			task.setUtenteAddetto(membro);
-			this.utenteService.salvaUtente(membro);
-
-			task.setProgetto(loggedProgetto);;
-			this.taskService.salvaTask(task);
-
+			this.taskService.salvaTask(task);			
 			sessionData.setLoggedTask(task);
 
 			return "redirect:/progetti/"+loggedProgetto.getId();	
@@ -143,9 +138,9 @@ public class TaskController {
 		Progetto progettoCorr = sessionData.getLoggedProgetto();
 
 		progettoCorr.getTaskContenuti().remove(taskDaElim);
-
 		this.progettoService.salvaProgetto(progettoCorr);
 		this.taskService.cancellaTask(taskDaElim);
+
 
 
 		//this.progettoService.salvaProgetto(progettoCorr);

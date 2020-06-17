@@ -19,6 +19,7 @@ import it.uniroma3.siw.progetto.model.Tag;
 import it.uniroma3.siw.progetto.model.Task;
 import it.uniroma3.siw.progetto.model.Utente;
 import it.uniroma3.siw.progetto.repository.TagRepository;
+import it.uniroma3.siw.progetto.repository.TaskRepository;
 import it.uniroma3.siw.progetto.repository.UtenteRepository;
 import it.uniroma3.siw.progetto.service.ProgettoService;
 import it.uniroma3.siw.progetto.service.TagService;
@@ -49,6 +50,8 @@ public class TagController {
 	TagValidatore tagValidatore;
 	@Autowired
 	TaskService taskService;
+	@Autowired
+	TaskRepository taskRepository;
 	@Autowired
 	TagRepository tagRepository;
 
@@ -110,9 +113,12 @@ public class TagController {
 		tagValidatore.validate(tag,tagBindingResult);
 		if(!tagBindingResult.hasErrors() ) {
 		List<Tag> tags = tagRepository.findByTasks(loggedTask);
+		//List<Task> tasks = taskRepository.findByTags(tag);
 		tags.add(tag);
+		//tasks.add(loggedTask);
 		loggedTask.setTags(tags);
-		this.tagService.salvaTag(tag);
+		//tag.setTasks(tasks);
+		//this.tagService.salvaTag(tag);
 		this.taskService.salvaTask(loggedTask);
 		return "redirect:/task/"+loggedTask.getId();
 		}
