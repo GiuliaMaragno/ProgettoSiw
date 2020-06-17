@@ -66,18 +66,28 @@ public class ProgettoService {
 	public void cancellaProgetto(Progetto progetto) {
 		this.progettoRepository.delete(progetto);
 	}
+	/*
+	 * @Transactional public boolean giàEsiste(Progetto progetto,Utente utente) {
+	 * List<Progetto> progettiEsistenti = (List<Progetto>)
+	 * this.progettoRepository.findByProprietario(proprietario); for (Progetto
+	 * progetto2 : progettiEsistenti)
+	 * if(progetto2.getNome().equals(progetto.getNome())) { return true; } return
+	 * false;
+	 * 
+	 * }
+	 */
 
 	@Transactional
-	public boolean giàEsiste(Progetto progetto) {
-		List<Progetto> progettiEsistenti = (List<Progetto>) this.progettoRepository.findAll();
-		for (Progetto progetto2 : progettiEsistenti) 
-			if(progetto2.getNome().equals(progetto.getNome())) {
-				return true;
+	public boolean progettiTuoi(Utente utente,Progetto progettoCorr){
+		List<Progetto> progettiEsistenti = this.progettoRepository.findByProprietario(utente);
+		for (Progetto progetto : progettiEsistenti) 
+			if(progetto.getNome().equals(progettoCorr.getNome())) {
+				return true;	
+
 			}
 		return false;
-
 	}
-	
-
 
 }
+
+

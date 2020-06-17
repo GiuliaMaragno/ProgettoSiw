@@ -7,17 +7,17 @@
 <title>Progetto</title>
 </head>
 <body>
-	<h1 >Commenti:</h1>
+	<h1>Commenti:</h1>
 
 	<form th:action="@{/addCommento}" method="POST">
-		<div >
+		<div>
 			<table>
 
 				<tr>
 					<td><input type="text" th:field="${commentoForm.descrizione}"
 						placeholder="DESCRIZIONE" /></td>
-					<td th:if="${#fields.hasErrors('commentoForm.descrizione')}" th:errors="${commentoForm.descrizione}"
-						th:style="'color:red'"></td>
+					<td th:if="${#fields.hasErrors('commentoForm.descrizione')}"
+						th:errors="${commentoForm.descrizione}" th:style="'color:red'"></td>
 				</tr>
 
 
@@ -31,13 +31,14 @@
 
 		</div>
 	</form>
-	<footer>
+	<nav>
 
-		<h4>
-			<a th:href="@{/home}"> Home</a>
-		</h4>
 
-	</footer>
+		<a th:href="@{/home}"> Home</a> <a th:href="@{/progetti}"> Miei
+			Progetti</a>
+
+
+	</nav>
 
 
 </body>

@@ -37,7 +37,7 @@ public class Task {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
 	private List<Commento> commentiTask;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	private List<Tag> tags;
 
 

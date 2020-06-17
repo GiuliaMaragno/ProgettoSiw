@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.uniroma3.siw.progetto.model.Credenziali;
 import it.uniroma3.siw.progetto.model.Progetto;
-import it.uniroma3.siw.progetto.model.Task;
 import it.uniroma3.siw.progetto.model.Utente;
 import it.uniroma3.siw.progetto.repository.ProgettoRepository;
 import it.uniroma3.siw.progetto.repository.UtenteRepository;
