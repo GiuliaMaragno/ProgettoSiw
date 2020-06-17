@@ -78,12 +78,13 @@ public class TaskController {
 
 	}
 	@RequestMapping(value = {"/addTask"}, method = RequestMethod.POST)
-	public String progettoTask( @Valid @ModelAttribute("taskForm") Task task,@Valid @ModelAttribute Credenziali credenziali,
-			BindingResult taskBindingResult ,BindingResult credenzialiBindingResult,Model model) {
+	public String progettoTask( @Valid @ModelAttribute("taskForm") Task task,BindingResult taskBindingResult ,@Valid @ModelAttribute("credenziali") Credenziali credenziali,
+			BindingResult credenzialiBindingResult,Model model) {
 
 
 		Utente loggedUtente = sessionData.getLoggedUtente();
 		Progetto loggedProgetto = sessionData.getLoggedProgetto();
+		taskValidatore.validate(task,taskBindingResult);
 
 		Credenziali credenzialiCorr = this.credenzialiService.getCredenziali(credenziali.getUsername());//
 		credenzialiValidatore.validateTask(credenzialiCorr, credenzialiBindingResult);
@@ -93,7 +94,6 @@ public class TaskController {
 		Utente membro = credenzialiCorr.getUtente(); //prendo utente dalle credenziali
 
 
-		taskValidatore.validate(task,taskBindingResult);
 		if(!taskBindingResult.hasErrors() ) {
 
 			task.setProgetto(loggedProgetto);
@@ -135,7 +135,7 @@ public class TaskController {
 
 		Task taskDaElim = this.taskService.getTask(id);
 		Progetto progettoCorr = sessionData.getLoggedProgetto();
-		 progettoCorr.getTaskContenuti().remove(taskDaElim);
+		progettoCorr.getTaskContenuti().remove(taskDaElim);
 		this.progettoService.salvaProgetto(progettoCorr);
 		this.taskService.cancellaTask(taskDaElim);
 		return "redirect:/progetti/" + progettoCorr.getId() ;
@@ -153,8 +153,8 @@ public class TaskController {
 	}
 
 	@RequestMapping(value = {"/task/{id}/modifica"}, method = RequestMethod.POST)
-	public String ModificaTask( @Valid @ModelAttribute("taskForm") Task task,Model model,
-			@PathVariable Long id,BindingResult taskBindingResult) {
+	public String ModificaTask( @Valid @ModelAttribute("taskForm") Task task,BindingResult taskBindingResult,Model model,
+			@PathVariable Long id) {
 
 		Task taskCorr = this.taskService.getTask(id);
 		Progetto progettoCorr = taskCorr.getProgetto();
@@ -166,6 +166,10 @@ public class TaskController {
 			taskService.salvaTask(taskCorr);
 			return "redirect:/progetti/" + progettoCorr.getId();
 		}
+
+	
+		model.addAttribute("loggedUtente", sessionData.getLoggedUtente());
+		model.addAttribute("progettoCorr", progettoCorr);
 		return "modificaTask";
 	}
 
