@@ -34,9 +34,9 @@ public class CredenzialiValidatore implements Validator {
 		Credenziali credenziali = (Credenziali) o;
 		String username = credenziali.getUsername().trim();
 		String password = credenziali.getPassword().trim();
-		
+
 		Credenziali credenziali2 = this.credenzialiService.getCredenziali(username);
-		
+
 
 		if (username.isEmpty())
 			errors.rejectValue("username", "required");
@@ -44,14 +44,14 @@ public class CredenzialiValidatore implements Validator {
 			errors.rejectValue("username", "size");
 		else if (credenziali2!=null && !credenziali2.getUtente().equals(sessionData.getLoggedUtente()))
 			errors.rejectValue("username", "duplicate");
-		
+
 
 		if (password.isEmpty())
 			errors.rejectValue("password", "required");
 		else if (password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH)
 			errors.rejectValue("password", "size");
 	}
-	
+
 	public void validateTask(Object o, Errors errors) {
 		Credenziali credenziali = (Credenziali) o;
 		//String username = credenziali.getUsername().trim();
@@ -66,20 +66,23 @@ public class CredenzialiValidatore implements Validator {
 		else if(!utentiMembri.contains(credenziali.getUtente()) && loggedProgetto.getProprietario().getId()!=(credenziali.getUtente().getId())) {
 			errors.rejectValue("username", "noMembro");
 		}
-		
+
 	}
-	
-	
+
+
 	public void validateMembro(Object o, Errors errors) {
 		Credenziali credenziali = (Credenziali) o;
-       
+
 		Utente loggedUtente = sessionData.getLoggedUtente();
+		Progetto progettoCorr = sessionData.getLoggedProgetto();
 		if(credenziali==null ) 
 			errors.rejectValue("username", "null");
-		
-		  else if(credenziali.getUtente().equals(loggedUtente))
-		  errors.rejectValue("username", "tu");
-		 
+
+		else if(credenziali.getUtente().getId()==(loggedUtente.getId()))
+			errors.rejectValue("username", "tu");
+
+		else if(progettoCorr.getMembri().contains(credenziali.getUtente()))
+			errors.rejectValue("username", "presente");
 
 	}
 
