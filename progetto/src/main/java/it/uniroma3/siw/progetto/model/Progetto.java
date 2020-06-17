@@ -41,7 +41,7 @@ public class Progetto {
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Utente> membri;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "progetto")
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "progetto")
 	private List<Task> taskContenuti;
 
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="progetto")

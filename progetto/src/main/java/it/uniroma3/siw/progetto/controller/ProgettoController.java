@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.uniroma3.siw.progetto.model.Credenziali;
 import it.uniroma3.siw.progetto.model.Progetto;
+import it.uniroma3.siw.progetto.model.Task;
 import it.uniroma3.siw.progetto.model.Utente;
 import it.uniroma3.siw.progetto.repository.ProgettoRepository;
 import it.uniroma3.siw.progetto.repository.UtenteRepository;
@@ -62,14 +63,13 @@ public class ProgettoController {
 	public String progetto(Model model, @PathVariable Long progettoId) {
 
 		Utente loggedUtente = sessionData.getLoggedUtente();
-		Progetto progetto = progettoService.getProgetto(progettoId);
-		sessionData.setLoggedProgetto(progetto);
-		List<Utente> membri = utenteRepository.findByProgettiVisibili(progetto);
-		if(!progetto.getProprietario().equals(loggedUtente)  && !membri.contains(loggedUtente) ) 
+		Progetto progetto = progettoService.getProgetto(progettoId); 
+		if(progetto.getProprietario().getId()!=loggedUtente.getId()  && !progetto.getMembri().contains(loggedUtente) ) 
 			return "redirect:/progetti";
+
 		model.addAttribute("loggedUtente", loggedUtente);
-		model.addAttribute("progetto", progetto);
-		model.addAttribute("membri", membri);
+		model.addAttribute("progetto", progetto);	
+		sessionData.setLoggedProgetto(progetto);
 		return "progetto";
 
 
@@ -105,8 +105,12 @@ public class ProgettoController {
 	public String aggiungiMembroForm(Model model) {
 		Utente loggedUtente = sessionData.getLoggedUtente();
 		Progetto loggedProgetto = sessionData.getLoggedProgetto();
-		model.addAttribute("loggedUtente", loggedUtente);
-		model.addAttribute("loggedProgetto", loggedProgetto);
+		if(!model.containsAttribute("loggedUtente")) {
+			model.addAttribute("loggedUtente", loggedUtente);
+		}
+		if(!model.containsAttribute("loggedProgetto")) {
+			model.addAttribute("loggedProgetto", loggedProgetto);
+		}
 		model.addAttribute("credenziali", new Credenziali());
 		return "condividiProgetto";
 
@@ -120,12 +124,12 @@ public class ProgettoController {
 		Progetto loggedProgetto = sessionData.getLoggedProgetto();
 		Credenziali credenzialiMembro = credenzialiService.getCredenziali(credenziali.getUsername());
 		credenzialiValidatore.validateMembro(credenzialiMembro, credenzialiBindingResult);
-	//	Utente utenteMembro = credenzialiMembro.getUtente();
+		//	Utente utenteMembro = credenzialiMembro.getUtente();
 		if(!credenzialiBindingResult.hasErrors()) {
 			//credenzialiService.salvaCredenziali(credenzialiMembro);
 			Utente utenteMembro = credenzialiMembro.getUtente();
 			loggedProgetto=progettoService.condividiConAltroUtente(loggedProgetto, utenteMembro);
-			this.utenteService.salvaUtente(utenteMembro);
+			//this.utenteService.salvaUtente(utenteMembro);
 			return "redirect:/progetti/"+loggedProgetto.getId();
 
 		}

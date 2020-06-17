@@ -9,8 +9,8 @@
 <body>
 	<h1>Task:</h1>
 
-	<form id="registraTaskProgetto" th:action="@{/task/{id}/modifica(id=${taskForm.id})}"
-		method="POST">
+	<form id="registraTaskProgetto"
+		th:action="@{/task/{id}/modifica(id=${taskForm.id})}" method="POST">
 		<div>
 			<table>
 
@@ -39,17 +39,31 @@
 						<button type="submit">Aggiungi</button>
 					</td>
 				</tr>
+
 			</table>
 
 
 		</div>
 	</form>
+	<div>
+		<table>
+			<tr>
+				<td th:if=${loggedUtente.id}==${progettoCorr.proprietario.id}><br>
+					<form method="POST"
+						th:action="@{/task/{id}/elimina(id=${taskForm.id})}">
+						<button type="submit" name="submit" value="value">DELETE</button>
+					</form></td>
+			</tr>
+		</table>
+	</div>
 	<footer>
-	
-	<h4><a th:href="@{/home}"> Home</a></h4>
-	
+
+		<h4>
+			<a th:href="@{/home}"> Home</a>
+		</h4>
+
 	</footer>
-	
+
 
 </body>
 </html>

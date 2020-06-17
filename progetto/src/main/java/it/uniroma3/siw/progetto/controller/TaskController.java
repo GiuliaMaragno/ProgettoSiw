@@ -99,8 +99,7 @@ public class TaskController {
 			task.setProgetto(loggedProgetto);
 			task.setUtenteAddetto(membro);
 			this.taskService.salvaTask(task);			
-			sessionData.setLoggedTask(task);
-
+			//sessionData.setLoggedTask(task);
 			return "redirect:/progetti/"+loggedProgetto.getId();	
 		}
 
@@ -136,16 +135,9 @@ public class TaskController {
 
 		Task taskDaElim = this.taskService.getTask(id);
 		Progetto progettoCorr = sessionData.getLoggedProgetto();
-
-		progettoCorr.getTaskContenuti().remove(taskDaElim);
+		 progettoCorr.getTaskContenuti().remove(taskDaElim);
 		this.progettoService.salvaProgetto(progettoCorr);
 		this.taskService.cancellaTask(taskDaElim);
-
-
-
-		//this.progettoService.salvaProgetto(progettoCorr);
-		model.addAttribute("progetto", progettoCorr);
-		//model.addAttribute("task", task);
 		return "redirect:/progetti/" + progettoCorr.getId() ;
 	}
 
@@ -153,7 +145,10 @@ public class TaskController {
 	public String taskDaModificare(Model model,@PathVariable Long id) {
 
 		Task task = this.taskService.getTask(id);
+		Progetto progettoCorr = task.getProgetto();
 		model.addAttribute("taskForm", task);
+		model.addAttribute("progettoCorr", progettoCorr);
+		model.addAttribute("loggedUtente", sessionData.getLoggedUtente());
 		return "modificaTask";
 	}
 
