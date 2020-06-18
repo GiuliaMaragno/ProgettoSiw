@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.uniroma3.siw.progetto.model.Credenziali;
+import it.uniroma3.siw.progetto.model.Utente;
 import it.uniroma3.siw.progetto.repository.CredenzialiRepository;
 
 import java.util.ArrayList;
@@ -64,5 +65,12 @@ public class CredenzialiService {
 	public void eliminaCredenziali(String username) {
 		this.credenzialiRepository.deleteByUsername(username);
 
+	}
+	
+	
+	@Transactional
+	public Credenziali getCredenzialiDaUtente(Utente utente) {
+		Optional<Credenziali> result = this.credenzialiRepository.findByUtente(utente);
+		return result.orElse(null);
 	}
 }

@@ -1,5 +1,6 @@
 package it.uniroma3.siw.progetto.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +65,18 @@ public class TaskService {
 		return result.orElse(null);
 	}
 	
-
+	@Transactional
+	public List<Task> getUtenteDaTags(Tag tag){
+		return this.taskRepository.findByTags(tag);
+	}
+	
+	@Transactional
+	public List<Task> getDaProgetto(Progetto progetto){
+		return this.taskRepository.findByProgetto(progetto);
+	}
+	
+	@Transactional
+	public List<Task> getTaskDaUtenteAddetto(Utente utente){
+		return this.taskRepository.findByUtenteAddetto(utente);
+	}
 }

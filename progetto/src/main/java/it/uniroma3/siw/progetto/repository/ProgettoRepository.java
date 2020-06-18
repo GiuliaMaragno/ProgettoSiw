@@ -19,7 +19,7 @@ public interface ProgettoRepository extends CrudRepository<Progetto, Long> {
 	
     public List<Progetto> findByProprietario(Utente proprietario);
     
-    public  Progetto findByTaskContenuti(Task task);
+    public Optional<Progetto> findByTaskContenuti(Task task);
 
 
 

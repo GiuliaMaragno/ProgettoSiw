@@ -46,16 +46,17 @@ public class CommentoController {
 
 	}
 
+	/*aggiungo i commenti su qualsiasi task di un progetto su cui ho visibilità*/
 	@RequestMapping(value = "/addCommento", method = RequestMethod.POST)
 	public String commentoTask(@Valid @ModelAttribute("commentoForm") Commento commento, BindingResult commentoBindingResult,Model model) {
 
 		Utente utente = sessionData.getLoggedUtente();
 
 		Task task = sessionData.getLoggedTask();
-		//List<Commento> commUtente = commentoRepository.findByUtente(utente);
 
+		/*valido il campo descrizione di commento*/
 		commentoValidatore.validate(commento, commentoBindingResult);
-		if(!commentoBindingResult.hasErrors() ) {
+		if(!commentoBindingResult.hasErrors() ) { //se non ha errori
 			commento.setTask(task);
 			commento.setUtente(utente);
 			this.commentoService.salvaCommento(commento);

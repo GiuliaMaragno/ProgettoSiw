@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.uniroma3.siw.progetto.model.Credenziali;
 import it.uniroma3.siw.progetto.model.Utente;
-import it.uniroma3.siw.progetto.repository.CredenzialiRepository;
 import it.uniroma3.siw.progetto.service.CredenzialiService;
 import it.uniroma3.siw.progetto.service.ProgettoService;
 import it.uniroma3.siw.progetto.service.UtenteService;
@@ -36,13 +35,12 @@ public class UtenteController {
 	@Autowired
 	UtenteService utenteService;
 	@Autowired
-	CredenzialiRepository credenzialiRepository;
-	@Autowired
 	CredenzialiValidatore credenzialiValidatore;
 	@Autowired
 	UtenteValidatore utenteValidatore;
 
 
+	
 	@RequestMapping(value= {"/home"}, method =RequestMethod.GET)
 	public String home(Model model) {
 		Utente utenteAutenticato= sessionData.getLoggedUtente();
@@ -50,15 +48,7 @@ public class UtenteController {
 		return "home";
 	}
 
-
-
-	@RequestMapping(value= { "/admin" }, method = RequestMethod.GET)
-	public String admin(Model model) {
-		Utente utenteAutenticato=sessionData.getLoggedUtente();
-		model.addAttribute("utente", utenteAutenticato);
-		return "admin";
-	}
-
+	/*Mostrare il profilo dell'utente*/
 	@RequestMapping(value = {"/utenti/me"}, method = RequestMethod.GET)
 	public String me(Model model) {
 		Utente loggedUtente = sessionData.getLoggedUtente();
@@ -68,20 +58,31 @@ public class UtenteController {
 		return "utenteProfilo";
 	}
 
-	@RequestMapping(value = {"/utenti/{progId}"}, method = RequestMethod.GET)
-	public String proprietario(Model model, @PathVariable Long progId) {
 
-		Utente utente = utenteService.getUtenteDaId(progId);
-		Credenziali credenziali = credenzialiRepository.findByUtente(utente);
-		model.addAttribute("loggedUtente", utente);
-		model.addAttribute("credenziali", credenziali);
-		return "utenteProfilo";
+	/*quando cambio il ruolo di un utente ad admin posso accedere a questa vista*/
+	@RequestMapping(value= { "/admin" }, method = RequestMethod.GET)
+	public String admin(Model model) {
+		Utente utenteAutenticato=sessionData.getLoggedUtente();
+		model.addAttribute("utente", utenteAutenticato);
+		return "admin";
 	}
 
+
+	/*
+	 * @RequestMapping(value = {"/utenti/{progId}"}, method = RequestMethod.GET)
+	 * public String proprietario(Model model, @PathVariable Long progId) {
+	 * 
+	 * Utente utente = utenteService.getUtenteDaId(progId); Credenziali credenziali
+	 * = this.credenzialiService.getCredenzialiDaUtente(utente);
+	 * model.addAttribute("loggedUtente", utente); model.addAttribute("credenziali",
+	 * credenziali); return "utenteProfilo"; }
+	 */
+	
+	/*da admin posso vedere tutti gli utenti registrati*/
 	@RequestMapping(value = {"/admin/utenti"}, method = RequestMethod.GET)
 	public String listaUtenti(Model model) {
 		Utente loggedUtente = sessionData.getLoggedUtente();
-		List<Credenziali> tuttiCredenziali = this.credenzialiService.getAllCredenziali();
+		List<Credenziali> tuttiCredenziali = this.credenzialiService.getAllCredenziali(); 
 		model.addAttribute("loggedUtente", loggedUtente);
 		model.addAttribute("credenzialiLista", tuttiCredenziali);
 
@@ -89,6 +90,7 @@ public class UtenteController {
 
 	}
 
+	/*da admin posso eliminare gli utenti nel sistema*/
 	@RequestMapping(value = {"/admin/utenti/{username}/delete"}, method = RequestMethod.POST)
 	public String rimuoviUtenti(Model model, @PathVariable String username) {
 		this.credenzialiService.eliminaCredenziali(username);
@@ -98,6 +100,7 @@ public class UtenteController {
 
 
 
+	/*vista per cambiare le informazioni del proprio profilo*/
 	@RequestMapping(value = {"/utenti/me/modifica"}, method = RequestMethod.GET)
 	public String modificaProfilo(Model model) {
 
@@ -120,22 +123,19 @@ public class UtenteController {
 		Credenziali credenzialiCorr = sessionData.getLoggedCredenziali();
 
 
-		// validate user and credentials fields
+		// valido i campi di utente e credenziali
 		this.utenteValidatore.validate(utente, utenteBindingResult);
 		this.credenzialiValidatore.validate(credenziali, credenzialiBindingResult);
 
-		// if neither of them had invalid contents, store the User and the Credentials into the DB
+		// se non hanno campi invalidi salvo nel DB
 		if(!utenteBindingResult.hasErrors() && !credenzialiBindingResult.hasErrors()) {
-			// set the user and store the credentials;
-			// this also stores the User, thanks to Cascade.ALL policy
-			//utente.setId(utenteCorr.getId());
+			
 			utenteCorr.setNome(utente.getNome());
 			utenteCorr.setCognome(utente.getCognome());
 			credenzialiCorr.setUsername(credenziali.getUsername());
 			credenzialiCorr.setPassword(credenziali.getPassword());
 			credenzialiCorr.setUtente(utenteCorr);
-			utenteService.salvaUtente(utenteCorr);
-			credenzialiService.salvaCredenziali(credenzialiCorr);
+			credenzialiService.salvaCredenziali(credenzialiCorr); //salvo anche utente(cascade.all)
 			return "redirect:/utenti/" + utenteCorr.getId();
 
 		}

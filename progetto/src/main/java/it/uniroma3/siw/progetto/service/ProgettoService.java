@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.uniroma3.siw.progetto.model.Progetto;
 import it.uniroma3.siw.progetto.model.Tag;
+import it.uniroma3.siw.progetto.model.Task;
 import it.uniroma3.siw.progetto.model.Utente;
 import it.uniroma3.siw.progetto.repository.ProgettoRepository;
 
@@ -66,16 +67,7 @@ public class ProgettoService {
 	public void cancellaProgetto(Progetto progetto) {
 		this.progettoRepository.delete(progetto);
 	}
-	/*
-	 * @Transactional public boolean giàEsiste(Progetto progetto,Utente utente) {
-	 * List<Progetto> progettiEsistenti = (List<Progetto>)
-	 * this.progettoRepository.findByProprietario(proprietario); for (Progetto
-	 * progetto2 : progettiEsistenti)
-	 * if(progetto2.getNome().equals(progetto.getNome())) { return true; } return
-	 * false;
-	 * 
-	 * }
-	 */
+
 
 	@Transactional
 	public boolean progettiTuoi(Utente utente,Progetto progettoCorr){
@@ -86,6 +78,12 @@ public class ProgettoService {
 
 			}
 		return false;
+	}
+
+	@Transactional
+	public Progetto getProgettoDaTask(Task task) {
+		Optional<Progetto> result = this.progettoRepository.findByTaskContenuti(task);
+		return result.orElse(null);
 	}
 
 }

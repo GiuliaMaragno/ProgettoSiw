@@ -32,21 +32,27 @@ public class Utente {
 	@Column(nullable = false, length = 100)
 	private String cognome;
 
+	/*data di creazione di utente*/
 	@Column(updatable = false, nullable = false)
 	private LocalDateTime dataCreazione;
 
+	/*data di ultimo aggiornamento di utente*/
 	@Column(nullable = false)
 	private LocalDateTime dataUltimoAggiornamento;
 
+	/*Commenti scritti da utente*/
 	@OneToMany(cascade = CascadeType.REMOVE,mappedBy = "utente")
 	private List<Commento> commento;
 
+	/*progetti di cui utente è proprietario*/
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "proprietario",fetch = FetchType.EAGER)
 	private List<Progetto> progettiProprietario;
 
+	/*progetti di cui utente ha visibilità*/
 	@ManyToMany(mappedBy = "membri", fetch=FetchType.EAGER)
 	private List<Progetto> progettiVisibili;
 
+	/*task affidati a utente*/
 	@OneToMany(mappedBy = "utenteAddetto")
 	List<Task> tasks;
 

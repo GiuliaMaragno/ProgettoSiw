@@ -27,23 +27,27 @@ public class Progetto {
 	@Column(nullable = false)
 	private String nome;
 
+	/*data di creazione di progetto*/
 	@Column(updatable = false, nullable = false)
 	private LocalDateTime dataCreazione;
 	
-
+	/*data di ultimo aggiornamento di progetto*/
 	@Column(nullable = false)
 	private LocalDateTime dataUltimoAggiornamento;
 
-
+	/*proprietario del progetto*/
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Utente proprietario;
 
+	/*lista di membri che hanno visibilità del progetto*/
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Utente> membri;
 
+	/*Task contenuti in un progetto*/
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "progetto")
 	private List<Task> taskContenuti;
 
+	/*Tag del progetto*/
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="progetto")
 	private List<Tag> tags;
 
@@ -77,6 +81,7 @@ public class Progetto {
 		this.dataUltimoAggiornamento = LocalDateTime.now();
 	}
 
+	/*aggiungo membri che hanno visibilità del progetto*/
 	public void addMembro(Utente membro) {
 		if(!this.membri.contains(membro))  //se non è gia presente
 		this.membri.add(membro);

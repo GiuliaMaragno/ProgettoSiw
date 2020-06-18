@@ -24,8 +24,10 @@ import it.uniroma3.siw.progetto.repository.CommentoRepository;
 import it.uniroma3.siw.progetto.repository.TagRepository;
 import it.uniroma3.siw.progetto.repository.TaskRepository;
 import it.uniroma3.siw.progetto.repository.UtenteRepository;
+import it.uniroma3.siw.progetto.service.CommentoService;
 import it.uniroma3.siw.progetto.service.CredenzialiService;
 import it.uniroma3.siw.progetto.service.ProgettoService;
+import it.uniroma3.siw.progetto.service.TagService;
 import it.uniroma3.siw.progetto.service.TaskService;
 import it.uniroma3.siw.progetto.service.UtenteService;
 import it.uniroma3.siw.progetto.session.SessionData;
@@ -60,7 +62,11 @@ public class TaskController {
 	@Autowired
 	TaskRepository taskRepository;
 	@Autowired
+	TagService tagService;
+	@Autowired
 	CredenzialiValidatore credenzialiValidatore;
+	@Autowired
+	CommentoService commentoService;
 
 
 
@@ -120,10 +126,10 @@ public class TaskController {
 		model.addAttribute("loggedTask", task);
 		model.addAttribute("loggedUtente", loggedUtente);
 
-		List<Commento> commenti = commentoRepository.findByTask(task);
+		List<Commento> commenti = this.commentoService.getCommentiDaTask(task);
 		model.addAttribute("commenti", commenti);
 
-		List<Tag> tags = tagRepository.findByTasks(task); 
+		List<Tag> tags = this.tagService.getTagDaTask(task); 
 		model.addAttribute("tags", tags);
 		return "tasks";
 
@@ -176,7 +182,7 @@ public class TaskController {
 	@RequestMapping(value = {"/taskAssegnati"}, method =RequestMethod.GET)
 	public String mieiTask(Model model) {
 		Utente loggedUtente = sessionData.getLoggedUtente();
-		List<Task> taskContenuti = taskRepository.findByUtenteAddetto(loggedUtente);
+		List<Task> taskContenuti = this.taskService.getTaskDaUtenteAddetto(loggedUtente);
 		model.addAttribute("taskContenuti", taskContenuti);
 		return "mieiTask";
 	}

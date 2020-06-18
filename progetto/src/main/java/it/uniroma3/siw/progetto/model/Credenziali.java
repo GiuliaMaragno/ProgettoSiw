@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 public class Credenziali {
 
     public static final String DEFAULT_RUOLO = "DEFAULT";
-    public static final String ADMIN_RUOLO = "ADMIN";
+    public static final String ADMIN_RUOLO = "ADMIN";  //admin per eliminare utenti
 
   
     @Id
@@ -15,27 +15,29 @@ public class Credenziali {
     private Long id;
 
    
+    /*username di utente*/
     @Column(unique = true, nullable = false, length = 100)
     private String username;
 
-    
+    /*passoword di utente*/
     @Column(nullable = false, length = 100)
     private String password;
 
    
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)        // when the account is created...
-                                                   //when the account is removed
+    /*utente a cui sono associate le credenziali*/
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)        // when the account is created...                                       
     private Utente utente;
 
-    
+	/*data di creazione di credenziali*/
     @Column(updatable = false, nullable = false)
     private LocalDateTime dataCreazione;
 
-    
+	/*data di ultimo aggiornamento di credenziali*/
     @Column(nullable = false)
     private LocalDateTime dataUltimoAggiornamento;
 
  
+    /*ruolo che ha l'utente registrato,alla creazione sempre di default*/
     @Column(nullable = false, length = 10)
     private String ruolo;
 

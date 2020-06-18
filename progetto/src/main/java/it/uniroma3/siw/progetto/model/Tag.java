@@ -18,15 +18,18 @@ public class Tag {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	private String colore;
-	private String descrizione;
 	@Column(nullable = false)
 	private String nome;
 
+	private String colore;
 
+	private String descrizione;
+
+	/*i task a cui si riferiscono i tag*/
 	@ManyToMany(mappedBy = "tags") 
 	private List<Task> tasks;
 
+	/*progetto associato ai tag*/
 	@ManyToOne
 	private Progetto progetto;
 

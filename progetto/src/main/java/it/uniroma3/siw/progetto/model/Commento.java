@@ -12,10 +12,15 @@ public class Commento {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	/*commento*/
 	private String descrizione;
 
+	/*task a cui si riferiscono i commenti*/
 	@ManyToOne 
 	private Task task;
+	
+	/*utente che ha scritto i commenti*/
 	@ManyToOne
 	private Utente utente;
 

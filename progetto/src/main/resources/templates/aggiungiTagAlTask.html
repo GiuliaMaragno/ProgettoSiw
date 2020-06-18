@@ -10,7 +10,7 @@
 	<h1>Scegli tra i seguenti tag:</h1>
 	<table>
 		<tbody th:if="${tags.size() > 0}">
-			<tr th:each="tag: ${progetto.tags}">
+			<tr th:each="tag: ${tags}">
 				<td><a th:href="'/addTagAlTask/' + ${tag.id}"
 					th:text="${tag.nome} + ' ' + ${tag.descrizione}"></a></td>
 			</tr>

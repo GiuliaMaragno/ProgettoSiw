@@ -34,9 +34,11 @@ public class Task {
 	@Column(nullable = false)
 	private LocalDateTime dataUltimoAggiornamento;
 
+	/*commenti che si riferiscono al task*/
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
 	private List<Commento> commentiTask;
 
+	/*tag associati ai task*/
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	private List<Tag> tags;
 
@@ -135,7 +137,31 @@ public class Task {
 	public void setUtenteAddetto(Utente utenteAddetto) {
 		this.utenteAddetto = utenteAddetto;
 	}
+	public void addCommento(Commento commento) {
+		this.commentiTask.add(commento);
 
+	}
+
+	public void addTag(Tag tag) {
+		this.tags.add(tag);
+
+	}
+
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
+	}
+
+	public Progetto getProgetto() {
+		return progetto;
+	}
+
+	public void setProgetto(Progetto progetto) {
+		this.progetto = progetto;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -173,30 +199,5 @@ public class Task {
 		return true;
 	}
 
-	public void addCommento(Commento commento) {
-		this.commentiTask.add(commento);
-
-	}
-
-	public void addTag(Tag tag) {
-		this.tags.add(tag);
-
-	}
-
-	public List<Tag> getTags() {
-		return tags;
-	}
-
-	public void setTags(List<Tag> tags) {
-		this.tags = tags;
-	}
-
-	public Progetto getProgetto() {
-		return progetto;
-	}
-
-	public void setProgetto(Progetto progetto) {
-		this.progetto = progetto;
-	}
 
 }

@@ -11,6 +11,6 @@ public interface CredenzialiRepository extends CrudRepository<Credenziali, Long>
 	
 	public Optional<Credenziali> findByUsername(String username);
 	public void deleteByUsername(String username);
-	public Credenziali findByUtente(Utente utente);
+	public Optional<Credenziali> findByUtente(Utente utente);
 
 }
