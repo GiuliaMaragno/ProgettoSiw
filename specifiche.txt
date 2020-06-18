@@ -11,7 +11,7 @@ Utente
 	
 Attore primario Utente.
 Un utente si registra per la prima volta nel sistema.
-Inserisce username, password, nome e cognome. 
+Inserisce username, password, nome e cognome.
 Il sistema verifica che i campi siano stati compilati correttamente e registra l'utente nel sistema.
 Il sistema mostra la pagina di benvenuto attraverso cui l'utente potrà successivamente fare il login.
 Se l'utente inserisce dati non validi, il sistema mostra l'errore all'utente e chiede il reinserimento delle credenziali.
@@ -27,7 +27,8 @@ In caso di fallimento il sistema indica che le credenziali inserite sono sbaglia
 -Visualizzare il mio Profilo
 	
 Attore Primario Utente autenticato
-Un utente autenticato sceglie l’attività “visualizzare il mio profilo”, il sistema mostra il profilo relativo all'utente contenente il suo nome, lo username, il cognome, il ruolo, la data di registrazione e la data dell'ultimo aggiornamento.
+Un utente autenticato sceglie l’attività “visualizzare il mio profilo”, il sistema mostra il profilo relativo all'utente contenente il
+suo nome, lo username, il cognome, il ruolo, la data di registrazione e la data dell'ultimo aggiornamento.
 
 -Aggiornare il mio profilo
 	
@@ -35,13 +36,12 @@ Attore primario: utente autenticato
 Un utente autenticato sceglie l’attività “aggiorna il mio profilo”, il sistema mostra username, nome e cognome, l'utente modifica i campi inserisce la sua password e il sistema mostra il profilo dell'utente con i campi aggiornati.
 
 
-
 Progetto
 
 -Crea nuovo progetto
 
 Attore primario Utente.
-l'utente registrato vuole creare un nuovo progetto.
+L'utente registrato vuole creare un nuovo progetto.
 L'utente sceglie l'attività "Crea nuovo progetto".
 L'utente inserisce il nome del progetto, l'utente conferma l'inserimento, il sistema mostra la pagina del progetto appena creato.
 L'utente annulla l'operazione di inserimento. Il sistema non registra nessuna informazione sul progetto
@@ -65,14 +65,14 @@ L'utente annulla l'operazione di aggiornamento. Il sistema non aggiorna le nuove
 -Cancellare un mio progetto
 	
 Attore primario Utente.
-L'utente sceglie l'attività "Delete" associata al progetto che vuole eliminare. 
+L'utente sceglie l'attività "Delete" associata al progetto che vuole eliminare.
 Il sistema mostra la pagina relativa all'elenco dei progetti di cui l'utente autenticato è membro aggiornato.
 
 -Condividere un mio progetto con un altro utente
 
 Attore primario Utente.
 L'utente sceglie l'attività "condividi con utente".
-L'utente inserisce il nome di un altro utente autenticato nel sistema con cui condividere il progetto. Nel caso in cui l'utente con cui l'utente autenticato 		vuole condividere il progetto non è registrato nel sistema il sistema mostra un messaggio di errore, in caso di successo il sistema mostra la pagina del 		progetto aggiornata con il nome dell’utente con cui è stato condiviso il progetto.
+L'utente inserisce il nome di un altro utente autenticato nel sistema con cui condividere il progetto. Nel caso in cui l'utente con cui l'utente autenticato vuole condividere il progetto non è registrato nel sistema il sistema mostra un messaggio di errore, in caso di successo il sistema mostra la pagina del progetto aggiornata con il nome dell’utente con cui è stato condiviso il progetto.
 L'utente annulla l'operazione di condivisione. Il sistema non registra nessuna informazione relativa alla condivisione.
 
 -Aggiungere un tag ad un mio progetto
