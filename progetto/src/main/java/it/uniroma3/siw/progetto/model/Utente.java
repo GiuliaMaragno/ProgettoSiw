@@ -38,7 +38,7 @@ public class Utente {
 	@Column(nullable = false)
 	private LocalDateTime dataUltimoAggiornamento;
 
-	@OneToMany(cascade = CascadeType.REMOVE)
+	@OneToMany(cascade = CascadeType.REMOVE,mappedBy = "utente")
 	private List<Commento> commento;
 
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "proprietario",fetch = FetchType.EAGER)

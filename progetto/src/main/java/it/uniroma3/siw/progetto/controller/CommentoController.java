@@ -1,6 +1,5 @@
 package it.uniroma3.siw.progetto.controller;
 
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -14,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.uniroma3.siw.progetto.model.Commento;
 import it.uniroma3.siw.progetto.model.Task;
+import it.uniroma3.siw.progetto.model.Utente;
 import it.uniroma3.siw.progetto.repository.CommentoRepository;
 import it.uniroma3.siw.progetto.service.CommentoService;
 import it.uniroma3.siw.progetto.service.TaskService;
+import it.uniroma3.siw.progetto.service.UtenteService;
 import it.uniroma3.siw.progetto.session.SessionData;
 import it.uniroma3.siw.progetto.validatore.CommentoValidatore;
 
@@ -33,6 +34,8 @@ public class CommentoController {
 	CommentoValidatore commentoValidatore;
 	@Autowired
 	CommentoRepository commentoRepository;
+	@Autowired
+	UtenteService utenteService;
 
 
 	@RequestMapping(value = "/addCommento", method = RequestMethod.GET)
@@ -46,15 +49,16 @@ public class CommentoController {
 	@RequestMapping(value = "/addCommento", method = RequestMethod.POST)
 	public String commentoTask(@Valid @ModelAttribute("commentoForm") Commento commento, BindingResult commentoBindingResult,Model model) {
 
+		Utente utente = sessionData.getLoggedUtente();
+
 		Task task = sessionData.getLoggedTask();
+		//List<Commento> commUtente = commentoRepository.findByUtente(utente);
 
 		commentoValidatore.validate(commento, commentoBindingResult);
 		if(!commentoBindingResult.hasErrors() ) {
 			commento.setTask(task);
-			List<Commento> commenti = commentoRepository.findByTask(task);
-			commenti.add(commento);
-			task.setCommentiTask(commenti);
-			this.taskService.salvaTask(task);
+			commento.setUtente(utente);
+			this.commentoService.salvaCommento(commento);
 			return "redirect:/task/" + task.getId();
 		}
 		return "commento";

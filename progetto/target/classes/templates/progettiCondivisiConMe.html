@@ -9,18 +9,12 @@
 <body>
 	<h1 th:text="'Progetti su cui hai visibilità ' + ${loggedUtente.nome} + '!'">...</h1>
 	<table>
-		<thead>
-			<tr>
-				<th>Nome</th>
-
-			</tr>
-		</thead>
 		<tbody>
 			<tr th:each="progetto : ${progettiCondivisiConMe}">
-				<td><a th:href="'/progetti/' + ${progetto.id}"
-					th:text="${progetto.nome}">...</a></td>
-				 <td th:text="'(Proprietario '+${progetto.proprietario.nome} + ' ' + ${progetto.proprietario.cognome}+')'"> <!-- <a th:href="'/utenti/'+ ${progetto.proprietario.id}"
-				th:text="${progetto.proprietario.nome} + ' ' + ${progetto.proprietario.cognome}">...</a> --><td>
+				<td>
+				<h3><a th:href="'/progetti/' + ${progetto.id}"
+					th:text="${progetto.nome}">...</a></h3></td>
+				<td style="color:gray" th:text="'(Proprietario '+${progetto.proprietario.nome} + ' ' + ${progetto.proprietario.cognome}+')'"><td>
 			</tr>
 		</tbody>
 	</table>

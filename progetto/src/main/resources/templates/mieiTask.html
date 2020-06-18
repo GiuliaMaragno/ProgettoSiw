@@ -11,8 +11,11 @@
 		<h1>I tuoi Task:</h1>
 		<ul th:if="${taskContenuti.size()>0}"
 			th:each="task : ${taskContenuti}">
-			<li><a th:href="'/task/' + ${task.id}" th:text="${task.nome}">
+			<li>
+			<h3>
+			<a th:href="'/task/' + ${task.id}" th:text="${task.nome}">
 			</a>
+			</h3>
 		</ul>
 	
 	</div>

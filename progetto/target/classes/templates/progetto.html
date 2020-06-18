@@ -7,7 +7,7 @@
 <title>Progetto</title>
 </head>
 <body>
-	<h1 th:text="'Nome: '+ ${progetto.nome}"></h1>
+	<h1 th:text="'Progetto '+ ${progetto.nome}"></h1>
 	<form method="GET" th:action="@{/progetti/modifica}">
 		<button th:if=${loggedUtente.id}==${progetto.proprietario.id}
 			type="submit" name="submit" value="value">AGGIORNA</button>
@@ -22,13 +22,15 @@
 
 			</tr>
 		</thead>
-		<tbody th:if="${progetto.taskContenuti.size()>0}">
-			<tr 
-				th:each="task : ${progetto.taskContenuti}">
-				<td><br><a th:href="'/task/' + ${task.id}" th:text="'-'+${task.nome}"> </a></td>
-				
-				<td th:if=${loggedUtente.id}==${progetto.proprietario.id}><br>
-					<form method="GET" th:action="@{/task/{id}/modifica(id=${task.id})}">
+		
+		<tbody th:if="${progetto.taskContenuti.size()>0}"> 
+			<tr th:each="task : ${progetto.taskContenuti}">
+				<td><h3><a th:href="'/task/' + ${task.id}" th:text="${task.nome}">
+				</a></h3></td>
+
+				<td th:if=${loggedUtente.id}==${progetto.proprietario.id}>
+					<form method="GET"
+						th:action="@{/task/{id}/modifica(id=${task.id})}">
 						<button type="submit" name="submit" value="value">AGGIORNA</button>
 					</form></td>
 			</tr>
@@ -47,8 +49,13 @@
 		<tbody>
 			<tr th:each="tag : ${progetto.tags}">
 				<td><br>
-					<div th:style="'color:'+${tag.colore}" th:text="${tag.nome}"></div>
-					<div th:text="${tag.descrizione}" style="color: gray"></div></td>
+					<div
+						th:style="'margin:0.1px;border:solid; border-color:'+${tag.colore}">
+						<div th:style="'color:'+${tag.colore}" th:text="${tag.nome}"></div>
+						<div th:text="${tag.descrizione}" style="color: gray"></div>
+					</div></td>
+
+			</tr>
 		</tbody>
 	</table>
 
@@ -61,11 +68,10 @@
 			</tr>
 		</thead>
 		<tbody th:if="${progetto.membri.size() > 0}">
-			<tr 
-				th:each="membro : ${progetto.membri}">
+			<tr th:each="membro : ${progetto.membri}">
 				<td><br>
-					<div th:text="'-' +${membro.nome} + ' ' + ${membro.cognome}"></div>
-				</td>
+					<h3 style="color: blue"
+						th:text="${membro.nome} + ' ' + ${membro.cognome}"></h3></td>
 			</tr>
 		</tbody>
 	</table>

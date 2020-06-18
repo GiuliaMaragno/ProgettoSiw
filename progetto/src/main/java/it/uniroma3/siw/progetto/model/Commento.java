@@ -16,6 +16,8 @@ public class Commento {
 
 	@ManyToOne 
 	private Task task;
+	@ManyToOne
+	private Utente utente;
 
 
 	public Commento() {
@@ -49,6 +51,15 @@ public class Commento {
 	public void setTask(Task task) {
 		this.task = task; 
 	}
+
+	public Utente getUtente() {
+		return utente;
+	}
+
+	public void setUtente(Utente utente) {
+		this.utente = utente;
+	}
+	
 
 
 }
