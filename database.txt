@@ -1,197 +1,0 @@
-PGDMP         1                x           progettosiw    12.2    12.2 ,    G           0    0    ENCODING    ENCODING        SET client_encoding = 'UTF8';
-                      false            H           0    0 
-   STDSTRINGS 
-   STDSTRINGS     (   SET standard_conforming_strings = 'on';
-                      false            I           0    0 
-   SEARCHPATH 
-   SEARCHPATH     8   SELECT pg_catalog.set_config('search_path', '', false);
-                      false            J           1262    106701    progettosiw    DATABASE     ã   CREATE DATABASE progettosiw WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'Italian_Italy.1252' LC_CTYPE = 'Italian_Italy.1252';
-    DROP DATABASE progettosiw;
-                postgres    false            À            1259    106815    commento    TABLE     u   CREATE TABLE public.commento (
-    id bigint NOT NULL,
-    descrizione character varying(255),
-    task_id bigint
-);
-    DROP TABLE public.commento;
-       public         heap    postgres    false            Ã            1259    106820    credenziali    TABLE     U  CREATE TABLE public.credenziali (
-    id bigint NOT NULL,
-    data_creazione timestamp without time zone NOT NULL,
-    data_ultimo_aggiornamento timestamp without time zone NOT NULL,
-    password character varying(100) NOT NULL,
-    ruolo character varying(10) NOT NULL,
-    username character varying(100) NOT NULL,
-    utente_id bigint
-);
-    DROP TABLE public.credenziali;
-       public         heap    postgres    false                         1259    106813    hibernate_sequence    SEQUENCE     {   CREATE SEQUENCE public.hibernate_sequence
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
- )   DROP SEQUENCE public.hibernate_sequence;
-       public          postgres    false            Õ            1259    106825    progetto    TABLE     ¸   CREATE TABLE public.progetto (
-    id bigint NOT NULL,
-    data_creazione timestamp without time zone NOT NULL,
-    data_ultimo_aggiornamento timestamp without time zone NOT NULL,
-    nome character varying(255) NOT NULL,
-    proprietario_id bigint
-);
-    DROP TABLE public.progetto;
-       public         heap    postgres    false            Œ            1259    106830    progetto_membri    TABLE     q   CREATE TABLE public.progetto_membri (
-    progetti_visibili_id bigint NOT NULL,
-    membri_id bigint NOT NULL
-);
- #   DROP TABLE public.progetto_membri;
-       public         heap    postgres    false            œ            1259    106833    tag    TABLE     ¡   CREATE TABLE public.tag (
-    id bigint NOT NULL,
-    colore character varying(255),
-    descrizione character varying(255),
-    nome character varying(255) NOT NULL,
-    progetto_id bigint
-);
-    DROP TABLE public.tag;
-       public         heap    postgres    false            –            1259    106841    task    TABLE     C  CREATE TABLE public.task (
-    id bigint NOT NULL,
-    data_creazione timestamp without time zone NOT NULL,
-    data_ultimo_aggiornamento timestamp without time zone NOT NULL,
-    descrizione character varying(255) NOT NULL,
-    nome character varying(255) NOT NULL,
-    progetto_id bigint,
-    utente_addetto_id bigint
-);
-    DROP TABLE public.task;
-       public         heap    postgres    false            —            1259    106849 	   task_tags    TABLE     ]   CREATE TABLE public.task_tags (
-    tasks_id bigint NOT NULL,
-    tags_id bigint NOT NULL
-);
-    DROP TABLE public.task_tags;
-       public         heap    postgres    false            “            1259    106852    utenti    TABLE       CREATE TABLE public.utenti (
-    id bigint NOT NULL,
-    cognome character varying(100) NOT NULL,
-    data_creazione timestamp without time zone NOT NULL,
-    data_ultimo_aggiornamento timestamp without time zone NOT NULL,
-    nome character varying(100) NOT NULL
-);
-    DROP TABLE public.utenti;
-       public         heap    postgres    false            ”            1259    106857    utenti_commento    TABLE     h   CREATE TABLE public.utenti_commento (
-    utente_id bigint NOT NULL,
-    commento_id bigint NOT NULL
-);
- #   DROP TABLE public.utenti_commento;
-       public         heap    postgres    false            <          0    106815    commento 
-   TABLE DATA           <   COPY public.commento (id, descrizione, task_id) FROM stdin;
-    public          postgres    false    203   \7       =          0    106820    credenziali 
-   TABLE DATA           z   COPY public.credenziali (id, data_creazione, data_ultimo_aggiornamento, password, ruolo, username, utente_id) FROM stdin;
-    public          postgres    false    204   £7       >          0    106825    progetto 
-   TABLE DATA           h   COPY public.progetto (id, data_creazione, data_ultimo_aggiornamento, nome, proprietario_id) FROM stdin;
-    public          postgres    false    205   G9       ?          0    106830    progetto_membri 
-   TABLE DATA           J   COPY public.progetto_membri (progetti_visibili_id, membri_id) FROM stdin;
-    public          postgres    false    206   Á9       @          0    106833    tag 
-   TABLE DATA           I   COPY public.tag (id, colore, descrizione, nome, progetto_id) FROM stdin;
-    public          postgres    false    207   :       A          0    106841    task 
-   TABLE DATA           Ä   COPY public.task (id, data_creazione, data_ultimo_aggiornamento, descrizione, nome, progetto_id, utente_addetto_id) FROM stdin;
-    public          postgres    false    208   e;       B          0    106849 	   task_tags 
-   TABLE DATA           6   COPY public.task_tags (tasks_id, tags_id) FROM stdin;
-    public          postgres    false    209   Ñ?       C          0    106852    utenti 
-   TABLE DATA           ^   COPY public.utenti (id, cognome, data_creazione, data_ultimo_aggiornamento, nome) FROM stdin;
-    public          postgres    false    210   ¡?       D          0    106857    utenti_commento 
-   TABLE DATA           A   COPY public.utenti_commento (utente_id, commento_id) FROM stdin;
-    public          postgres    false    211   X@       K           0    0    hibernate_sequence    SEQUENCE SET     A   SELECT pg_catalog.setval('public.hibernate_sequence', 61, true);
-          public          postgres    false    202            ¢
-           2606    106819    commento commento_pkey 
-   CONSTRAINT     T   ALTER TABLE ONLY public.commento
-    ADD CONSTRAINT commento_pkey PRIMARY KEY (id);
- @   ALTER TABLE ONLY public.commento DROP CONSTRAINT commento_pkey;
-       public            postgres    false    203            §
-           2606    106824    credenziali credenziali_pkey 
-   CONSTRAINT     Z   ALTER TABLE ONLY public.credenziali
-    ADD CONSTRAINT credenziali_pkey PRIMARY KEY (id);
- F   ALTER TABLE ONLY public.credenziali DROP CONSTRAINT credenziali_pkey;
-       public            postgres    false    204            ®
-           2606    106829    progetto progetto_pkey 
-   CONSTRAINT     T   ALTER TABLE ONLY public.progetto
-    ADD CONSTRAINT progetto_pkey PRIMARY KEY (id);
- @   ALTER TABLE ONLY public.progetto DROP CONSTRAINT progetto_pkey;
-       public            postgres    false    205            ™
-           2606    106840    tag tag_pkey 
-   CONSTRAINT     J   ALTER TABLE ONLY public.tag
-    ADD CONSTRAINT tag_pkey PRIMARY KEY (id);
- 6   ALTER TABLE ONLY public.tag DROP CONSTRAINT tag_pkey;
-       public            postgres    false    207            ¨
-           2606    106848    task task_pkey 
-   CONSTRAINT     L   ALTER TABLE ONLY public.task
-    ADD CONSTRAINT task_pkey PRIMARY KEY (id);
- 8   ALTER TABLE ONLY public.task DROP CONSTRAINT task_pkey;
-       public            postgres    false    208            ∞
-           2606    106863 ,   utenti_commento uk_bqas480tgln64fwb0f0s9g9ra 
-   CONSTRAINT     n   ALTER TABLE ONLY public.utenti_commento
-    ADD CONSTRAINT uk_bqas480tgln64fwb0f0s9g9ra UNIQUE (commento_id);
- V   ALTER TABLE ONLY public.utenti_commento DROP CONSTRAINT uk_bqas480tgln64fwb0f0s9g9ra;
-       public            postgres    false    211            ¶
-           2606    106861 (   credenziali uk_momch2qmcwhvr1f1dvk1kah4w 
-   CONSTRAINT     g   ALTER TABLE ONLY public.credenziali
-    ADD CONSTRAINT uk_momch2qmcwhvr1f1dvk1kah4w UNIQUE (username);
- R   ALTER TABLE ONLY public.credenziali DROP CONSTRAINT uk_momch2qmcwhvr1f1dvk1kah4w;
-       public            postgres    false    204            Æ
-           2606    106856    utenti utenti_pkey 
-   CONSTRAINT     P   ALTER TABLE ONLY public.utenti
-    ADD CONSTRAINT utenti_pkey PRIMARY KEY (id);
- <   ALTER TABLE ONLY public.utenti DROP CONSTRAINT utenti_pkey;
-       public            postgres    false    210            µ
-           2606    106884 +   progetto_membri fk8cle3yknrshlsext4j4h8cu22    FK CONSTRAINT     ö   ALTER TABLE ONLY public.progetto_membri
-    ADD CONSTRAINT fk8cle3yknrshlsext4j4h8cu22 FOREIGN KEY (progetti_visibili_id) REFERENCES public.progetto(id);
- U   ALTER TABLE ONLY public.progetto_membri DROP CONSTRAINT fk8cle3yknrshlsext4j4h8cu22;
-       public          postgres    false    205    206    2728            ª
-           2606    106914 +   utenti_commento fkbk9l8equ16npk9rr9oxqrcy9h    FK CONSTRAINT     ë   ALTER TABLE ONLY public.utenti_commento
-    ADD CONSTRAINT fkbk9l8equ16npk9rr9oxqrcy9h FOREIGN KEY (commento_id) REFERENCES public.commento(id);
- U   ALTER TABLE ONLY public.utenti_commento DROP CONSTRAINT fkbk9l8equ16npk9rr9oxqrcy9h;
-       public          postgres    false    211    2722    203            π
-           2606    106904 %   task_tags fkes0ksybarf59lj57xuuhgb5yr    FK CONSTRAINT     Ç   ALTER TABLE ONLY public.task_tags
-    ADD CONSTRAINT fkes0ksybarf59lj57xuuhgb5yr FOREIGN KEY (tags_id) REFERENCES public.tag(id);
- O   ALTER TABLE ONLY public.task_tags DROP CONSTRAINT fkes0ksybarf59lj57xuuhgb5yr;
-       public          postgres    false    2730    207    209            ∫
-           2606    106909 %   task_tags fkhkvmcm575l8fcl9w9p6glav84    FK CONSTRAINT     Ñ   ALTER TABLE ONLY public.task_tags
-    ADD CONSTRAINT fkhkvmcm575l8fcl9w9p6glav84 FOREIGN KEY (tasks_id) REFERENCES public.task(id);
- O   ALTER TABLE ONLY public.task_tags DROP CONSTRAINT fkhkvmcm575l8fcl9w9p6glav84;
-       public          postgres    false    208    209    2732            ∑
-           2606    106894     task fkhoch48rqsqb58xyi2sokryryt    FK CONSTRAINT     Ü   ALTER TABLE ONLY public.task
-    ADD CONSTRAINT fkhoch48rqsqb58xyi2sokryryt FOREIGN KEY (progetto_id) REFERENCES public.progetto(id);
- J   ALTER TABLE ONLY public.task DROP CONSTRAINT fkhoch48rqsqb58xyi2sokryryt;
-       public          postgres    false    205    2728    208            ¥
-           2606    106879 +   progetto_membri fkiqiputnxy4syaiona7qdi4eik    FK CONSTRAINT     ç   ALTER TABLE ONLY public.progetto_membri
-    ADD CONSTRAINT fkiqiputnxy4syaiona7qdi4eik FOREIGN KEY (membri_id) REFERENCES public.utenti(id);
- U   ALTER TABLE ONLY public.progetto_membri DROP CONSTRAINT fkiqiputnxy4syaiona7qdi4eik;
-       public          postgres    false    2734    206    210            ∏
-           2606    106899     task fknd3yfmw9yrmiokv2473t4wna6    FK CONSTRAINT     ä   ALTER TABLE ONLY public.task
-    ADD CONSTRAINT fknd3yfmw9yrmiokv2473t4wna6 FOREIGN KEY (utente_addetto_id) REFERENCES public.utenti(id);
- J   ALTER TABLE ONLY public.task DROP CONSTRAINT fknd3yfmw9yrmiokv2473t4wna6;
-       public          postgres    false    2734    208    210            ≥
-           2606    106874 $   progetto fknhcd1a4lu9tb83l2r2o83wjrn    FK CONSTRAINT     å   ALTER TABLE ONLY public.progetto
-    ADD CONSTRAINT fknhcd1a4lu9tb83l2r2o83wjrn FOREIGN KEY (proprietario_id) REFERENCES public.utenti(id);
- N   ALTER TABLE ONLY public.progetto DROP CONSTRAINT fknhcd1a4lu9tb83l2r2o83wjrn;
-       public          postgres    false    205    210    2734            º
-           2606    106919 +   utenti_commento fko8ge6g2rb1u55pxnh08sf25ci    FK CONSTRAINT     ç   ALTER TABLE ONLY public.utenti_commento
-    ADD CONSTRAINT fko8ge6g2rb1u55pxnh08sf25ci FOREIGN KEY (utente_id) REFERENCES public.utenti(id);
- U   ALTER TABLE ONLY public.utenti_commento DROP CONSTRAINT fko8ge6g2rb1u55pxnh08sf25ci;
-       public          postgres    false    210    211    2734            ±
-           2606    106864 $   commento fkp0wlypbn4vemwrc2rkwelprl7    FK CONSTRAINT     Ç   ALTER TABLE ONLY public.commento
-    ADD CONSTRAINT fkp0wlypbn4vemwrc2rkwelprl7 FOREIGN KEY (task_id) REFERENCES public.task(id);
- N   ALTER TABLE ONLY public.commento DROP CONSTRAINT fkp0wlypbn4vemwrc2rkwelprl7;
-       public          postgres    false    203    2732    208            ≤
-           2606    106869 '   credenziali fkp4o7q01pbwo137xu2ca1oib7s    FK CONSTRAINT     â   ALTER TABLE ONLY public.credenziali
-    ADD CONSTRAINT fkp4o7q01pbwo137xu2ca1oib7s FOREIGN KEY (utente_id) REFERENCES public.utenti(id);
- Q   ALTER TABLE ONLY public.credenziali DROP CONSTRAINT fkp4o7q01pbwo137xu2ca1oib7s;
-       public          postgres    false    204    2734    210            ∂
-           2606    106889    tag fkpnjajss8lh1sou56f2whqqe7e    FK CONSTRAINT     Ö   ALTER TABLE ONLY public.tag
-    ADD CONSTRAINT fkpnjajss8lh1sou56f2whqqe7e FOREIGN KEY (progetto_id) REFERENCES public.progetto(id);
- I   ALTER TABLE ONLY public.tag DROP CONSTRAINT fkpnjajss8lh1sou56f2whqqe7e;
-       public          postgres    false    205    2728    207            <   7   xú36·Ù»W() /K,…W»Õœ)IUHÀœ+…T»Ã+I-J-.Nr9ç∏bÙ∏∏∏ ¢¬p      =   î  xúu—;s™@ Ü·~E
-€¨ª¿rÎT\	Ç¢@ú4à\6rtA˝ıßQ3'€∑˘ûôq‡+î_ëÚ"à∫ÄtÅ®†']‡B4@pÄ,‚ú◊ZbŒ”8há$ŒbiôÜócÍB˜!q¶e˙ÅœãÌ¨Q¡∫å©·å)∂œïQKÎu}<RN‡ÒÔ-A +œ˚Õ ìvˆ=LÀ›æ;“Ñ#cl“$ËÛï¥©1+Vw∏æàüÕ“˙t0À“…√P∞òFÔIª£úÃ+∑∞d¯ºﬂd§ïxæñCœs[o∑Ió’©EìŒF„ˆ⁄ºwnåªÉiª˚”€áù˜0dîwÑ ã«†
-4I˙ÈÍÑ∫uIäv7fcü|°»C£Æ`√Œ›˘¬&˝‘pH`mTáy◊b(%€k˚¶ûví’'ˆ«√`3ö—1ç™8ßúƒc¯ﬂ“‘°$Mz⁄oåòu[L+ØÒ˙¨“¸É·„‘dMÚ…jﬁÿ∆∑GÊ{H≠≤ò´Ãr]‚¸‹4NÓå¯/¿Û¸?ˇ≤      >   ê   xúuÃΩ
-¬0@·9˜)Ú77?M≥Ï ËîÇãKëÅ∂	∂ ¯ÙéJ%Î«·tåê∞A€»ñìÚ§=)·¨Æ˙òO˘í∂ù»ceåóRHk™>∆-ÒP‚3-q›ß92Í'w—+ÎEk©Í})szLÔî◊»√ãi–›!6ŒS+oÚı!Ù◊ÅáÛç9∏ ¯ 5Ÿ9}      ?   &   xú34·4·24·4‚26Â¥ `ñóâ%ß©!Wå ]‡ˆ      @   8  xúÖë;o√0Ñg˙Wí,Ö)…q2} ˙@ên]ÿà6$í°™˙ÎK9M≥©&∫;?auøl\„‡52√-©û´8V"‘[¶Fkòi5*˘L…≈9¯†÷á{ëi®;dÜYqŒ%ÁÜíﬂJTy6PÛmÎ`ˆ;hΩ^ﬁ©1Ó9yÒMY≠à;m¥9_
-mÖëXÓ–]hUtù‘2-9w™•˛z¡≤5KÓ˛-&j-0¨·w-q~?∆îi2Îâ=EıH}pŒ~OÅ&õ,‘:”ë¿yx|y^oÆü6w'ç#OQç)ÜÏïWéÚ¥™µP”
--⁄Û4L[Y…o¶sÅF—	µbOÊH„ûrûûÂõ		íˇbÁ’éø}NÜx∂€±™vUΩ]UUıà§’      A     xú}VÀn‰6<kæÇ7€@¨H$ı<Ó:á õƒ∞˜ò-qf;†»EM˛%?ñ¶#/È	‡√†∆]˝™.Õö—Ï>+ÔÛödYõ’-ÁiEÀ´¯'xQ`úÏƒODXùQ@±
-£ìdÏ@jGËæ…‰	:i;Aé!í‰<·JÍú∂<Kyu]gNò¶H#‹`∆£¥–±ÚF˘"ﬁ¿Iæò·Eÿƒ£úòc|fz†,Ã¿[ößu6ª„ø;oo¬J≤‰O'ÿ%yXâÀÂ!AÈKœXuíÿâñìEˆ‰—öìtŒ˜†%˘ÕÙR)≥÷’V∑¨J´:ö÷>É<	ö‰9ãhô<w~?Œ∏∏q´:™ÆÒ;.£å|+N'òÙ	»…ä£øƒÕ⁄aRÚÓ]÷AhêÔ[¬≠	\Ç∫ë„W6†6Ã™É:»C3?uZ˛˛3€˙ltß¶—/TÜÂmV•/Æ‚®Nc{A‹‰P∏JÆ2ùÃwÀÿú√%-_-sc·ÕP⁄ÊyZƒ\pLÉE°é‚E˙ì!®gmÛ‰åÖ‰◊‚”,«5èW¨ŸÚêïµYëRäy«o_q“˛ AÜåôÙÊv»ﬂa;ˇ˛só|ï£[Ê∆B!QﬁfMJ´®õØìA|'≈∂á_µ≥¶üfÂÆGÖU-Ø”<Â∂„ìr0¥—K˝&» ±HÇZ√%Ú¸ûóØÂ" î! §”Ï¯#Íœ†B;„ã∆“ó‰≥ö-+aÖ/?äØ˝iŒc«˝¸ ˜§#ö≈Õ4öï4‘4õÌ¥,B„ÿÒ€O5xóãê’¢aÊ√•E≈4¯óÊ—Mmxì‡˝À»ã‘ﬁ»ﬁ¯ ı6Ã(<ÇNâqÑ%•ŒÁ„aUòg«_Ö÷Ü,NÅW’OÁÎ	gcùì∂ãŸÏ.Ì¡˚˘Åá≤«OÎ»w¸ˆlΩäŒ¬*·˘Ùd^1⁄∑ªlò‹]∫ˇÄ⁄≈uó=EG≈ôw’≤	Md«zá^å[`¢YQ8F˚Œ;:”„;H|ä˙¿√{„¥e⁄k‘«0≠ &y|˙Â˘Î	æ˛™πæ±˙P¸Hü£F€<C˜ÃØ„,#£Ç^&è“é˛«Lx„ŸXÖ}”¨∫ä◊Dé¯Ê√$€réxyèVY§uÂª‡e±iÂŸåÄÆ˘˜ Uƒ1Eìñyyˇ†∆à6
-«{ÁiHˇ=éV∂Ÿ‚77®˚nÔøjÂãF÷xøÆäàÔÇÁı∂,ÚUIwˇ◊x^Ÿ>àb,-Íhº¯†ÈùØ	‚¸£ÀR∆Bæ/ì*ﬂä√ª”ßc‹¬UfaLÓM≠)√•ÔxŒ—Ìç’ÛU:âF±˝&2d!˝3=ˇ~9∂Ù      B   -   xú32‡42‰22‚44„22≥M8çLπåÃ8Mπåç9-∏bÙ∏∏∏ ~D›      C   á   xúuŒ±
-¬0Ä·9˜}ÅÜÀ%π¶Ÿtq©ãÉìKàEäÖñºøÓı÷~¯…‹÷}CHÿ#˜nË»gr9¢ıâTøñMVÊ,ÂSﬂáû2&;Ü®˙‘‰%¿Ê>oœ?µ'À´>µ*íVG∂åIıã¥ÂóGwºO∫Ï0#€0F’Oã‘ æ√E$      D      xúã—„‚‚ ≈ ©     
