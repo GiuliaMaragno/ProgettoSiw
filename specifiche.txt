@@ -35,6 +35,10 @@ suo nome, lo username, il cognome, il ruolo, la data di registrazione e la data 
 Attore primario: utente autenticato
 Un utente autenticato sceglie l’attività “aggiorna il mio profilo”, il sistema mostra username, nome e cognome, l'utente modifica i campi inserisce la sua password e il sistema mostra il profilo dell'utente con i campi aggiornati.
 
+-Eliminazione Utente
+Un utente admin seleziona l'attività "lista di tutti gli utenti" il sistema mostra la lista degli utenti che partecipano al sistema, l'utente seleziona l'attività "Delete", il sistema mostra l'elenco aggiornato degli utenti del sistema.
+
+NB il ruolo dell'utente bisogna modificarlo nel database altrimenti il sistema non mostra la pagina /admin 
 
 Progetto
 
@@ -120,13 +124,3 @@ Il sistema mostra l’elenco dei tag associati al progetto, l’utente seleziona
 Attore primario Utente.
 L’utente sceglie l’attività aggiungi commento.
 L’utente inserisce il commento, il sistema mostra la pagina dei task con il nome del task, la sua descrizione, il nome 	dell’utente che se ne occupa, i commenti riferiti ai task ed il nome, la descrizione ed il colore dei tag associati al task.
-
-
-
-
-
-
-
-
-
-
