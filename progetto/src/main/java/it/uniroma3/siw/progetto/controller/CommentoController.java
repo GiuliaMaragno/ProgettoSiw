@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import it.uniroma3.siw.progetto.model.Commento;
 import it.uniroma3.siw.progetto.model.Task;
 import it.uniroma3.siw.progetto.model.Utente;
-import it.uniroma3.siw.progetto.repository.CommentoRepository;
 import it.uniroma3.siw.progetto.service.CommentoService;
 import it.uniroma3.siw.progetto.service.TaskService;
 import it.uniroma3.siw.progetto.service.UtenteService;
@@ -32,8 +31,6 @@ public class CommentoController {
 	TaskService taskService;
 	@Autowired
 	CommentoValidatore commentoValidatore;
-	@Autowired
-	CommentoRepository commentoRepository;
 	@Autowired
 	UtenteService utenteService;
 

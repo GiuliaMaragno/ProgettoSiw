@@ -13,9 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-/**
- * Validator for Credentials
- */
+
 @Component
 public class CredenzialiValidatore implements Validator {
 
@@ -54,17 +52,16 @@ public class CredenzialiValidatore implements Validator {
 
 	public void validateTask(Object o, Errors errors) {
 		Credenziali credenziali = (Credenziali) o;
-		//String username = credenziali.getUsername().trim();
 
 		Progetto loggedProgetto = sessionData.getLoggedProgetto();
 		List<Utente> utentiMembri = loggedProgetto.getMembri(); //
 
 
-		if(credenziali==null) {
-			errors.rejectValue("username", "null");
+		if(credenziali==null) { //non esiste
+			errors.rejectValue("username", "null"); 
 		}
 		else if(!utentiMembri.contains(credenziali.getUtente()) && loggedProgetto.getProprietario().getId()!=(credenziali.getUtente().getId())) {
-			errors.rejectValue("username", "noMembro");
+			errors.rejectValue("username", "noMembro");   //devi prima aggiungerlo al tuo progetto
 		}
 
 	}
@@ -78,10 +75,10 @@ public class CredenzialiValidatore implements Validator {
 		if(credenziali==null ) 
 			errors.rejectValue("username", "null");
 
-		else if(credenziali.getUtente().getId()==(loggedUtente.getId()))
+		else if(credenziali.getUtente().getId()==(loggedUtente.getId())) //sei il propritario
 			errors.rejectValue("username", "tu");
 
-		else if(progettoCorr.getMembri().contains(credenziali.getUtente()))
+		else if(progettoCorr.getMembri().contains(credenziali.getUtente())) //è gia presente nel tuo progetto
 			errors.rejectValue("username", "presente");
 
 	}

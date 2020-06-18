@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import it.uniroma3.siw.progetto.model.Credenziali;
 import it.uniroma3.siw.progetto.model.Progetto;
 import it.uniroma3.siw.progetto.model.Utente;
-import it.uniroma3.siw.progetto.repository.ProgettoRepository;
-import it.uniroma3.siw.progetto.repository.UtenteRepository;
 import it.uniroma3.siw.progetto.service.CredenzialiService;
 import it.uniroma3.siw.progetto.service.ProgettoService;
 import it.uniroma3.siw.progetto.service.UtenteService;
@@ -32,26 +30,21 @@ public class ProgettoController {
 	ProgettoService progettoService;
 	@Autowired
 	UtenteService utenteService;
-
 	@Autowired
 	ProgettoValidatore progettoValidatore;
 	@Autowired
 	CredenzialiValidatore credenzialiValidatore;
 	@Autowired
 	CredenzialiService credenzialiService;
-
 	@Autowired
 	SessionData sessionData;
-	@Autowired
-	ProgettoRepository progettoRepository;
-	@Autowired
-	UtenteRepository utenteRepository;
 
 
+	/*lista dei miei progetti*/
 	@RequestMapping(value = {"/progetti"}, method = RequestMethod.GET)
 	public String mieiProgetti(Model model) {
 		Utente loggedUtente = sessionData.getLoggedUtente();
-		List<Progetto> listaProgetti = progettoRepository.findByProprietario(loggedUtente);
+		List<Progetto> listaProgetti = this.progettoService.getProgettoDaProprietario(loggedUtente);
 		model.addAttribute("loggedUtente", loggedUtente);
 		model.addAttribute("listaProgetti", listaProgetti);
 		return "mieiProgetti";
@@ -88,10 +81,10 @@ public class ProgettoController {
 			BindingResult progettoBindingResult,Model model) {
 
 		Utente loggedUtente = sessionData.getLoggedUtente();
+		//valido i campi
 		progettoValidatore.validate(progetto, progettoBindingResult);
 		if(!progettoBindingResult.hasErrors()) {
 			progetto.setProprietario(loggedUtente);
-			loggedUtente.getProgettiProprietario().add(progetto);
 			this.progettoService.salvaProgetto(progetto);
 			return "redirect:/progetti/" + progetto.getId();
 		}
@@ -104,12 +97,11 @@ public class ProgettoController {
 	public String aggiungiMembroForm(Model model) {
 		Utente loggedUtente = sessionData.getLoggedUtente();
 		Progetto loggedProgetto = sessionData.getLoggedProgetto();
-		if(!model.containsAttribute("loggedUtente")) {
-			model.addAttribute("loggedUtente", loggedUtente);
-		}
-		if(!model.containsAttribute("loggedProgetto")) {
-			model.addAttribute("loggedProgetto", loggedProgetto);
-		}
+
+		model.addAttribute("loggedUtente", loggedUtente);
+
+		model.addAttribute("loggedProgetto", loggedProgetto);
+
 		model.addAttribute("credenziali", new Credenziali());
 		return "condividiProgetto";
 
@@ -122,13 +114,11 @@ public class ProgettoController {
 
 		Progetto loggedProgetto = sessionData.getLoggedProgetto();
 		Credenziali credenzialiMembro = credenzialiService.getCredenziali(credenziali.getUsername());
+		//valido i campi
 		credenzialiValidatore.validateMembro(credenzialiMembro, credenzialiBindingResult);
-		//	Utente utenteMembro = credenzialiMembro.getUtente();
-		if(!credenzialiBindingResult.hasErrors()) {
-			//credenzialiService.salvaCredenziali(credenzialiMembro);
+		if(!credenzialiBindingResult.hasErrors()) { // se non ci sono errori
 			Utente utenteMembro = credenzialiMembro.getUtente();
 			loggedProgetto=progettoService.condividiConAltroUtente(loggedProgetto, utenteMembro);
-			//this.utenteService.salvaUtente(utenteMembro);
 			return "redirect:/progetti/"+loggedProgetto.getId();
 
 		}
@@ -150,7 +140,7 @@ public class ProgettoController {
 	@RequestMapping(value= {"/progettiCondivisi"}, method= RequestMethod.GET)
 	public String progettiCondivisiConMe(Model model) {
 		Utente loggedUtente = sessionData.getLoggedUtente();
-		List<Progetto> progettiCondivisiConMe =  this.progettoRepository.findByMembri(loggedUtente);
+		List<Progetto> progettiCondivisiConMe = this.progettoService.getProgettiDaMembri(loggedUtente);
 		model.addAttribute("loggedUtente", loggedUtente);
 		model.addAttribute("progettiCondivisiConMe", progettiCondivisiConMe);
 		return "progettiCondivisiConMe";
@@ -159,7 +149,6 @@ public class ProgettoController {
 
 	@RequestMapping(value= {"/progetti/modifica"}, method= RequestMethod.GET)
 	public String ProgettoNome(  Model model) {
-
 
 		model.addAttribute("progettoForm", new Progetto());
 		return "progettoModifica";
@@ -171,6 +160,7 @@ public class ProgettoController {
 
 		Progetto progettoCorr = sessionData.getLoggedProgetto();
 
+		//valido i campi
 		progettoValidatore.validate(progetto1, progettoBindingResult);
 		if(!progettoBindingResult.hasErrors()) {
 			progettoCorr.setNome(progetto1.getNome());

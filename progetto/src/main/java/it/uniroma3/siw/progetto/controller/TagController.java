@@ -88,7 +88,7 @@ public class TagController {
 
 	/*aggiungo un tag del progetto ad un task*/
 	@RequestMapping(value = {"/addTagAlTask"}, method =RequestMethod.GET )
-	public String formTagAlTask(Model model) {
+	public String aggiungoTagAlTask(Model model) {
 
 
 		Task loggedTask = sessionData.getLoggedTask();
@@ -107,17 +107,17 @@ public class TagController {
 		model.addAttribute("progetto", progettoCorr);
 		return "aggiungiTagAlTask";
 
-
 	}
+
 	@RequestMapping(value = {"/addTagAlTask/{id}"}, method =RequestMethod.GET )
-	public String aggiungiTagAlTask(Model model, @PathVariable Long id) {
+	public String TagPerTask(Model model, @PathVariable Long id) {
 
 		Task loggedTask = sessionData.getLoggedTask();
 
 		Tag tagScelto = tagService.getTag(id);
 		List<Tag> tags =this.tagService.getTagDaTask(loggedTask);
-		tags.add(tagScelto);
-		loggedTask.setTags(tags);
+		tags.add(tagScelto); //aggiungo il nuovo tag
+		loggedTask.setTags(tags);  
 		this.taskService.salvaTask(loggedTask);
 		return "redirect:/task/"+loggedTask.getId();
 

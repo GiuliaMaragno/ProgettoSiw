@@ -20,10 +20,6 @@ import it.uniroma3.siw.progetto.model.Progetto;
 import it.uniroma3.siw.progetto.model.Tag;
 import it.uniroma3.siw.progetto.model.Task;
 import it.uniroma3.siw.progetto.model.Utente;
-import it.uniroma3.siw.progetto.repository.CommentoRepository;
-import it.uniroma3.siw.progetto.repository.TagRepository;
-import it.uniroma3.siw.progetto.repository.TaskRepository;
-import it.uniroma3.siw.progetto.repository.UtenteRepository;
 import it.uniroma3.siw.progetto.service.CommentoService;
 import it.uniroma3.siw.progetto.service.CredenzialiService;
 import it.uniroma3.siw.progetto.service.ProgettoService;
@@ -44,23 +40,14 @@ public class TaskController {
 	UtenteService utenteService;
 	@Autowired
 	ProgettoValidatore progettoValidatore;
-
 	@Autowired
 	SessionData sessionData;
 	@Autowired
 	TaskService taskService;
 	@Autowired
-	UtenteRepository utenteRepository;
-	@Autowired
-	TaskValidatore taskValidatore;
-	@Autowired
-	TagRepository tagRepository;
-	@Autowired
-	CommentoRepository commentoRepository;
+	TaskValidatore taskValidatore;	
 	@Autowired
 	CredenzialiService credenzialiService;
-	@Autowired
-	TaskRepository taskRepository;
 	@Autowired
 	TagService tagService;
 	@Autowired
@@ -90,22 +77,25 @@ public class TaskController {
 
 		Utente loggedUtente = sessionData.getLoggedUtente();
 		Progetto loggedProgetto = sessionData.getLoggedProgetto();
+		
+		//valido i campi del task
 		taskValidatore.validate(task,taskBindingResult);
 
-		Credenziali credenzialiCorr = this.credenzialiService.getCredenziali(credenziali.getUsername());//
+		Credenziali credenzialiCorr = this.credenzialiService.getCredenziali(credenziali.getUsername());
+		
+		//valido le credenziali dell' utente al quale voglio affidare il task
 		credenzialiValidatore.validateTask(credenzialiCorr, credenzialiBindingResult);
-		if (credenzialiBindingResult.hasErrors()) {
+		if (credenzialiBindingResult.hasErrors()) { //se non ci sono errori
 			return "aggiungiTask";
 		}
 		Utente membro = credenzialiCorr.getUtente(); //prendo utente dalle credenziali
 
 
-		if(!taskBindingResult.hasErrors() ) {
+		if(!taskBindingResult.hasErrors() ) { //se non ci sono errori
 
 			task.setProgetto(loggedProgetto);
 			task.setUtenteAddetto(membro);
 			this.taskService.salvaTask(task);			
-			//sessionData.setLoggedTask(task);
 			return "redirect:/progetti/"+loggedProgetto.getId();	
 		}
 

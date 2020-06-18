@@ -40,7 +40,7 @@ public class UtenteController {
 	UtenteValidatore utenteValidatore;
 
 
-	
+
 	@RequestMapping(value= {"/home"}, method =RequestMethod.GET)
 	public String home(Model model) {
 		Utente utenteAutenticato= sessionData.getLoggedUtente();
@@ -67,17 +67,16 @@ public class UtenteController {
 		return "admin";
 	}
 
+	/* chiamata al momento di aggiornare il profilo dell'utente*/
+	@RequestMapping(value = {"/utenti/{progId}"}, method = RequestMethod.GET)
+	public String proprietario(Model model, @PathVariable Long progId) {
 
-	/*
-	 * @RequestMapping(value = {"/utenti/{progId}"}, method = RequestMethod.GET)
-	 * public String proprietario(Model model, @PathVariable Long progId) {
-	 * 
-	 * Utente utente = utenteService.getUtenteDaId(progId); Credenziali credenziali
-	 * = this.credenzialiService.getCredenzialiDaUtente(utente);
-	 * model.addAttribute("loggedUtente", utente); model.addAttribute("credenziali",
-	 * credenziali); return "utenteProfilo"; }
-	 */
-	
+		Utente utente = utenteService.getUtenteDaId(progId); Credenziali credenziali
+		= this.credenzialiService.getCredenzialiDaUtente(utente);
+		model.addAttribute("loggedUtente", utente); model.addAttribute("credenziali",
+				credenziali); return "utenteProfilo"; }
+
+
 	/*da admin posso vedere tutti gli utenti registrati*/
 	@RequestMapping(value = {"/admin/utenti"}, method = RequestMethod.GET)
 	public String listaUtenti(Model model) {
@@ -129,7 +128,7 @@ public class UtenteController {
 
 		// se non hanno campi invalidi salvo nel DB
 		if(!utenteBindingResult.hasErrors() && !credenzialiBindingResult.hasErrors()) {
-			
+
 			utenteCorr.setNome(utente.getNome());
 			utenteCorr.setCognome(utente.getCognome());
 			credenzialiCorr.setUsername(credenziali.getUsername());

@@ -86,6 +86,16 @@ public class ProgettoService {
 		return result.orElse(null);
 	}
 
+	
+	@Transactional
+	public List<Progetto> getProgettoDaProprietario(Utente proprietario){
+		return this.progettoRepository.findByProprietario(proprietario);
+	}
+	
+	@Transactional
+	public  List<Progetto> getProgettiDaMembri(Utente membro){
+		return this.progettoRepository.findByMembri(membro);
+	}
 }
 
 
