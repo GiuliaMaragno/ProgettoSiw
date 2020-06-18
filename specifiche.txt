@@ -8,101 +8,118 @@ Sistema sowftware di tpo client-server, usato per la gestione dei progetti.
 Utente
 
 - Sign Up
-	Attore primario Utente.
-	Un utente si registra per la prima volta nel sistema.
-	Inserisce username, password, nome e cognome. 
-	Il sistema verifica che i campi siano stati compilati correttamente e registra l'utente nel sistema.
-	Il sistema mostra la pagina di benvenuto attraverso cui l'utente potrà successivamente fare il login.
-	Se l'utente inserisce dati non validi, il sistema mostra l'errore all'utente e chiede il reinserimento delle credenziali.
+	
+Attore primario Utente.
+Un utente si registra per la prima volta nel sistema.
+Inserisce username, password, nome e cognome. 
+Il sistema verifica che i campi siano stati compilati correttamente e registra l'utente nel sistema.
+Il sistema mostra la pagina di benvenuto attraverso cui l'utente potrà successivamente fare il login.
+Se l'utente inserisce dati non validi, il sistema mostra l'errore all'utente e chiede il reinserimento delle credenziali.
 
 -Autenticazione
-	Attore Primario: Utente
-	Un utente effettua il login inserendo Username e Password, il sistema verifica che l'utente sia già registrato al suo interno.
-	In caso di successo il sistema mostra la home dell'utente autenticato.
-	Tramite la home l'utente può vedere quali sono i suoi progetti, creare un nuovo progetto, vedere i progetti che sono condivisi 		con lui, visualizzare il suo profilo ed effettuare il logout.
-	In caso di fallimento il sistema indica che le credenziali inserite sono sbagliate.
+
+Attore Primario: Utente
+Un utente effettua il login inserendo Username e Password, il sistema verifica che l'utente sia già registrato al suo interno.
+In caso di successo il sistema mostra la home dell'utente autenticato.
+Tramite la home l'utente può vedere quali sono i suoi progetti, creare un nuovo progetto, vedere i progetti che sono condivisi con lui, visualizzare il suo profilo ed effettuare il logout.
+In caso di fallimento il sistema indica che le credenziali inserite sono sbagliate.
 
 -Visualizzare il mio Profilo
-	Attore Primario Utente autenticato
-	Un utente autenticato sceglie l’attività “visualizzare il mio profilo”, il sistema mostra il profilo relativo all'utente 		contenente il suo nome, lo username, il cognome, il ruolo, la data di registrazione e la data dell'ultimo aggiornamento.
+	
+Attore Primario Utente autenticato
+Un utente autenticato sceglie l’attività “visualizzare il mio profilo”, il sistema mostra il profilo relativo all'utente contenente il suo nome, lo username, il cognome, il ruolo, la data di registrazione e la data dell'ultimo aggiornamento.
 
 -Aggiornare il mio profilo
-	Attore primario: utente autenticato
-	Un utente autenticato sceglie l’attività “aggiorna il mio profilo”, il sistema mostra username, nome e cognome, l'utente 		modifica i campi inserisce la sua password e il sistema mostra il profilo dell'utente con i campi aggiornati.
+	
+Attore primario: utente autenticato
+Un utente autenticato sceglie l’attività “aggiorna il mio profilo”, il sistema mostra username, nome e cognome, l'utente modifica i campi inserisce la sua password e il sistema mostra il profilo dell'utente con i campi aggiornati.
 
 
 
 Progetto
 
 -Crea nuovo progetto
-	Attore primario Utente.
-	l'utente registrato vuole creare un nuovo progetto.
-	L'utente sceglie l'attività "Crea nuovo progetto".
-	L'utente inserisce il nome del progetto, l'utente conferma l'inserimento, il sistema mostra la pagina del progetto appena 		creato.
-	L'utente annulla l'operazione di inserimento. Il sistema non registra nessuna informazione sul progetto
+
+Attore primario Utente.
+l'utente registrato vuole creare un nuovo progetto.
+L'utente sceglie l'attività "Crea nuovo progetto".
+L'utente inserisce il nome del progetto, l'utente conferma l'inserimento, il sistema mostra la pagina del progetto appena creato.
+L'utente annulla l'operazione di inserimento. Il sistema non registra nessuna informazione sul progetto
 
 -Visualizzare i miei progetti.
-	Attore primario Utente.
-	L'utente sceglie l'attività "Visualizza i miei progetti" il sistema mostra l'elenco dei progetti associati all'utente 			autenticato.
+
+Attore primario Utente.
+L'utente sceglie l'attività "Visualizza i miei progetti" il sistema mostra l'elenco dei progetti associati all'utente autenticato.
 
 -Visualizza i progetti condivisi con me 
-	Attore primario Utente.
-	L'utente sceglie l'attività "Visualizza i progetti condivisi con me", il sistema mostra l'elenco dei progetti che sono visibili 	all' utente autenticato.
+
+Attore primario Utente.
+L'utente sceglie l'attività "Visualizza i progetti condivisi con me", il sistema mostra l'elenco dei progetti che sono visibili all' utente autenticato.
 
 -Aggiorna i dati di un mio progetto
-	Attore primario Utente.
-	L'utente seleziona l'attività "Aggiorna progetto", il sistema mostra i campi modificabili del progetto, l'utente modifica il 		nome, l'utente sceglie l'attività "aggiorna" il sistema mostra la pagina relativa al progetto con il nuovo nome, i task del 		progetto, i relativi tag associati ad esso e gli utenti con cui il progetto è condiviso.
-	L'utente annulla l'operazione di aggiornamento. Il sistema non aggiorna le nuove informazioni del progetto
+	
+Attore primario Utente.
+L'utente seleziona l'attività "Aggiorna progetto", il sistema mostra i campi modificabili del progetto, l'utente modifica il nome, l'utente sceglie l'attività "aggiorna" il sistema mostra la pagina relativa al progetto con il nuovo nome, i task del progetto, i relativi tag associati ad esso e gli utenti con cui il progetto è condiviso.
+L'utente annulla l'operazione di aggiornamento. Il sistema non aggiorna le nuove informazioni del progetto
 
 -Cancellare un mio progetto
-	Attore primario Utente.
-	L'utente sceglie l'attività "Delete" associata al progetto che vuole eliminare. 
-	Il sistema mostra la pagina relativa all'elenco dei progetti di cui l'utente autenticato è membro aggiornato.
+	
+Attore primario Utente.
+L'utente sceglie l'attività "Delete" associata al progetto che vuole eliminare. 
+Il sistema mostra la pagina relativa all'elenco dei progetti di cui l'utente autenticato è membro aggiornato.
 
 -Condividere un mio progetto con un altro utente
-	Attore primario Utente.
-	L'utente sceglie l'attività "condividi con utente".
-	L'utente inserisce il nome di un altro utente autenticato nel sistema con cui condividere il progetto. Nel caso in cui l'utente 	con cui l'utente autenticato vuole condividere il progetto non è registrato nel sistema il sistema mostra un messaggio di 		errore, in caso di successo il sistema mostra la pagina del progetto aggiornata con il nome dell’utente con cui è stato 		condiviso il progetto.
-	L'utente annulla l'operazione di condivisione. Il sistema non registra nessuna informazione relativa alla condivisione.
+
+Attore primario Utente.
+L'utente sceglie l'attività "condividi con utente".
+L'utente inserisce il nome di un altro utente autenticato nel sistema con cui condividere il progetto. Nel caso in cui l'utente con cui l'utente autenticato 		vuole condividere il progetto non è registrato nel sistema il sistema mostra un messaggio di errore, in caso di successo il sistema mostra la pagina del 		progetto aggiornata con il nome dell’utente con cui è stato condiviso il progetto.
+L'utente annulla l'operazione di condivisione. Il sistema non registra nessuna informazione relativa alla condivisione.
 
 -Aggiungere un tag ad un mio progetto
-	Attore primario Utente.
-	L'utente sceglie l'attività "aggiungi tag" 
-	L'utente inserisce il nome la descrizione e il colore del Tag, l'utente conferma l'inserimento del tag, il sistema mostra la 		scheda del progetto associato al tag, con il nome del tag del colore scelto dall'utente e la descrizione, la lista dei tag e dei 	 task già associati al progetto.
-	L'utente annulla l'operazione di inserimento tag. Il sistema non registra nessuna informazione sui tag relativi al progetto
+	
+Attore primario Utente.
+L'utente sceglie l'attività "aggiungi tag" 
+L'utente inserisce il nome la descrizione e il colore del Tag, l'utente conferma l'inserimento del tag, il sistema mostra la scheda del progetto associato al tag, con il nome del tag del colore scelto dall'utente e la descrizione, la lista dei tag e dei task già associati al progetto.
+L'utente annulla l'operazione di inserimento tag. Il sistema non registra nessuna informazione sui tag relativi al progetto
 
 
 Task
 
 -Aggiungi nuovo Task ad un mio progetto
-	Attore primario Utente.
-	L'utente sceglie l'attività "aggiungi task" 
-	L'utente inserisce il nome la descrizione del Task, l'utente conferma l'inserimento del task, il sistema mostra la scheda del 		progetto associato al task, con il nome e la descrizione del task aggiunto, la lista dei tag e i task già associati al progetto.
-	L'utente annulla l'operazione di inserimento task. Il sistema non registra nessuna informazione sui task relativi al progetto.
+
+Attore primario Utente.
+L'utente sceglie l'attività "aggiungi task" 
+L'utente inserisce il nome la descrizione del Task, l'utente conferma l'inserimento del task, il sistema mostra la scheda del 	progetto associato al task, con il nome e la descrizione del task aggiunto, la lista dei tag e i task già associati al progetto.
+L'utente annulla l'operazione di inserimento task. Il sistema non registra nessuna informazione sui task relativi al progetto.
 
 -Aggiornare un Task del mio progetto
-	Attore primario Utente.
-	L'utente sceglie l'attività "aggiorna" relativa al Task, Il sistema mostra i campi editabili, l'utente modifica nome e cognome, 	il sistema mostra la scheda del progetto con i nuovi dati relativi al task aggiornati.
+
+Attore primario Utente.
+L'utente sceglie l'attività "aggiorna" relativa al Task, Il sistema mostra i campi editabili, l'utente modifica nome e cognome, 	il sistema mostra la scheda del progetto con i nuovi dati relativi al task aggiornati.
 
 -Cancellare un Task del mio progetto
-	Attore primario Utente.
-	L'utente sceglie l'attività "Delete" associata al task che vuole eliminare, il sistema mostra la pagina aggiornata relativa al 		progetto con il nome dei task, dei tag ed i nomi e i cognomi degli utenti membri del progetto.
+	
+Attore primario Utente.
+L'utente sceglie l'attività "Delete" associata al task che vuole eliminare, il sistema mostra la pagina aggiornata relativa al progetto con il nome dei task, 	dei tag ed i nomi e i cognomi degli utenti membri del progetto.
 
 -Assegna un task del mio progetto ad un utente che ha visibilità sul mio progetto
-	Attore primario Utente.
-	L'utente proprietario sceglie l'attività "aggiungi utente addetto" ed inserisce il nome dell'utente a cui vuole assegnare il 		task. 
-	Nel caso in cui l'utente addetto non sia registrato nel sistema il sistema mostra un messaggio di errore.
-	L'utente annulla l'operazione di condivisione. Il sistema non registra nessuna informazione relativa alla condivisione.
+
+Attore primario Utente.
+L'utente proprietario sceglie l'attività "aggiungi utente addetto" ed inserisce il nome dell'utente a cui vuole assegnare il task. 
+Nel caso in cui l'utente addetto non sia registrato nel sistema il sistema mostra un messaggio di errore.
+L'utente annulla l'operazione di condivisione. Il sistema non registra nessuna informazione relativa alla condivisione.
 
 -Aggiungere un Tag ad un Task del mio progetto
-	Attore primario Utente.
-	L'utente seleziona l'attività "aggiungi Tag" riferita al Task.
-	Il sistema mostra l’elenco dei tag associati al progetto, l’utente seleziona il tag che vuole aggiungere, il sistema mostra la 		pagina dei task con il nome del task, la sua descrizione, il nome dell’utente che se ne occupa, i commenti riferiti ai task ed 		il nome, la descrizione ed il colore dei tag aggiunti.
+
+Attore primario Utente.
+L'utente seleziona l'attività "aggiungi Tag" riferita al Task.
+Il sistema mostra l’elenco dei tag associati al progetto, l’utente seleziona il tag che vuole aggiungere, il sistema mostra la pagina dei task con il nome del task, la sua descrizione, il nome dell’utente che se ne occupa, i commenti riferiti ai task ed il nome, la descrizione ed il colore dei tag aggiunti.
 
 -Aggiungere un commento ad un Task del progetto su cui ho visibilità
-	Attore primario Utente.
-	L’utente sceglie l’attività aggiungi commento.
-	L’utente inserisce il commento, il sistema mostra la pagina dei task con il nome del task, la sua descrizione, il nome 			dell’utente che se ne occupa, i commenti riferiti ai task ed il nome, la descrizione ed il colore dei tag associati al task.
+
+Attore primario Utente.
+L’utente sceglie l’attività aggiungi commento.
+L’utente inserisce il commento, il sistema mostra la pagina dei task con il nome del task, la sua descrizione, il nome 	dell’utente che se ne occupa, i commenti riferiti ai task ed il nome, la descrizione ed il colore dei tag associati al task.
 
 
 
