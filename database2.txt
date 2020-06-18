@@ -1,0 +1,230 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.2
+-- Dumped by pg_dump version 12.2
+
+-- Started on 2020-06-18 18:39:52
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 2869 (class 0 OID 107130)
+-- Dependencies: 203
+-- Data for Name: commento; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.commento (id, descrizione, task_id, utente_id) FROM stdin;
+30	sono a buon punto!!	17	4
+48	 un problemino sui  contratti	37	4
+49	devo parlare prima con i clienti sono cambiate delle cose	39	4
+80	Molto interessante	55	8
+81	riascolto lezione alcune cose poco chiare	56	8
+82	l'ultimo non mi viene	57	8
+83	finiti tutti	59	8
+84	risenti lezione e rivedi esercitazione	58	8
+\.
+
+
+--
+-- TOC entry 2870 (class 0 OID 107135)
+-- Dependencies: 204
+-- Data for Name: credenziali; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.credenziali (id, data_creazione, data_ultimo_aggiornamento, password, ruolo, username, utente_id) FROM stdin;
+3	2020-06-18 17:34:17.739	2020-06-18 17:34:17.739	$2a$10$QnTjr61y6BwR0ug7oqxy.eUIs6kW9LIXmZIgXc0XJTBFUlhaC8Jqm	DEFAULT	luigiBianchi	4
+5	2020-06-18 17:34:32.665	2020-06-18 17:34:32.665	$2a$10$rLlpJkeWS.DZ6sd5DBt6Fe/HKc2Luzq.udE0KhTmaUiISrth.sBmG	DEFAULT	luciaVerdi	6
+7	2020-06-18 17:34:48.796	2020-06-18 17:34:48.796	$2a$10$dlPcrHKsbcnjKJYXvwsUy.qgAWg9/9xQtlSsdwplQXRSH.0FwXF6C	DEFAULT	giuliaVerdi	8
+9	2020-06-18 17:35:12.066	2020-06-18 17:35:12.066	$2a$10$nWkJk8ZMN2nwMa5XLaWjsuD6QdwclUt8vpnf9/Fjg3tZt.urYQfWG	DEFAULT	aliceBianchi	10
+1	2020-06-18 17:33:49.127	2020-06-18 17:33:49.128	$2a$10$fJgWBXpcmKd9w2S6X9ueq.o6SMRS5uZrBTRxXG0UaEmzL.SfZUmsq	ADMIN	marioRossi	2
+\.
+
+
+--
+-- TOC entry 2871 (class 0 OID 107140)
+-- Dependencies: 205
+-- Data for Name: progetto; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.progetto (id, data_creazione, data_ultimo_aggiornamento, nome, proprietario_id) FROM stdin;
+11	2020-06-18 17:37:49.674	2020-06-18 17:37:49.674	ToDoList	2
+12	2020-06-18 17:38:52.9	2020-06-18 17:38:52.9	Tesi Sperimentale	6
+31	2020-06-18 17:54:08.541	2020-06-18 17:54:08.541	Applicazione Sw	4
+50	2020-06-18 18:08:25.752	2020-06-18 18:08:25.752	ESAME SIW	8
+60	2020-06-18 18:12:23.913	2020-06-18 18:18:07.188	Progetto siw  Parziale 	8
+\.
+
+
+--
+-- TOC entry 2872 (class 0 OID 107145)
+-- Dependencies: 206
+-- Data for Name: progetto_membri; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.progetto_membri (progetti_visibili_id, membri_id) FROM stdin;
+12	2
+12	4
+12	10
+12	8
+31	2
+31	6
+60	10
+\.
+
+
+--
+-- TOC entry 2873 (class 0 OID 107148)
+-- Dependencies: 207
+-- Data for Name: tag; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.tag (id, colore, descrizione, nome, progetto_id) FROM stdin;
+24	#cc1414	Urgente	Da fare oggi	12
+25	#5cad1a	(importante)	Da fare appena sono pronti i dati	12
+26	#f91f1f	(18/06/2020)	Fatto	12
+27	#be16ca	importante	da finire entro domani alle 10	12
+28	#2edcb9	(oggi)	Da Caricare	12
+29	#ec8dc0	(2 gg ritardo)	in Ritardo	12
+41	#df0c0c	18/07/2020	Fatto	31
+42	#0bd5ad	Urgente	Da fare oggi	31
+43	#392092	importante	Da fare entro una settimana	31
+44	#000000	(2 gg ritardo)	da finire entro domani alle 10	31
+45	#700fd2	quasi finita	fase Aggiornamento	31
+46	#7f1805	problemi	Rimandato a domani	31
+69	#c22424	scorrevole	da finire entro domani alle 10	60
+70	#df7272	Urgente	da finire entro stasera 	60
+71	#247cdb	importante	implementare max entro dopodomani	60
+72	#d419e1	(2 gg ritardo)	finire nel pomeriggio	60
+73	#b96313	Causa Esami	in Ritardo	60
+74	#000000	6 giungo	Finito	60
+75	#000000	(scorrevole)	fare oggi e domani	50
+76	#000000	importante	fare sabato	50
+77	#b75c5c	cerca di finire	Lunedi	50
+78	#e0ee20	max gg dopo	Martedì	50
+79	#1936c8	(se hai tempo)	Giovedì	50
+\.
+
+
+--
+-- TOC entry 2874 (class 0 OID 107156)
+-- Dependencies: 208
+-- Data for Name: task; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.task (id, data_creazione, data_ultimo_aggiornamento, descrizione, nome, progetto_id, utente_addetto_id) FROM stdin;
+13	2020-06-18 17:40:50.876	2020-06-18 17:40:50.876	Biblioteca, articoli o riviste scientifiche	Ricerca fonti 	12	6
+14	2020-06-18 17:41:35.518	2020-06-18 17:41:35.518	Raccogli dati atmosferici regioni Lazio e Lombardia	Raccolta dati	12	2
+15	2020-06-18 17:41:57.423	2020-06-18 17:41:57.423	Normalizzare i dati	Pulisci Dati	12	10
+16	2020-06-18 17:42:19.4	2020-06-18 17:42:19.4	Reti neurali	Progettazione Modello	12	8
+17	2020-06-18 17:42:45.645	2020-06-18 17:42:45.645	Spiega in max 4/5 pagine	Scrivi ipotesi	12	4
+18	2020-06-18 17:43:10.33	2020-06-18 17:43:10.33	(aggiungi grafici e formule)	Spiega in maniera dettagliata l'esperimento	12	8
+20	2020-06-18 17:44:08.257	2020-06-18 17:44:08.257	Ricorda tutte le fonti utilizzate	Scrittura fonti	12	6
+21	2020-06-18 17:44:26.539	2020-06-18 17:44:26.539	(verifichiamo su un' altra città)	Test	12	8
+22	2020-06-18 17:44:43.963	2020-06-18 17:44:43.963	max 5 pagine	Introduzione	12	2
+23	2020-06-18 17:45:42.504	2020-06-18 17:45:42.504	ultima scadenza metà giugno	Definire Scadenze	12	10
+32	2020-06-18 17:55:05.389	2020-06-18 17:55:05.389	10 Pagine	Analisi dei requisiti	31	4
+33	2020-06-18 17:56:28.553	2020-06-18 17:56:28.553	Primo incontro	Incontro Clienti	31	2
+35	2020-06-18 17:57:02.705	2020-06-18 17:57:02.705	forma dettagliata	casi d'uso	31	4
+36	2020-06-18 17:57:24.897	2020-06-18 17:57:24.897	rivedi bene i casi d'uso	Diagramma delle classi	31	4
+37	2020-06-18 17:58:03.918	2020-06-18 17:58:03.918	vanno aggiunte due Classi importanti	revisione modello di dominio	31	4
+38	2020-06-18 17:58:36.674	2020-06-18 17:58:36.674	durante incontro con i clienti 	Diagrammi di interazione	31	6
+39	2020-06-18 17:59:08.26	2020-06-18 17:59:08.26	attenzione ai controller	Scrittura codice 	31	2
+40	2020-06-18 17:59:43.325	2020-06-18 17:59:43.325	definitivo	Modifica Diagramma delle classi	31	4
+47	2020-06-18 18:06:05.425	2020-06-18 18:06:05.425	(Bozza)	modello dominio	31	4
+51	2020-06-18 18:08:53.15	2020-06-18 18:08:53.15	230 slide	Persistenza	50	8
+53	2020-06-18 18:09:28.754	2020-06-18 18:09:28.754	65 slide	repository	50	8
+54	2020-06-18 18:09:53.813	2020-06-18 18:09:53.813	2 esercizi	esercizio Repository	50	8
+55	2020-06-18 18:10:11.356	2020-06-18 18:10:11.356	117 pagine	html-css-xml	50	8
+56	2020-06-18 18:10:36.04	2020-06-18 18:10:36.04	180 slide	servlet-jsp 	50	8
+57	2020-06-18 18:10:55.124	2020-06-18 18:10:55.124	8 esercizi	esercizi jsp	50	8
+58	2020-06-18 18:11:14.102	2020-06-18 18:11:14.102	71 slide	springboot	50	8
+59	2020-06-18 18:11:35.939	2020-06-18 18:11:35.939	5 esercizi	esercizi springboot	50	8
+52	2020-06-18 18:09:13.153	2020-06-18 18:11:46.902	8 esercizi	esercizi persistenza	50	8
+61	2020-06-18 18:13:12.069	2020-06-18 18:13:12.069	da finire entro il 5 giugno	Analisi dei requisiti	60	10
+62	2020-06-18 18:14:07.443	2020-06-18 18:14:07.443	iniziale	Diagramma delle classi	60	8
+63	2020-06-18 18:14:44.608	2020-06-18 18:14:44.609	oggi pomeriggio	implementa Persistenza	60	10
+64	2020-06-18 18:15:10.716	2020-06-18 18:15:10.716	da incrementare piano piano	implementazione Repository	60	8
+65	2020-06-18 18:15:31.98	2020-06-18 18:15:31.98	implementazione non definitiva	Implementazione Service	60	8
+66	2020-06-18 18:15:58.3	2020-06-18 18:15:58.3	Credenziali controller	implementazione Controller	60	10
+67	2020-06-18 18:17:04.29	2020-06-18 18:17:04.29	Utente Controller provvisorio	implementazione Controller	60	8
+68	2020-06-18 18:17:36.372	2020-06-18 18:17:36.372	aggiungi le varie viste 	aggiungi template	60	10
+\.
+
+
+--
+-- TOC entry 2875 (class 0 OID 107164)
+-- Dependencies: 209
+-- Data for Name: task_tags; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.task_tags (tasks_id, tags_id) FROM stdin;
+13	27
+14	28
+15	25
+17	29
+21	25
+16	25
+32	41
+33	45
+47	44
+37	43
+39	46
+61	74
+62	69
+63	72
+64	73
+65	72
+66	69
+68	69
+51	75
+53	76
+54	76
+55	77
+56	78
+57	78
+59	79
+58	79
+\.
+
+
+--
+-- TOC entry 2876 (class 0 OID 107167)
+-- Dependencies: 210
+-- Data for Name: utenti; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.utenti (id, cognome, data_creazione, data_ultimo_aggiornamento, nome) FROM stdin;
+2	Rossi	2020-06-18 17:33:49.161	2020-06-18 17:33:49.161	Mario
+4	Bianchi	2020-06-18 17:34:17.74	2020-06-18 17:34:17.74	Luigi
+6	Verdi	2020-06-18 17:34:32.666	2020-06-18 17:34:32.666	Lucia
+8	Verdi	2020-06-18 17:34:48.797	2020-06-18 17:34:48.797	Giulia
+10	Bianchi	2020-06-18 17:35:12.066	2020-06-18 17:35:12.066	Alice
+\.
+
+
+--
+-- TOC entry 2882 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.hibernate_sequence', 84, true);
+
+
+-- Completed on 2020-06-18 18:39:52
+
+--
+-- PostgreSQL database dump complete
+--
+
